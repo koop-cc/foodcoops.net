@@ -190,6 +190,11 @@ fairnetzt:
   database:
     database: foodsoft_fairnetzt
 
+fcbn:
+  <<: *defaults
+  database:
+    database: foodsoft_fcbn
+
 fckalk:
   <<: *defaults
   database:
