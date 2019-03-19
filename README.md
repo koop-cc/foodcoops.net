@@ -103,6 +103,7 @@ chmod u+x /etc/cron.daily/deploy.sh
 * [Adding a new foodcoop](#adding-a-new-foodcoop)
 * [Giving a foodcoop its own subdomain](#giving-a-foodcoop-its-own-subdomain)
 * [Adding a member to the operations team](#adding-a-member-to-the-operations-team)
+* [Pause and resume for maintenance](#pause-and-resume-for-maintenance)
 * [Troubleshooting](#troubleshooting)
 
 
@@ -184,5 +185,16 @@ Make sure to have this information before adding it to our configuration.
 - Obtain user's SSH key and verify it from a Github gist, Keybase or a video call.
 - Add SSH key to user account
 - (maybe more, pending #8)
+
+### Pause and resume for maintenance
+
+(please expand this section)
+
+- list running services
+- pause the services
+- list running services (verify successful pause)
+- perform maintenance
+- resume the services
+- list running services (verify successful resume)
 
 ### Troubleshooting
