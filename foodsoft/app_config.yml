@@ -250,6 +250,11 @@ lauterleben:
   database:
     database: foodsoft_lauterleben
 
+lekoweimar:
+  <<: *defaults
+  database:
+    database: foodsoft_lekoweimar
+
 localharvest:
   <<: *defaults
   database:
