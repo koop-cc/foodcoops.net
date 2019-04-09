@@ -189,20 +189,28 @@ Make sure to have this information before adding it to our configuration.
 ### Increase LVM partition size
 
 1. Increase LV size by, say, 2 GB
-   ```lvextend --size +2G /dev/CHANGEME-vg/CHANGEME```
+   ```shell
+   lvextend --size +2G /dev/CHANGEME-vg/CHANGEME
+   ```
 
 2. Stop services (just to be sure)
-   ```su deploy
+   ```shell
+   su deploy
    cd /var/git/foodcoops.net
    docker-compose down
-   exit```
+   exit
+   ```
 
 3. Perform online resize of the filesystem
-   ```resize2fs /dev/mapper/CHANGEME```
+   ```shell
+   resize2fs /dev/mapper/CHANGEME
+   ```
 
 4. Restart services
-   ```su deploy
+   ```shell
+   su deploy
    cd /var/git/foodcoops.net
-   docker-compose up -d```
+   docker-compose up -d
+   ```
 
 ### Troubleshooting
