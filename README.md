@@ -103,7 +103,7 @@ chmod u+x /etc/cron.daily/deploy.sh
 * [Adding a new foodcoop](#adding-a-new-foodcoop)
 * [Giving a foodcoop its own subdomain](#giving-a-foodcoop-its-own-subdomain)
 * [Adding a member to the operations team](#adding-a-member-to-the-operations-team)
-* [Pause and resume for maintenance](#pause-and-resume-for-maintenance)
+* [Increase LVM partition size](#increase-lvm-partition-size)
 * [Troubleshooting](#troubleshooting)
 
 
