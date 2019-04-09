@@ -300,6 +300,11 @@ plattsalat:
   database:
     database: foodsoft_plattsalat
 
+rudifood:
+  <<: *defaults
+  database:
+    database: foodsoft_rudifood
+
 stolzenhagen:
   <<: *defaults
   database:
