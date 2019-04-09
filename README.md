@@ -186,15 +186,23 @@ Make sure to have this information before adding it to our configuration.
 - Add SSH key to user account
 - (maybe more, pending #8)
 
-### Pause and resume for maintenance
+### Increase LVM partition size
 
-(please expand this section)
+1. Increase LV size by, say, 2 GB
+   ```lvextend --size +2G /dev/CHANGEME-vg/CHANGEME```
 
-- list running services
-- pause the services
-- list running services (verify successful pause)
-- perform maintenance
-- resume the services
-- list running services (verify successful resume)
+2. Stop services (just to be sure)
+   ```su deploy
+   cd /var/git/foodcoops.net
+   docker-compose down
+   exit```
+
+3. Perform online resize of the filesystem
+   ```resize2fs /dev/mapper/CHANGEME```
+
+4. Restart services
+   ```su deploy
+   cd /var/git/foodcoops.net
+   docker-compose up -d```
 
 ### Troubleshooting
