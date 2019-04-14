@@ -215,6 +215,11 @@ foodcool:
   database:
     database: foodsoft_foodcool
 
+freeportcoop:
+  <<: *defaults
+  database:
+    database: foodsoft_freeportcoop
+
 guerckchen:
   <<: *defaults
   database:
