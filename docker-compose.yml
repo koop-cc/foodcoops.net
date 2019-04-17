@@ -10,6 +10,7 @@ services:
         app.${DOMAIN}
       CERTBOT_EMAIL: admin@${DOMAIN}
       CERTBOT_TOUCH_FILE: /triggers/reload-certs
+      CERTBOT_DISABLED: ${CERTBOT_DISABLED}
     volumes:
       - certs:/certs
       - triggers:/triggers
