@@ -215,6 +215,11 @@ foodcool:
   database:
     database: foodsoft_foodcool
 
+foodkorb:
+  <<: *defaults
+  database:
+    database: foodsoft_foodkorb
+
 freeportcoop:
   <<: *defaults
   database:
