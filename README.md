@@ -78,9 +78,9 @@ docker-compose run --rm \
   -e 'DATABASE_URL=mysql2://foodsoft:${FOODSOFT_DB_PASSWORD}@mariadb/foodsoft_demo?encoding=utf8mb4' \
   foodsoft bundle exec rake db:schema:load db:seed:small.en
 
-docker-compose run --rm \
+docker-compose run --rm --entrypoint=/bin/bash \
   -e 'DATABASE_URL=mysql2://foodsoft_latest:${FOODSOFT_LATEST_DB_PASSWORD}@mariadb/foodsoft_latest?encoding=utf8mb4' \
-  foodsoft bundle exec rake db:schema:load db:seed:small.en
+  foodsoft_latest bundle exec rake db:drop db:create db:schema:load db:seed:small.en
 ```
 
 ### SSL certificates

@@ -60,6 +60,7 @@ services:
       - REDIS_URL=redis://redis:6379
       - SECRET_KEY_BASE=${FOODSOFT_LATEST_SECRET_KEY_BASE}
       - SHAREDLISTS_DATABASE_URL=mysql2://foodsoft_latest:${FOODSOFT_LATEST_DB_PASSWORD}@mariadb/sharedlists?encoding=utf8mb4
+      - RAILS_RELATIVE_URL_ROOT=/latest
 
   haproxy:
     build: haproxy
