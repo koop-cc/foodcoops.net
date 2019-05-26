@@ -290,6 +290,11 @@ meierei:
   database:
     database: foodsoft_meierei
 
+minitopia:
+  <<: *defaults
+  database:
+    database: foodsoft_minitopia
+
 radieschen:
   <<: *defaults
   database:
