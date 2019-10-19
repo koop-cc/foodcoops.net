@@ -300,6 +300,11 @@ radieschen:
   database:
     database: foodsoft_radieschen
 
+recknitz:
+  <<: *defaults
+  database:
+    database: foodsoft_recknitz
+
 rundling:
   <<: *defaults
   database:
