@@ -280,6 +280,11 @@ luzern:
   database:
     database: foodsoft_luzern
 
+m19:
+  <<: *defaults
+  database:
+    database: foodsoft_m19
+
 mannheim:
   <<: *defaults
   database:
