@@ -225,6 +225,11 @@ freeportcoop:
   database:
     database: foodsoft_freeportcoop
 
+fuki:
+  <<: *defaults
+  database:
+    database: foodsoft_fuki
+
 guerckchen:
   <<: *defaults
   database:
