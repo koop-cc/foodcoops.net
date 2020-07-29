@@ -335,6 +335,11 @@ rudifood:
   database:
     database: foodsoft_rudifood
 
+osdorp:
+  <<: *defaults
+  database:
+    database: foodsoft_osdorp
+
 stolzenhagen:
   <<: *defaults
   database:
