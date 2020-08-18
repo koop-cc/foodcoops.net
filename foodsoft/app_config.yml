@@ -170,6 +170,11 @@ cocos:
   database:
     database: foodsoft_cocos
 
+coolmuehle:
+  <<: *defaults
+  database:
+    database: foodsoft_coolmuehle
+
 eca:
   <<: *defaults
   database:
