@@ -120,6 +120,7 @@ chmod u+x /etc/cron.daily/deploy.sh
 * [Giving a foodcoop its own subdomain](#giving-a-foodcoop-its-own-subdomain)
 * [Adding a member to the operations team](#adding-a-member-to-the-operations-team)
 * [Increase LVM partition size](#increase-lvm-partition-size)
+* [Recreating the latest demo database](#recreating-the-latest-demo-database)
 * [Troubleshooting](#troubleshooting)
 
 
@@ -228,5 +229,19 @@ Make sure to have this information before adding it to our configuration.
    cd /var/git/foodcoops.net
    docker-compose up -d
    ```
+
+### Recreating the latest demo database
+
+It can sometimes be useful to reset demo instance with a new database, seeded from `small.en`.
+For the latest version of Foodsoft, it may even be necessary when somehow an erroneous migration
+was committed. In that case, you'll need to bypass the automatic migration by providing a different
+entry-point:
+
+```shell
+cd /var/git/foodcoops.net
+docker-compose run --rm --entrypoint ./docker-entrypoint.sh \
+  -e RAILS_ENV=production -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 \
+  foodsoft_latest bundle exec rake db:drop db:create db:schema:load db:seed:small.en
+```
 
 ### Troubleshooting
