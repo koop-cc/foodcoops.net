@@ -195,6 +195,11 @@ elsabinar:
   database:
     database: foodsoft_elsabinar
 
+engelingshof:
+  <<: *defaults
+  database:
+    database: foodsoft_engelingshof
+
 fairnetzt:
   <<: *defaults
   database:
