@@ -365,6 +365,11 @@ tanteaute:
   database:
     database: foodsoft_tanteaute
 
+tanteemmen:
+  <<: *defaults
+  database:
+    database: foodsoft_tanteemmen
+
 tantemuenze:
   <<: *defaults
   database:
