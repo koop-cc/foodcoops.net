@@ -285,6 +285,11 @@ lekoweimar:
   database:
     database: foodsoft_lekoweimar
 
+lhgfg:
+  <<: *defaults
+  database:
+    database: foodsoft_lhgfg
+
 localharvest:
   <<: *defaults
   database:
