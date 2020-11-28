@@ -82,12 +82,12 @@ services:
     volumes:
       - mariadb:/var/lib/mysql
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    environment:
-      - PMA_ABSOLUTE_URI=https://app.${DOMAIN}/phpmyadmin/
-      - PMA_HOST=mariadb
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+#    restart: always
+#    environment:
+#      - PMA_ABSOLUTE_URI=https://app.${DOMAIN}/phpmyadmin/
+#      - PMA_HOST=mariadb
 
   redis:
     image: redis:3.2-alpine
