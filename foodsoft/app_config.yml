@@ -255,6 +255,11 @@ hessenhagen:
   database:
     database: foodsoft_hessenhagen
 
+imbiss:
+  <<: *defaults
+  database:
+    database: foodsoft_imbiss
+
 jolling:
   <<: *defaults
   database:
