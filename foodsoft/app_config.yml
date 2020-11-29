@@ -210,11 +210,6 @@ fcbn:
   database:
     database: foodsoft_fcbn
 
-fcschinke09:
-  <<: *defaults
-  database:
-    database: foodsoft_fcschinke09
-
 foodkorb:
   <<: *defaults
   database:
