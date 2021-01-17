@@ -178,7 +178,9 @@ Make sure to have this information before adding it to our configuration.
      foodsoft bundle exec rake db:setup
    ```
 
-5. Immediately login with `admin` / `secret` and change the user details and password.
+5. Immediately login with `admin` / `secret` and change the user details and password. The `admin`
+   user should become the user account of the first contact person, so use their email address
+   here: We do not want to encourage an unused `admin` account.
 
 6. You may want to pre-set some configuration if you know a bit more about the foodcoop. It's always
    helpful for new foodcoops to have a setup that already reflects their intended use a bit.
