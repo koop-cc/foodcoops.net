@@ -210,6 +210,11 @@ fcbn:
   database:
     database: foodsoft_fcbn
 
+fcww:
+  <<: *defaults
+  database:
+    database: foodsoft_fcww
+
 foodkorb:
   <<: *defaults
   database:
