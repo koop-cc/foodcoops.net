@@ -21,7 +21,6 @@ services:
     environment:
       - DATABASE_URL=mysql2://foodsoft:${FOODSOFT_DB_PASSWORD}@mariadb/foodsoft_demo?encoding=utf8mb4
       - EMAIL_SENDER=noreply@${DOMAIN}
-      #- ERROR_RECIPIENTS=
       - HOSTNAME=app.${DOMAIN}
       - QUEUE=foodsoft_notifier
       - REDIS_URL=redis://redis:6379
@@ -33,6 +32,7 @@ services:
       - SMTP_PORT
       - SMTP_USER_NAME
       - SMTP_PASSWORD
+      - ERROR_RECIPIENTS
 
   foodsoft_cron:
     extends: foodsoft
@@ -61,6 +61,7 @@ services:
 #      - SECRET_KEY_BASE=${FOODSOFT_LATEST_SECRET_KEY_BASE}
 #      - SHAREDLISTS_DATABASE_URL=mysql2://foodsoft_latest:${FOODSOFT_LATEST_DB_PASSWORD}@mariadb/sharedlists?encoding=utf8mb4
 #      - RAILS_RELATIVE_URL_ROOT=/latest
+#      # - LATEST_ERROR_RECIPIENTS
 
   haproxy:
     build: haproxy
