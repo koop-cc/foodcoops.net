@@ -180,6 +180,11 @@ eca:
   database:
     database: foodsoft_eca
 
+eszi:
+  <<: *defaults
+  database:
+    database: foodsoft_eszi
+
 ethelkidson:
   <<: *defaults
   database:
