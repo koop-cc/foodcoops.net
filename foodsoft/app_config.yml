@@ -245,6 +245,11 @@ hessenhagen:
   database:
     database: foodsoft_hessenhagen
 
+himmelrich:
+  <<: *defaults
+  database:
+    database: foodsoft_himmelrich
+
 imbiss:
   <<: *defaults
   database:
