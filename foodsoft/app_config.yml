@@ -230,6 +230,11 @@ freeportcoop:
   database:
     database: foodsoft_freeportcoop
 
+frw:
+  <<: *defaults
+  database:
+    database: foodsoft_frw
+
 fuki:
   <<: *defaults
   database:
