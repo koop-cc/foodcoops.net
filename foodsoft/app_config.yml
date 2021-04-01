@@ -330,6 +330,11 @@ minitopia:
   database:
     database: foodsoft_minitopia
 
+oosterwold:
+  <<: *defaults
+  database:
+    database: foodsoft_oosterwold
+
 radieschen:
   <<: *defaults
   database:
