@@ -246,4 +246,11 @@ docker-compose run --rm --entrypoint ./docker-entrypoint.sh \
   foodsoft_latest bundle exec rake db:drop db:create db:schema:load db:seed:small.en
 ```
 
+### List the date of latest activity per instance
+
+```shell
+cd /var/git/foodcoops.net
+docker-compose exec foodsoft bundle exec rails r 'FoodsoftConfig.foodcoops.each{|s| FoodsoftConfig.select_foodcoop(s) ; puts "#{User.maximum(:last_activity).rfc3339} #{s}"}'
+```
+
 ### Troubleshooting
