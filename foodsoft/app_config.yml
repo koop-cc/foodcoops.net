@@ -150,6 +150,11 @@ demo:
   database:
     database: foodsoft_demo
 
+allmendetaucha:
+  <<: *defaults
+  database:
+    database: foodsoft_allmendetaucha
+
 beisswat:
   <<: *defaults
   database:
@@ -389,6 +394,11 @@ tuess:
   <<: *defaults
   database:
     database: foodsoft_tuess
+
+tutcoop:
+  <<: *defaults
+  database:
+    database: foodsoft_tutcoop
 
 yamhi:
   <<: *defaults
