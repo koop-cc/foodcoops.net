@@ -375,6 +375,11 @@ osdorp:
   database:
     database: foodsoft_osdorp
 
+solrosa:
+  <<: *defaults
+  database:
+    database: foodsoft_solrosa
+
 stolzenhagen:
   <<: *defaults
   database:
