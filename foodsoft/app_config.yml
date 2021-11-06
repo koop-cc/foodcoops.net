@@ -360,11 +360,6 @@ rudifood:
   database:
     database: foodsoft_rudifood
 
-osdorp:
-  <<: *defaults
-  database:
-    database: foodsoft_osdorp
-
 solrosa:
   <<: *defaults
   database:
