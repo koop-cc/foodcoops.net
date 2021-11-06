@@ -290,11 +290,6 @@ lauterleben:
   database:
     database: foodsoft_lauterleben
 
-lekoweimar:
-  <<: *defaults
-  database:
-    database: foodsoft_lekoweimar
-
 lhgfg:
   <<: *defaults
   database:
