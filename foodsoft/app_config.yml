@@ -169,12 +169,7 @@ boernicke:
   <<: *defaults
   database:
     database: foodsoft_boernicke
-
-cocos:
-  <<: *defaults
-  database:
-    database: foodsoft_cocos
-
+    
 eca:
   <<: *defaults
   database:
