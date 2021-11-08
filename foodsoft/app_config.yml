@@ -170,6 +170,11 @@ boernicke:
   database:
     database: foodsoft_boernicke
     
+buda:
+  <<: *defaults
+  database:
+    database: foodsoft_buda
+    
 eca:
   <<: *defaults
   database:
