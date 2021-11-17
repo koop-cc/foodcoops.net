@@ -195,11 +195,6 @@ egliswil:
   database:
     database: foodsoft_egliswil
 
-elsabinar:
-  <<: *defaults
-  database:
-    database: foodsoft_elsabinar
-
 engelingshof:
   <<: *defaults
   database:
