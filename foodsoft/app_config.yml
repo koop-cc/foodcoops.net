@@ -255,11 +255,6 @@ himmelrich:
   database:
     database: foodsoft_himmelrich
 
-imbiss:
-  <<: *defaults
-  database:
-    database: foodsoft_imbiss
-
 jolling:
   <<: *defaults
   database:
