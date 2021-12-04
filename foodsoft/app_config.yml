@@ -175,11 +175,6 @@ buda:
   database:
     database: foodsoft_buda
     
-eca:
-  <<: *defaults
-  database:
-    database: foodsoft_eca
-
 eszi:
   <<: *defaults
   database:
@@ -189,11 +184,6 @@ ethelkidson:
   <<: *defaults
   database:
     database: foodsoft_ethelkidson
-
-egliswil:
-  <<: *defaults
-  database:
-    database: foodsoft_egliswil
 
 engelingshof:
   <<: *defaults
@@ -220,11 +210,6 @@ foodkorb:
   database:
     database: foodsoft_foodkorb
 
-freeportcoop:
-  <<: *defaults
-  database:
-    database: foodsoft_freeportcoop
-
 frw:
   <<: *defaults
   database:
@@ -250,11 +235,6 @@ himmelrich:
   database:
     database: foodsoft_himmelrich
 
-jolling:
-  <<: *defaults
-  database:
-    database: foodsoft_jolling
-
 koeln:
   <<: *defaults
   database:
@@ -279,11 +259,6 @@ lhgfg:
   <<: *defaults
   database:
     database: foodsoft_lhgfg
-
-localharvest:
-  <<: *defaults
-  database:
-    database: foodsoft_localharvest
 
 lostfood:
   <<: *defaults
@@ -384,8 +359,3 @@ yamhi:
   <<: *defaults
   database:
     database: foodsoft_yamhi
-
-vokomaastricht:
-  <<: *defaults
-  database:
-    database: foodsoft_vokomaastricht
