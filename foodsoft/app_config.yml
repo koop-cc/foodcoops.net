@@ -224,6 +224,11 @@ guerckchen:
   <<: *defaults
   database:
     database: foodsoft_guerckchen
+    
+haarlem:
+  <<: *defaults
+  database:
+    database: foodsoft_haarlem
 
 hessenhagen:
   <<: *defaults
