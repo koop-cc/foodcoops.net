@@ -26,7 +26,6 @@ services:
       - REDIS_URL=redis://redis:6379
       - SECRET_KEY_BASE=${FOODSOFT_SECRET_KEY_BASE}
       - SHAREDLISTS_DATABASE_URL=mysql2://foodsoft:${FOODSOFT_DB_PASSWORD}@mariadb/sharedlists?encoding=utf8mb4
-      - MAILER_PREFIX=foodsoft+
       - SMTP_DOMAIN=app.${DOMAIN}
       - SMTP_ADDRESS
       - SMTP_PORT
