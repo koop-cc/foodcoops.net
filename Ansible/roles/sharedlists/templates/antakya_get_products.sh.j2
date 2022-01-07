@@ -1,0 +1,20 @@
+#!/bin/sh
+# {{ ansible_managed }}
+
+set -eu
+
+URL={{ vault_antakya_products_dl_url }}
+FILE=/tmp/antakya_products.csv
+SUBJECT="Antakya Products"
+FROM_ADDR={{ vault_antakya_from_address }}
+TO_ADDR={{ vault_antakya_to_address }}
+
+wget -O "$FILE" "$URL"
+
+# Delete invalid lines
+sed -i '/^";/d' "$FILE"
+sed -i '/\;"$/d' "$FILE"
+
+echo "$SUBJECT" | mutt -s "$SUBJECT" -e 'my_hdr From:$FROM_ADDR' -e 'set envelope_from=yes' -e 'set send_charset==us-ascii:utf-8' -a "$FILE" -- "$TO_ADDR"
+
+rm "$FILE"
