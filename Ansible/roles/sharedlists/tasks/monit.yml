@@ -1,0 +1,6 @@
+---
+- name: "monit | copy monitoring files"
+  template:
+    src: monit.j2
+    dest: /etc/monit/conf-enabled/sharedlists
+  notify: reload monit

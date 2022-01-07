@@ -1,0 +1,21 @@
+---
+- name: "ssh | ignore locale environment"
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    line: '^AcceptEnv LANG LC_.*$'
+    state: absent
+  notify: restart ssh
+
+- name: "ssh | disable passworf authentication"
+  replace:
+    path: /etc/ssh/sshd_config
+    regexp: '^(#)?PasswordAuthentication yes'
+    replace: 'PasswordAuthentication no'
+  notify: restart ssh
+
+- name: "ssh | disable empty passwords"
+  replace:
+    path: /etc/ssh/sshd_config
+    regexp: '^(#)?PermitEmptyPasswords yes'
+    replace: 'PermitEmptyPasswords no'
+  notify: restart ssh

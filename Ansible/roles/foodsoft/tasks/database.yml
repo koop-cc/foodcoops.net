@@ -1,0 +1,72 @@
+---
+- name: "database | create database"
+  mysql_db:
+    name: "{{ foodsoft_db }}"
+    state: present
+    collation: utf8mb4_unicode_520_ci
+    encoding: utf8mb4
+    login_unix_socket: "{{ mariadb_socket }}"
+    login_user: root
+
+- name: "database | Add privileges to database user"
+  mysql_user:
+    name: "{{ foodsoft_db_user }}"
+    priv: "{{ foodsoft_db }}.*:ALL"
+    append_privs: true
+    state: present
+    login_unix_socket: "{{ mariadb_socket }}"
+    login_user: root
+    update_password: on_create
+
+- name: "database | copy database configuration"
+  template:
+    src: database.yml.j2
+    dest: "{{ foodsoft_home }}/config/database.yml"
+    owner: "{{ foodsoft_user }}"
+    group: "{{ foodsoft_user }}"
+    mode: 0600
+
+# If database schema is already loaded it outputs a version number > 0
+- name: "database | test if database schema is already loaded"
+  shell:
+    cmd: "rbenv exec rails db:version | grep ^Current | sed 's/^.*: //'"
+    chdir: "{{ foodsoft_home }}"
+  environment:
+    RAILS_ENV: production
+    SECRET_KEY_BASE: "{{ vault_foodsoft_secret_key_base }}"
+  become: true
+  become_user: "{{ foodsoft_user }}"
+  register: db_version
+  changed_when: false
+
+- name: "database | create schema"
+  shell:  
+    cmd: "rbenv exec rails db:schema:load"
+    chdir: "{{ foodsoft_home }}"
+  environment:
+    RAILS_ENV: production
+    SECRET_KEY_BASE: "{{ vault_foodsoft_secret_key_base }}"
+  become: true
+  become_user: "{{ foodsoft_user }}"
+  when: db_version == 0
+
+- name: "database | Run seed.rb"
+  shell:
+    cmd: "rbenv exec rails db:seed"
+    chdir: "{{ foodsoft_home }}"
+  environment:
+    RAILS_ENV: production
+    SECRET_KEY_BASE: "{{ vault_foodsoft_secret_key_base }}"
+  become: true
+  become_user: "{{ foodsoft_user }}"
+  when: db_version == 0 #db:seed is not idempotent in this case
+
+- name: "database | compile assets"
+  shell: 
+    cmd: "rbenv exec rails assets:precompile"
+    chdir: "{{ foodsoft_home }}"
+  environment:
+    RAILS_ENV: production
+    SECRET_KEY_BASE: "{{ vault_foodsoft_secret_key_base }}"
+  become: true
+  become_user: "{{ foodsoft_user }}"

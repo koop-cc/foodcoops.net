@@ -1,0 +1,18 @@
+# {{ ansible_managed }}
+
+/aol(\.[a-z]{2,3}){1,2}$/               dlimit:
+/gmail(\.[a-z]{2,3}){1,2}$/             dlimit:
+/hotmail(\.[a-z]{2,3}){1,2}$/           dlimit:
+/ifnm\.de$/                             dlimit:
+/kabelmail\.de$/                        dlimit:
+/live(\.[a-z]{2,3}){1,2}$/              dlimit:
+/lovis\.de$/                            dlimit:
+/maksimo\.de$/                          dlimit:
+/miteinander-ev\.de$/                   dlimit:
+/netzwerk-courage\.de$/                 dlimit:
+/oekohaus-rostock\.de$/                 dlimit:
+/straze\.de$/                           dlimit:
+/t-online(\.[a-z]{2,3}){1,2}$/          dlimit:
+/(.*\.)?tejat(\.[a-z]{2,3}){1,2}$/      dlimit:
+/telekom(\.[a-z]{2,3}){1,2}$/           dlimit:
+/yahoo(\.[a-z]{2,3}){1,2}$/             dlimit:

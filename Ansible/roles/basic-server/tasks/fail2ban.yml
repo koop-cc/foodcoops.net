@@ -1,0 +1,27 @@
+---
+- name: "fail2ban | copy configuration for nginx"
+  copy:
+    src: "fail2ban/{{ item }}"
+    dest: "/etc/fail2ban/{{ item }}"
+  loop:
+    - jail.d/nginx-req-limit.conf
+    - filter.d/nginx-req-limit.conf
+  notify: reload fail2ban
+  when: "'nginx' in ansible_facts.packages"
+
+- name: "fail2ban | copy configuration for ssh server"
+  copy:
+    src: "fail2ban/{{ item }}"
+    dest: "/etc/fail2ban/{{ item }}"
+  notify: reload fail2ban
+  loop:
+    - filter.d/sshd-ddos.conf
+    - jail.d/ssh.conf
+
+- name: "fail2ban | setup cron job"
+  cron:
+    name: "Ansible: Purge fail2ban database"
+    minute: "1"
+    hour: "2"
+    day: "31"
+    job: sqlite3 '/var/lib/fail2ban/fail2ban.sqlite3' "delete from bans where timeofban <= strftime('\%s', date('now', '-90 days'));" && sqlite3 '/var/lib/fail2ban/fail2ban.sqlite3' "vacuum;" >/dev/null 2>&1

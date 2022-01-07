@@ -1,0 +1,7 @@
+---
+- name: "munin-node | allow munin server IP"
+  lineinfile:
+    dest: /etc/munin/munin-node.conf
+    line: 'allow ^{{ munin_server_ip | replace(".", "\.") }}$'
+    insertafter: "^allow .127"
+  notify: restart munin-node

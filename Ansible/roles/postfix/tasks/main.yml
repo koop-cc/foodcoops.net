@@ -1,0 +1,12 @@
+---
+- import_tasks: packages.yml
+  tags: packages
+
+- import_tasks: postfix.yml
+  tags: postfix
+
+- import_tasks: mta-sts.yml
+  tags: mta-sts
+
+- import_tasks: dkim.yml
+  tags: dkim

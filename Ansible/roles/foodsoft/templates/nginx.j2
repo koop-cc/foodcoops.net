@@ -1,0 +1,27 @@
+server {
+    listen 80;
+    server_name {{ foodsoft_domain }};
+    include snippets/letsencrypt.conf;
+    location / { return 301 https://$http_host$request_uri; }
+}
+
+server {
+    listen 443 ssl http2;
+    server_name {{ foodsoft_domain }};
+    ssl_certificate /var/lib/dehydrated/certs/{{ foodsoft_domain }}/fullchain.pem;
+    ssl_certificate_key /var/lib/dehydrated/certs/{{ foodsoft_domain }}/privkey.pem;
+    include /etc/nginx/snippets/add_headers.conf;
+    include /etc/nginx/snippets/foodsoft_redirects.conf;
+
+    location ~ ^/(.*)/sessions$ {
+        limit_req zone=perip burst=5 nodelay;
+        limit_req zone=perserver burst=10;
+        limit_req_status 429;
+        limit_conn addr 5;
+        proxy_pass http://localhost:{{ foodsoft_web_port }};
+    }
+
+    location / {
+        proxy_pass http://localhost:{{ foodsoft_web_port }};
+    }
+}

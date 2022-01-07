@@ -1,0 +1,9 @@
+galaxy_info:
+  author: foodcoops.net admin
+  description: Install sharedlists with rbenv
+  license: GPLv3
+  min_ansible_version: 2.9
+  platforms:
+   - name: Debian
+     versions:
+       - Bullseye

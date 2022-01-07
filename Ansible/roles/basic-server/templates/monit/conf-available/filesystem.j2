@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+
+{% for mount in ansible_mounts|selectattr("fstype", "equalto", "ext4")|sort(attribute="mount") %}
+check filesystem {{ mount.device|replace("/", "_") }} with path {{ mount.device }}
+  if space free < 10 % then alert
+  if inode usage > 90 % then alert
+  if changed fsflags then alert
+
+{% endfor %}
+check file ext4fs with path /var/log/syslog
+  if match "EXT4-fs error" then alert

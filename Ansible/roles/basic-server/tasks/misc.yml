@@ -1,0 +1,39 @@
+---
+- name: "misc | setup local"
+  locale_gen:
+    name: en_US.UTF-8
+    state: present
+
+- name: "misc | set timezone"
+  timezone:
+    name: Europe/Berlin
+
+- name: "misc | set hostname"
+  hostname:
+    name: "{{ inventory_hostname }}"
+    use: systemd
+
+- name: "misc | set hostname in /etc/hosts"
+  lineinfile:
+    path: /etc/hosts
+    line: '127.0.0.1 {{ ansible_hostname }}'
+
+- name: "misc | setup unattended-upgrades"
+  debconf:
+    name: unattended-upgrades
+    question: unattended-upgrades/enable_auto_updates
+    value: "True"
+    vtype: boolean
+
+- name: "misc | copy firewall configuration"
+  template:
+    src: ferm.conf.j2
+    dest: /etc/ferm/ferm.conf
+  notify: restart ferm
+
+- name: "misc | Limit journald logging"
+  cron:
+    name: "Ansible: Limit Logging of journald"
+    job: "journalctl --vacuum-time={{ journald_logging_time|default('2d') }} >/dev/null"
+    hour: "00"
+    minute: "01"

@@ -1,0 +1,10 @@
+---
+- name: "changetrack | configuration 1"
+  template:
+    src: changetrack.j2
+    dest: /etc/default/changetrack
+
+- name: "changetrack | configuration 2"
+  copy:
+    src: changetrack.conf
+    dest: /etc/changetrack.conf

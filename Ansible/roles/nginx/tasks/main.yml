@@ -1,0 +1,9 @@
+---
+- import_tasks: packages.yml
+  tags: packages
+
+- import_tasks: nginx.yml
+  tags: nginx
+
+- import_tasks: dehydrated.yml
+  tags: dehydrated

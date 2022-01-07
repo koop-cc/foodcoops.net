@@ -1,0 +1,22 @@
+---
+# https://git.systemausfall.org/julius/sharedlists/src/branch/main/config/schedule.rb
+
+- name: "cron | Insert ENV variables"
+  cron:
+    name: "{{ item. name }}"
+    job: "{{ item.job }}"
+    env: true
+    user: "{{ sharedlists_user }}"
+  loop:
+    - name: RAILS_ENV
+      job: production
+    - name: SECRET_KEY_BASE
+      job: "{{ vault_sharedlists_secret_key_base }}"
+
+- name: "cron | install job"
+  cron:
+    name: Update suppliers
+    user: "{{ sharedlists_user }}"
+    minute: "14"
+    hour: "11,16,20"
+    job: /bin/bash -lc "cd {{ sharedlists_home }} && rbenv exec rails sync_ftp_files --silent > /dev/null"

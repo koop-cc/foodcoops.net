@@ -1,0 +1,25 @@
+---
+- name: reload monit
+  service:
+    name: monit
+    state: reloaded
+
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded
+
+- name: restart foodsoft-web
+  service:
+    name: "{{ foodsoft_web_service }}"
+    state: restarted
+
+- name: restart foodsoft-smtp
+  service:
+    name: "{{ foodsoft_smtp_service }}"
+    state: restarted
+
+- name: restart foodsoft-resque
+  service:
+    name: "{{ foodsoft_resque_service }}"
+    state: restarted

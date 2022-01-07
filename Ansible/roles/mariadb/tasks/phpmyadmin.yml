@@ -1,0 +1,48 @@
+---
+- name: "phpmyadmin | check facts"
+  package_facts:
+    manager: apt
+
+- name: "phpmyadmin | install packages"
+  apt:
+    pkg:
+      - phpmyadmin
+      - php-fpm
+    cache_valid_time: 3600
+
+- name: "phpmyadmin | add domain"
+  lineinfile:
+    path: /etc/dehydrated/domains.txt
+    line: "{{ phpmyadmin_domain }}"
+  register: add_domain
+  when: "'dehydrated' in ansible_facts.packages"
+
+- name: "phpmyadmin | create certificate"
+  command: dehydrated --cron -g
+  when: add_domain.changed
+
+- name: "phpmyadmin | create htpasswd file"
+  htpasswd:
+    path: "{{ phpmyadmin_htpasswd_file }}"
+    password: "{{ vault_phpmyadmin_password }}"
+    owner: root
+    group: www-data
+    mode: 06400
+
+- name: "phpmyadmin | Check php version"
+  shell:
+    cmd: php -v | grep -Po '(?<=PHP )([0-9.]{3})'
+  register: php_version
+  changed_when: false
+
+- name: "phpmyadmin | copy nginx sites"
+  template:
+    src: nginx.j2
+    dest: "/etc/nginx/sites-available/{{ phpmyadmin_domain }}"
+
+- name: "phpmyadmin | activate nginx site"
+  file:
+    src: "/etc/nginx/sites-available/{{ phpmyadmin_domain }}"
+    dest: "/etc/nginx/sites-enabled/{{ phpmyadmin_domain }}"
+    state: link
+  notify: reload nginx

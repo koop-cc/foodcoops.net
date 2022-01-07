@@ -1,0 +1,71 @@
+---
+- name: "foodcoop | {{ item.name }} | Add database"
+  mysql_db:
+    name: "{{ item.database }}"
+    state: present
+    collation: utf8mb4_unicode_520_ci
+    encoding: utf8mb4
+    login_unix_socket: "{{ mariadb_socket }}"
+    login_user: root
+
+- name: "foodcoop | {{ item.name }} | create database user"
+  mysql_user:
+    name: "{{ foodsoft_db_user }}"
+    password: "{{ vault_foodsoft_db_password }}"
+    priv: "{{ item.database }}.*:ALL"
+    append_privs: true
+    state: present
+    login_unix_socket: "{{ mariadb_socket }}"
+    login_user: root
+
+# If database schema is already loaded it outputs a version number > 0
+- name: "foodcoop | {{ item.name }} | test if database schema is already loaded"
+  shell:
+    cmd: "rbenv exec rails db:version | grep ^Current | sed 's/^.*: //'"
+    chdir: "{{ foodsoft_home }}"
+  environment:
+    RAILS_ENV: production
+    REDIS_URL: redis://127.0.0.1:6379
+    SECRET_KEY_BASE: "{{ vault_foodsoft_secret_key_base }}"
+    DATABASE_URL: mysql2://{{ foodsoft_db_user }}:{{ vault_foodsoft_db_password}}@localhost/{{ item.database }}
+  become: true
+  become_user: "{{ foodsoft_user }}"
+  register: db_version
+  changed_when: false
+
+- name: "database | {{ item.name }} | create schema"
+  shell:  
+    cmd: "rbenv exec rails db:schema:load"
+    chdir: "{{ foodsoft_home }}"
+  environment:
+    RAILS_ENV: production
+    REDIS_URL: redis://127.0.0.1:6379
+    SECRET_KEY_BASE: "{{ vault_foodsoft_secret_key_base }}"
+    DATABASE_URL: mysql2://{{ foodsoft_db_user }}:{{ vault_foodsoft_db_password}}@localhost/{{ item.database }}
+  become: true
+  become_user: "{{ foodsoft_user }}"
+  when: db_version == 0
+
+- name: "database | {{ item.name }} | Run seed.rb"
+  shell:
+    cmd: "rbenv exec rails db:seed"
+    chdir: "{{ foodsoft_home }}"
+  environment:
+    RAILS_ENV: production
+    REDIS_URL: redis://127.0.0.1:6379
+    SECRET_KEY_BASE: "{{ vault_foodsoft_secret_key_base }}"
+    DATABASE_URL: mysql2://{{ foodsoft_db_user }}:{{ vault_foodsoft_db_password}}@localhost/{{ item.database }}
+  become: true
+  become_user: "{{ foodsoft_user }}"
+  when: db_version == 0 #db:seed is not idempotent in this case
+
+- name: "foodcoop | {{ item.name }} | Add new foodcoop to configuration file"
+  blockinfile:
+    path: "{{ foodsoft_home }}/config/app_config.yml"
+    insertafter: "### Ansible: multi_coop"
+    marker_begin: "{{ item.name }}"
+    block: |
+      {{ item.name }}:
+        <<: *defaults
+        database:
+          database: {{ item.database }}

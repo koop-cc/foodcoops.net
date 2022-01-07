@@ -1,0 +1,40 @@
+RBENV_CMD="rbenv exec"
+RAILS_ENV=production
+RAILS_FORCE_SSL=false
+RAILS_SERVE_STATIC_FILES=true
+REDIS_URL={{ foodsoft_redis_url }}
+QUEUE=*
+FOODSOFT_BIND_IP={{ foodsoft_web_bind_ip }}
+FOODSOFT_WEB_PORT={{ foodsoft_web_port }}
+SECRET_KEY_BASE={{ vault_foodsoft_secret_key_base }}
+
+# reply_email_smtp_server
+SMTP_SERVER_PORT={{ foodsoft_smtp_server_port }}
+SMTP_SERVER_HOST={{ foodsoft_smtp_server_host }}
+
+# outgoing emails
+# if not defined emails are delivered via sendmail
+{% if foodsoft_smtp_address is defined %}
+SMTP_ADDRESS={{ foodsoft_smtp_address }}
+{% endif %}
+{% if foodsoft_smtp_port is defined %}
+SMTP_PORT={{ foodsoft_smtp_port }}
+{% endif %}
+{% if foodsoft_smtp_authentication is defined %}
+SMTP_AUTHENTICATION={{ foodsoft_smtp_authentication }}
+{% endif %}
+{% if foodsoft_smtp_enable_starttls_auto is defined %}
+SMTP_ENABLE_STARTTLS_AUTO={{ foodsoft_smtp_enable_starttls_auto }}
+{% endif %}
+{% if foodsoft_smtp_open_ssl_verify_mode is defined %}
+SMTP_OPENSSL_VERIFY_MODE={{ foodsoft_smtp_openssl_verify_mode }}
+{% endif %}
+{% if foodsoft_smtp_user_name is defined %}
+SMTP_USER_NAME={{ foodsoft_smtp_user_name }}
+{% endif %}
+{% if foodsoft_smtp_password is defined %}
+SMTP_PASSWORD={{ foodsoft_smtp_password }}
+{% endif %}
+{% if foodsoft_smtp_domain is defined %}
+SMTP_DOMAIN={{ foodsoft_smtp_domain}}
+{% endif %}

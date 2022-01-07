@@ -1,0 +1,11 @@
+dhparam_global_file: /etc/ssl/private/dhparam.pem
+mariadb_socket: /run/mysqld/mysqld.sock
+munin_server_ip: 188.34.160.255
+
+foodsoft_smtp_server_port: "2526"
+foodsoft_smtp_server_host: "127.0.0.1"
+
+sharedlists_smtp_server_host: "127.0.0.1"
+sharedlists_smtp_server_port: "2525"
+sharedlists_smtp_mailer_domain: app.foodcoops.net
+sharedlists_smtp_mailer_prefix: sharedlists+

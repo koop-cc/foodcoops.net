@@ -1,0 +1,12 @@
+## Default setting for changetrack.  -*-shell-script-*-
+## This file is sourced from /etc/cron.{hourly,daily}/changetrack.
+
+## Standard parameters: quiet, unified diffs, and mail to root.
+PARAMS="-q -u -o {{ ansible_hostname }}+changetrack@foodcoops.net -f root"
+
+## The location of the list of conffiles
+CONFFILES_LIST=/var/lib/changetrack/all_conffiles.txt
+
+## When set to yes, all conffiles on your system is tracked for changes
+## in addition to the ones you put in /etc/changetrack.conf
+AUTO_TRACK_ALL_CONFFILES=yes

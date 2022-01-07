@@ -1,0 +1,27 @@
+---
+- name: "packages | check facts"
+  package_facts:
+    manager: apt
+
+- name: "packages | install packages"
+  apt:
+    pkg:
+      - curl
+      - dehydrated
+      - fail2ban
+      - ferm
+      - git
+      - htop
+      - locales
+      - mc
+      - monit
+      - munin-node
+      - ncdu
+      - rsync
+      - screen
+      - sqlite3
+      - sudo
+      - unattended-upgrades
+      - vim
+      - wget
+    cache_valid_time: 3600

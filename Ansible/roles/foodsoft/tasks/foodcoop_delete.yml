@@ -1,0 +1,18 @@
+---
+- name: "delete | {{ item.name }} | Delete database"
+  mysql_db:
+    name: "{{ item.database }}"
+    state: absent
+    login_unix_socket: "{{ mariadb_socket }}"
+    login_user: root
+
+- name: "delete | {{ item.name }} | Delete foodcoop from configuration file"
+  blockinfile:
+    path: "{{ foodsoft_home }}/config/app_config.yml"
+    state: absent
+    marker_begin: "{{ item.name }}"
+    block: |
+      {{ item.name }}:
+        <<: *defaults
+        database:
+          database: {{ item.database }}

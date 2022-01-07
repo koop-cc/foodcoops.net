@@ -1,0 +1,3 @@
+# {{ ansible_managed }}
+
+/^ylmf\-pc$/                    550 Unacceptable HELO

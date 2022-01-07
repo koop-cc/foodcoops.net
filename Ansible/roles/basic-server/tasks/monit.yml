@@ -1,0 +1,36 @@
+---
+- name: "monit | copy configuration"
+  template:
+    src: monit/monitrc.j2
+    dest: /etc/monit/monitrc
+  notify: restart monit
+
+- name: "monit | copy monitoring files"
+  copy:
+    src: "monit/conf-available/{{ item }}"
+    dest: /etc/monit/conf-available/
+  loop:
+    - fail2ban
+    - oomkiller
+    - ssh
+  notify: restart monit
+
+- name: "monit | link monitoring files"
+  file:
+    src: "/etc/monit/conf-available/{{ item }}"
+    dest: "/etc/monit/conf-enabled/{{ item }}"
+    state: link
+  loop:
+    - fail2ban
+    - oomkiller
+    - ssh
+  notify: restart monit
+
+- name: "monit | copy monitoring templates"
+  template:
+    src: "monit/conf-available/{{ item }}"
+    dest: "/etc/monit/conf-enabled/{{ item }}"
+  loop:
+    - filesystem.j2
+    - system.j2
+  notify: restart monit

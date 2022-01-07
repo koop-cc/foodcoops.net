@@ -1,0 +1,7 @@
+---
+- name: "user | create local user account"
+  user:
+    name: "{{ foodsoft_user }}"
+    shell: /bin/bash
+    password_lock: yes
+    home: "{{ foodsoft_user_home }}"

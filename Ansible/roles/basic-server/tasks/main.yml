@@ -1,0 +1,32 @@
+---
+- import_tasks: packages.yml
+  tags: packages
+
+- import_tasks: changetrack.yml
+  tags: changetrack
+
+- import_tasks: misc.yml
+  tags: misc
+
+- import_tasks: monit.yml
+  tags: monit
+
+- import_tasks: munin-node.yml
+  tags: munin-node
+
+- import_tasks: fail2ban.yml
+  tags: fail2ban
+
+- import_tasks: ssh.yml
+  tags: ssh
+
+- import_tasks: admins.yml
+  tags: admin
+
+- name: "Add rsnapshot"
+  include_tasks: rsnapshot.yml
+  args:
+    apply:
+      tags: rsnapshot
+  tags: never
+  when: backup_host is defined and backup_host

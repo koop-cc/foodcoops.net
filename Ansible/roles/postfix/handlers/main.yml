@@ -1,0 +1,25 @@
+---
+- name: restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted
+
+- name: reload fail2ban
+  service:
+    name: fail2ban
+    state: reloaded
+
+- name: reload postfix
+  service:
+    name: postfix
+    state: reloaded
+
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded
+
+- name: restart opendkim
+  service:
+    name: opendkim
+    state: restarted

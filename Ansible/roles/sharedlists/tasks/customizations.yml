@@ -1,0 +1,25 @@
+---
+- name: "customizations | disable bundle plattform warnings"
+  command:
+    cmd: rbenv exec bundle config --local disable_platform_warnings true
+    chdir: "{{ sharedlists_home }}"
+  become: true
+  become_user: "{{ sharedlists_user }}"
+
+- name: "customizations | check railties version"
+  shell:
+    cmd: rbenv exec bundle info railties | grep "railties (" | cut -d ' ' -f5 | sed 's/[)(]//g'
+    chdir: "{{ sharedlists_home }}"
+  become: true
+  become_user: "{{ sharedlists_user }}"
+  changed_when: false
+  register: railties_version
+
+# Copy only if version number matches.
+- name: "customizations | copy monkey path for anon logging"
+  copy:
+    src: anon_logger.rb
+    dest: "{{ sharedlists_home }}/config/initializers/anon_logger.rb"
+    owner: "{{ sharedlists_user }}"
+    group: "{{ sharedlists_user }}"
+  when: railties_version.stdout <= "6.1.4.4"

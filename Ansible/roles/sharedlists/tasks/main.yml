@@ -1,0 +1,26 @@
+- import_tasks: packages.yml
+  tags: packages
+
+- import_tasks: user.yml
+  tags: user
+
+- import_tasks: sharedlists.yml
+  tags: sharedlists
+
+- import_tasks: customizations.yml
+  tags: customizations
+
+- import_tasks: database.yml
+  tags: database
+
+- import_tasks: systemd.yml
+  tags: systemd
+
+- import_tasks: cron.yml
+  tags: cron
+
+- import_tasks: monit.yml
+  tags: monit
+
+- import_tasks: webserver.yml
+  tags: webserver

@@ -1,0 +1,108 @@
+---
+foodsoft_domain: app.foodcoops.net
+phpmyadmin_domain: dbadmin.foodcoops.net
+sharedlists_domain: sharedlists.foodcoops.net
+backup_guest: true
+ssh_port: "2243"
+firewall:
+  ports:
+   - http
+   - https
+   - smtp
+
+mail_fqdn: app.foodcoops.net
+mail_myorigin: mx.app.foodcoops.net
+mail_mx: mx.app.foodcoops.net
+postfix_public: true
+postfix_relay: mail.senselab.org
+postfix_relay_port: "587"
+
+foodcoops:
+  - name: demo
+    database: foodsoft_demo
+  - name: allmendetaucha
+    database: foodsoft_allmendetaucha
+  - name: beisswat
+    database: foodsoft_beisswat
+  - name: biwag
+    database: foodsoft_biwag
+  - name: boernicke
+    database: foodsoft_boernicke
+  - name: buda
+    database: foodsoft_buda
+  - name: eszi
+    database: foodsoft_eszi
+  - name: ethelkidson
+    database: foodsoft_ethelkidson
+  - name: engelingshof
+    database: foodsoft_engelingshof
+  - name: fairnetzt
+    database: foodsoft_fairnetzt
+  - name: fcbn
+    database: foodsoft_fcbn
+  - name: fcww
+    database: foodsoft_fcww
+  - name: foodkorb
+    database: foodsoft_foodkorb
+  - name: frw
+    database: foodsoft_frw
+  - name: fuki
+    database: foodsoft_fuki
+  - name: guerckchen
+    database: foodsoft_guerckchen
+  - name: haarlem
+    database: foodsoft_haarlem
+  - name: hessenhagen
+    database: foodsoft_hessenhagen
+  - name: himmelrich
+    database: foodsoft_himmelrich
+  - name: koeln
+    database: foodsoft_koeln
+  - name: konsumkoop
+    database: foodsoft_konsumkoop
+  - name: korb
+    database: foodsoft_korb
+  - name: lauterleben
+    database: foodsoft_lauterleben
+  - name: lhgfg
+    database: foodsoft_lhgfg
+  - name: lostfood
+    database: foodsoft_lostfood
+  - name: luzern
+    database: foodsoft_luzern
+  - name: m19
+    database: foodsoft_m19
+  - name: mannheim
+    database: foodsoft_mannheim
+  - name: meierei
+    database: foodsoft_meierei
+  - name: minitopia
+    database: foodsoft_minitopia
+  - name: oosterwold
+    database: foodsoft_oosterwold
+  - name: radieschen
+    database: foodsoft_radieschen
+  - name: recknitz
+    database: foodsoft_recknitz
+  - name: rundling
+    database: foodsoft_rundling
+  - name: schalottchen
+    database: foodsoft_schalottchen
+  - name: plattsalat
+    database: foodsoft_plattsalat
+  - name: rudifood
+    database: foodsoft_rudifood
+  - name: solrosa
+    database: foodsoft_solrosa
+  - name: stolzenhagen
+    database: foodsoft_stolzenhagen
+  - name: tanteaute
+    database: foodsoft_tanteaute
+  - name: tanteemmen
+    database: foodsoft_tanteemmen
+  - name: tuess
+    database: foodsoft_tuess
+  - name: tutcoop
+    database: foodsoft_tutcoop
+  - name: yamhi
+    database: foodsoft_yamhi

@@ -1,0 +1,56 @@
+# {{ ansible_managed }}
+
+@def $HOST_MUNIN = {{ hostvars['fc-monitor']['ansible_facts']['eth0']['ipv4']['address'] }};
+
+table filter {
+    chain INPUT {
+        policy DROP;
+
+        # connection tracking
+        mod state state INVALID DROP;
+        mod state state (ESTABLISHED RELATED) ACCEPT;
+
+        # allow local packet
+        interface lo ACCEPT;
+
+        # respond to ping
+        proto icmp ACCEPT;
+
+        # accept locally redirected connections
+        mod conntrack ctstate DNAT ACCEPT;
+
+        # our services to the world
+        proto tcp dport ({{ firewall.ports|join(' ') }}) ACCEPT;
+
+{% if inventory_hostname != 'fc-monitor' %}
+        # allow connection from munin host
+        proto tcp saddr $HOST_MUNIN dport munin ACCEPT;
+{% endif %}
+    }
+    chain OUTPUT {
+        policy ACCEPT;
+
+        # connection tracking
+        mod state state (ESTABLISHED RELATED) ACCEPT;
+    }
+    chain FORWARD {
+        policy DROP;
+
+        # connection tracking
+        mod state state INVALID DROP;
+        mod state state (ESTABLISHED RELATED) ACCEPT;
+    }
+}
+
+table nat {
+    chain PREROUTING {
+        mod addrtype dst-type LOCAL {
+            proto tcp dport {{ ssh_port }} REDIRECT to-ports 22;
+{% if inventory_hostname == "fc-monitor" %}
+            proto tcp dport {{ icinga_api_port }} REDIRECT to-ports 5665;
+{% endif %}
+        }
+    }
+}
+
+@include('ferm.d/');

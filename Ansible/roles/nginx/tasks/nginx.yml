@@ -1,0 +1,79 @@
+---
+- name: "nginx | deactivate server tokens"
+  replace:
+    path: /etc/nginx/nginx.conf
+    regexp: 'server_tokens on;'
+    replace: 'server_tokens off;'
+  notify: reload nginx
+
+- name: "nginx | deacticate access logging"
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    regexp: '^\s*access_log /var/log/nginx/access.log;$'
+    state: absent
+  notify: reload nginx
+
+- name: "nginx | deactivate access explicit"
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    insertafter: 'error_log'
+    line: '        access_log off;'
+  notify: reload nginx
+
+- name: "nginx | copy configuration to conf.d"
+  copy:
+    src: "conf.d/{{ item }}"
+    dest: "/etc/nginx/conf.d/{{ item }}"
+  loop:
+    - request_limits.conf
+    - reverse_proxy.conf
+    - ssl.conf
+  notify: reload nginx
+
+- name: "nginx | copy configuration to snippets"
+  copy:
+    src: "snippets/{{ item }}"
+    dest: "/etc/nginx/snippets/{{ item }}"
+  loop:
+    - add_headers.conf
+    - letsencrypt.conf
+  notify: reload nginx
+
+- name: "nginx | create dhparam"
+  openssl_dhparam:
+    path: "{{ dhparam_global_file }}"
+    size: 4096
+
+- name: "nginx | Disable server tokens"
+  replace:
+    path: /etc/nginx/nginx.conf
+    regexp: '(#)?server_tokens on;'
+    replace: 'server_tokens off;'
+  notify: reload nginx
+
+- name: "nginx | Insert DDOS Protection"
+  blockinfile:
+    path: /etc/nginx/nginx.conf
+    insertafter: 'access_log'
+    marker_begin: DDOS Protection
+    block: |2
+             limit_req_zone $binary_remote_addr zone=perip:10m rate=10r/m;
+             limit_req_zone $server_name zone=perserver:10m rate=20r/m;
+             limit_req_status 444;
+             limit_conn_zone $binary_remote_addr zone=addr:10m;
+
+- name: "nginx | Copy fail2ban configuration files"
+  copy:
+    src: "fail2ban/{{ item }}"
+    dest: "/etc/fail2ban/{{ item }}"
+  loop:
+    - filter.d/nginx-req-limit.conf
+    - jail.d/nginx-req-limit.conf
+  when: "'fail2ban' in ansible_facts.packages"
+  notify: reload fail2ban
+
+- name: "nginx | Copy cron job to purge IP addresses"
+  copy:
+    src: nginx-purge-ip
+    dest: /etc/cron.daily/nginx-purge-ip
+    mode: 0755

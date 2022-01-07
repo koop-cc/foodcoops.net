@@ -1,0 +1,45 @@
+---
+- name: "database | create database"
+  mysql_db:
+    name: "{{ sharedlists_db }}"
+    state: present
+    login_unix_socket: "{{ mariadb_socket }}"
+    login_user: root
+
+- name: "database | create database user"
+  mysql_user:
+    name: "{{ sharedlists_db_user }}"
+    password: "{{ vault_sharedlists_db_password }}"
+    priv: "{{ sharedlists_db }}.*:ALL"
+    state: present
+    login_unix_socket: "{{ mariadb_socket }}"
+    login_user: root
+    update_password: on_create
+
+- name: "database | copy database configuration"
+  template:
+    src: database.yml.j2
+    dest: "{{ sharedlists_home }}/config/database.yml"
+    owner: "{{ sharedlists_user }}"
+    group: "{{ sharedlists_user }}"
+    mode: 0600
+
+- name: "database | run migrations"
+  shell:
+    cmd: "rbenv exec rails db:migrate"
+    chdir: "{{ sharedlists_home }}"
+  environment:
+    RAILS_ENV: production
+    SECRET_KEY_BASE: "{{ vault_sharedlists_secret_key_base }}"
+  become: true
+  become_user: "{{ sharedlists_user }}"
+
+- name: "database | compile assets"
+  shell: 
+    cmd: "rbenv exec rails assets:precompile"
+    chdir: "{{ sharedlists_home }}"
+  environment:
+    RAILS_ENV: production
+    SECRET_KEY_BASE: "{{ vault_sharedlists_secret_key_base }}"
+  become: true
+  become_user: "{{ sharedlists_user }}"

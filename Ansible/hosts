@@ -1,0 +1,3 @@
+[foodcoops_net]
+focone      ansible_port=2243
+fc-monitor  ansible_port=2242

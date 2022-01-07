@@ -1,0 +1,26 @@
+---
+- name: "customizations | check railties version"
+  shell:
+    cmd: rbenv exec bundle info railties | grep "railties (" | cut -d ' ' -f5 | sed 's/[)(]//g'
+    chdir: "{{ foodsoft_home }}"
+  become: true
+  become_user: "{{ foodsoft_user }}"
+  changed_when: false
+  register: railties_version
+
+- name: "customizations | Add Rails 6 Backport"
+  copy:
+    src: foodsoft/rails6_backports.rb
+    dest: "{{ foodsoft_home }}/config/initializers/rails6_backports.rb"
+    owner: "{{ foodsoft_user }}"
+    group: "{{ foodsoft_user }}"
+  when: railties_version.stdout <= "6.0.0"
+
+# Copy only if version number matches.
+- name: "customizations | copy monkey path for anon logging"
+  copy:
+    src: foodsoft/anon_logger.rb
+    dest: "{{ foodsoft_home }}/config/initializers/anon_logger.rb"
+    owner: "{{ foodsoft_user }}"
+    group: "{{ foodsoft_user }}"
+  when: railties_version.stdout <= "5.2.6"

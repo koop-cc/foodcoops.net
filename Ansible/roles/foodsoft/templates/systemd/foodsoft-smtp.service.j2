@@ -1,0 +1,18 @@
+[Unit]
+Description=Foodsoft smtp server
+Documentation=https://github.com/foodcoops/foodsoft/wiki
+After=network.target
+
+[Service]
+EnvironmentFile={{ foodsoft_environment_file }}
+User={{ foodsoft_user }}
+Group={{ foodsoft_user }}
+Restart=on-failure
+RestartSec=10
+WorkingDirectory={{ foodsoft_home }}
+ExecStart=/bin/bash -l -c "${RBENV_CMD} rails foodsoft:reply_email_smtp_server"
+ProtectHome=true
+ProtectSystem=full
+PrivateTmp=true
+PrivateUsers=true
+NoNewPrivileges=true

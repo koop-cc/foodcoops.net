@@ -1,0 +1,91 @@
+---
+- name: "sharedlists | clone repository"
+  git:
+    repo: "{{ sharedlists_git_url }}"
+    dest: "{{ sharedlists_home }}"
+    version: main
+    force: yes
+
+- name: "sharedlists | Ruby version lookup"
+  shell: cat "{{ sharedlists_home }}/.ruby-version"
+  register: ruby_version
+  changed_when: false
+
+- name: "sharedlists | change owner"
+  file:
+    path: "{{ sharedlists_home }}"
+    state: directory
+    recurse: yes
+    owner: "{{ sharedlists_user }}"
+    group: "{{ sharedlists_user }}"
+
+- name: "sharedlists | setup rbenv"
+  lineinfile:
+    path: "{{ sharedlists_user_home }}/.bashrc"
+    line: eval "$(rbenv init -)"
+
+- name: "sharedlists | create rbenv plugin directory"
+  file:
+    path: "{{ ruby_path }}/plugins"
+    state: directory
+    owner: "{{ sharedlists_user }}"
+    group: "{{ sharedlists_user }}"
+
+- name: "sharedlists | install ruby-build"
+  git:
+    repo: "{{ ruby_build_git_url }}"
+    dest: "{{ ruby_path }}/plugins/ruby-build"
+
+- name: "sharedlists | install ruby"
+  shell:
+    cmd: 'rbenv install {{ ruby_version.stdout }}'
+    creates: "{{ ruby_path }}/versions/{{ ruby_version.stdout }}/bin/ruby"
+  become: true
+  become_user: "{{ sharedlists_user }}"
+
+- name: "sharedlists | install bundler"
+  command:
+    cmd: rbenv exec gem install bundler
+    chdir: "{{ sharedlists_home }}"
+    creates: "{{ ruby_path }}/versions/{{ ruby_version.stdout }}/bin/bundler"
+  become: true
+  become_user: "{{ sharedlists_user }}"
+
+# https://nokogiri.org/tutorials/installing_nokogiri.html#installing-using-standard-system-libraries
+- name: "sharedlists | configure nokogiri"
+  command:
+    cmd: 'rbenv exec bundle config build.nokogiri "--use-system-libraries"'
+    chdir: "{{ sharedlists_home }}"
+  become: true
+  become_user: "{{ sharedlists_user }}"
+  environment:
+    RAILS_ENV: production
+
+- name: "sharedlists | set bundle options"
+  command:
+    cmd: "rbenv exec bundle config set --local without 'development test'"
+    chdir: "{{ sharedlists_home }}"
+    creates: "{{ sharedlists_home }}/.bundle/config"
+  become: true
+  become_user: "{{ sharedlists_user }}"
+
+- name: "sharedlists | install ruby packages"
+  command:
+    cmd: "rbenv exec bundle install"
+    chdir: "{{ sharedlists_home }}"
+  become: true
+  become_user: "{{ sharedlists_user }}"
+  environment:
+    RAILS_ENV: production
+
+- name: "sharedlists | create suppliers directory"
+  file:
+    path: "{{ sharedlists_home }}/supplier_assets"
+    state: directory
+    owner: "{{ sharedlists_user }}"
+    group: "{{ sharedlists_user }}"
+
+- name: "sharedlists | Add logrotate configuration"
+  template:
+    src: logrotate.d/sharedlists.j2
+    dest: /etc/logrotate.d/sharedlists

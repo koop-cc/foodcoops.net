@@ -1,0 +1,14 @@
+---
+- name: "packages | check facts"
+  package_facts:
+    manager: apt
+
+- name: "packages | install packages"
+  apt:
+    pkg:
+      - apache2-utils
+      - dehydrated
+      - haveged
+      - moreutils
+      - nginx-full
+    cache_valid_time: 3600

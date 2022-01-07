@@ -1,0 +1,114 @@
+---
+- name: "foosoft | get latest tag"
+  shell:
+    cmd: curl -sL "{{ foodsoft_git_latest_tag_url }}" | jq -r '.[0].name'
+  register: latest_tag
+
+- name: "foodsoft | clone repository"
+  git:
+    repo: "{{ foodsoft_git_url }}"
+    dest: "{{ foodsoft_home }}"
+    version: master
+#   version: "{{ latest_tag.stdout }}"
+    force: yes
+
+- name: "foodsoft | Ruby version lookup"
+  shell: cat "{{ foodsoft_home }}/.ruby-version"
+  register: ruby_version
+  changed_when: false
+
+- name: "foodsoft | change owner"
+  file:
+    path: "{{ foodsoft_home }}"
+    state: directory
+    recurse: yes
+    owner: "{{ foodsoft_user }}"
+    group: "{{ foodsoft_user }}"
+
+- name: "foodsoft | setup rbenv"
+  lineinfile:
+    path: "{{ foodsoft_user_home }}/.bashrc"
+    line: eval "$(rbenv init -)"
+
+- name: "foodsoft | create rbenv plugin directory"
+  file:
+    path: "{{ ruby_path }}/plugins"
+    state: directory
+    owner: "{{ foodsoft_user }}"
+    group: "{{ foodsoft_user }}"
+
+- name: "foodsoft | install ruby-build"
+  git:
+    repo: "{{ ruby_build_git_url }}"
+    dest: "{{ ruby_path }}/plugins/ruby-build"
+
+- name: "foodsoft | install ruby"
+  shell:
+    cmd: 'rbenv install {{ ruby_version.stdout }}'
+    creates: "{{ ruby_path }}/versions/{{ ruby_version.stdout }}/bin/ruby"
+  become: true
+  become_user: "{{ foodsoft_user }}"
+
+- name: "foodsoft | install bundler"
+  command:
+    cmd: rbenv exec gem install bundler
+    chdir: "{{ foodsoft_home }}"
+    creates: "{{ ruby_path }}/versions/{{ ruby_version.stdout }}/bin/bundler"
+  become: true
+  become_user: "{{ foodsoft_user }}"
+
+# https://nokogiri.org/tutorials/installing_nokogiri.html#installing-using-standard-system-libraries
+- name: "foodsoft | configure nokogiri"
+  command:
+    cmd: 'rbenv exec bundle config build.nokogiri "--use-system-libraries"'
+    chdir: "{{ foodsoft_home }}"
+  become: true
+  become_user: "{{ foodsoft_user }}"
+  environment:
+    RAILS_ENV: production
+
+- name: "foodsoft | set bundle options"
+  command:
+    cmd: "rbenv exec bundle config set --local without 'development test'"
+    chdir: "{{ foodsoft_home }}"
+    creates: "{{ foodsoft_home }}/.bundle/config"
+  become: true
+  become_user: "{{ foodsoft_user }}"
+
+- name: "foodsoft | install ruby packages"
+  command:
+    cmd: "rbenv exec bundle install"
+    chdir: "{{ foodsoft_home }}"
+  become: true
+  become_user: "{{ foodsoft_user }}"
+  environment:
+    RAILS_ENV: production
+
+- name: "foodsoft | copy default configuration"
+  copy:
+    src: "{{ foodsoft_home }}/config/app_config.yml.SAMPLE"
+    dest: "{{ foodsoft_home }}/config/app_config.yml"
+    remote_src: true
+    owner: "{{ foodsoft_user }}"
+    group: "{{ foodsoft_user }}"
+    mode: 0600
+    force: no
+
+- name: "foodsoft | insert marker for mutli_coop setup"
+  lineinfile:
+    path: "{{ foodsoft_home }}/config/app_config.yml"
+    line: '### Ansible: multi_coop'
+
+- name: "foodsoft | Add privileges to sharedlists suppliers"
+  mysql_user:
+    name: "{{ foodsoft_db_user }}"
+    priv: sharedlists.suppliers:SELECT/sharedlists.articles:SELECT
+    append_privs: true
+    state: present
+    login_unix_socket: "{{ mariadb_socket }}"
+    login_user: root
+
+- name: "foodsoft | Add logrotate configuration"
+  template:
+    src: logrotate.d/foodsoft.j2
+    dest: /etc/logrotate.d/foodsoft

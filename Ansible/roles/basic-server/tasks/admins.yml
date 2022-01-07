@@ -1,0 +1,16 @@
+---
+- name: "ssh | Import ssh keys of admins"
+  authorized_key:
+    user: root
+    state: present
+    key: "{{ lookup('file', item) }}"
+  with_fileglob:
+    - ssh_authorized_keys/admins/*.pub
+
+- name: "ssh | Remove old ssh keys"
+  authorized_key:
+    user: root
+    state: absent
+    key: "{{ lookup('file', item) }}"
+  with_fileglob:
+    - ssh_authorized_keys/deprecated/*.pub

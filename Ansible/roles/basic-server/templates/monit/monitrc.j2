@@ -1,0 +1,40 @@
+set daemon 600
+with start delay 240
+
+set logfile /var/log/monit.log
+set pidfile /var/run/monit.pid
+set idfile /var/lib/monit/id
+set statefile /var/lib/monit/state
+
+{% if postfix_public is defined and postfix_public %}
+set mailserver {{ monit_mailserver }}
+  port {{ monit_mailserver_port }}
+  username "{{ vault_monit_mailserver_smtp_user }}"
+  password "{{ vault_monit_mailserver_smtp_password }}"
+  using tlsv12
+  using hostname {{ inventory_hostname }}
+{% else %}
+set mailserver localhost
+{% endif %}
+
+set eventqueue
+  basedir /var/lib/monit/events
+  slots 100
+
+set mail-format {
+from:		  monit@app.foodcoops.net
+subject:	monit alert -- $HOST: $SERVICE: $EVENT
+message:	$EVENT Service $SERVICE
+  Host:		$HOST
+  Date:		$DATE
+  Action:	$ACTION
+  Description:	$DESCRIPTION
+}
+
+set alert {{ monit_notifications_receiver }} not on { instance, action, pid, ppid } with reminder on 288 cycles
+
+set httpd port 2812 and
+  use address localhost
+  allow localhost
+
+include /etc/monit/conf-enabled/*

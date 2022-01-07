@@ -1,0 +1,6 @@
+---
+- hosts:
+    - focone
+  roles:
+    - role: postfix
+      tags: role-postfix

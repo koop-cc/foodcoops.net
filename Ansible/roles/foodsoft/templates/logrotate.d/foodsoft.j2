@@ -1,0 +1,9 @@
+{{ foodsoft_home }}/log/*.log {
+  daily
+  missingok
+  rotate 1
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+}

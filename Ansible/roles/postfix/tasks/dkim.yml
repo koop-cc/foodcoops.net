@@ -1,0 +1,40 @@
+---
+- name: "dkim | Create keys"
+  command:
+    cmd: "opendkim-genkey -s mail -d {{ mail_fqdn }} --directory=/etc/dkimkeys"
+    creates: /etc/dkimkeys/mail.txt
+
+- name: "dkim | Enable signing"
+  replace:
+    path: /etc/opendkim.conf
+    regexp: '#Mode\s*sv'
+    replace: 'Mode sv'
+  notify: restart opendkim
+
+- name: "dkim | Define domain"
+  replace:
+    path: /etc/opendkim.conf
+    regexp: '#Domain\s*example.com'
+    replace: 'Domain {{ mail_fqdn }}'
+  notify: restart opendkim
+
+- name: "dkim | Define selector"
+  replace:
+    path: /etc/opendkim.conf
+    regexp: '#Selector\s*2020'
+    replace: 'Selector mail'
+  notify: restart opendkim
+
+- name: "dkim | Define keyfile"
+  replace:
+    path: /etc/opendkim.conf
+    regexp: '#KeyFile\s*/etc/dkimkeys/example.private'
+    replace: 'Keyfile /etc/dkimkeys/mail.private'
+  notify: restart opendkim
+
+- name: "dkim | Activate port"
+  replace:
+    path: /etc/opendkim.conf
+    regexp: '#Socket\s*inet:8891@localhost'
+    replace: 'Socket inet:8891@localhost'
+  notify: restart opendkim

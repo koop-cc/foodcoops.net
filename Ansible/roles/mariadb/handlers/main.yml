@@ -1,0 +1,10 @@
+---
+- name: restart munin-node
+  service:
+    name: munin-node
+    state: restarted
+
+- name: restart mariadb
+  service:
+    name: mariadb
+    state: restarted

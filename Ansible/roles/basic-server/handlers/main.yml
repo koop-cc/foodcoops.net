@@ -1,0 +1,25 @@
+---
+- name: restart ssh
+  service:
+    name: ssh
+    state: restarted
+
+- name: restart monit
+  service:
+    name: monit
+    state: restarted
+
+- name: reload fail2ban
+  service:
+    name: fail2ban
+    state: reloaded
+
+- name: restart munin-node
+  service:
+    name: munin-node
+    state: restarted
+
+- name: restart ferm
+  service:
+    name: ferm
+    state: restarted

@@ -1,0 +1,38 @@
+---
+- name: "systemd | copy service files"
+  template:
+    src: "systemd/{{ item.src }}"
+    dest: "/etc/systemd/system/{{ item.dest }}"
+  loop:
+    - { src: foodsoft-web.service.j2, dest: "{{ foodsoft_web_service }}.service" }
+    - { src: foodsoft-smtp.service.j2, dest: "{{ foodsoft_smtp_service }}.service" }
+    - { src: foodsoft-resque.service.j2, dest: "{{ foodsoft_resque_service }}.service" }
+  notify:
+    - restart foodsoft-web
+    - restart foodsoft-smtp
+    - restart foodsoft-resque
+
+- name: "systemd | create configuration directory"
+  file:
+    path: /etc/foodsoft
+    state: directory
+
+- name: "systemd | copy configuration"
+  template:
+    src: systemd/foodsoft.conf.j2
+    dest: "{{ foodsoft_environment_file }}"
+  notify:
+    - restart foodsoft-web
+    - restart foodsoft-smtp
+    - restart foodsoft-resque
+
+- name: "systemd | enable service"
+  systemd:
+    enabled: yes
+    daemon_reload: yes
+    state: started
+    name: "{{ item }}"
+  loop:
+    - "{{ foodsoft_web_service }}"
+    - "{{ foodsoft_smtp_service }}"
+    - "{{ foodsoft_resque_service }}"

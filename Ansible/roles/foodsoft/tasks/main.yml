@@ -1,0 +1,35 @@
+---
+- import_tasks: packages.yml
+  tags: packages
+
+- import_tasks: user.yml
+  tags: user
+
+- import_tasks: foodsoft.yml
+  tags: foodsoft
+
+- import_tasks: customizations.yml
+  tags: customizations
+
+- import_tasks: database.yml
+  tags: database
+
+- import_tasks: systemd.yml
+  tags: systemd
+
+- import_tasks: cron.yml
+  tags: cron
+
+- import_tasks: monit.yml
+  tags: monit
+
+- import_tasks: webserver.yml
+  tags: webserver
+
+- name: "Delete Foodcoop"
+  include_tasks: foodcoop_delete.yml
+  args:
+    apply:
+      tags: foodcoop_delete
+  tags: never
+  when: item.deleted is defined and item.deleted

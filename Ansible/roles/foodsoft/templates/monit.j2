@@ -1,0 +1,24 @@
+check process foodsoft-web
+  matching '"^puma [0-9.]* \(tcp:\/\/{{ foodsoft_web_bind_ip | replace(".", "\.") }}:{{ foodsoft_web_port }}\) \[foodsoft\]"'
+  start program = "/usr/sbin/service foodsoft-web start"
+  stop program = "/usr/sbin/service foodsoft-web stop"
+  if 2 restarts within 3 cycles then timeout
+  if cpu usage > 95% for 3 cycles then restart
+  if failed host 127.0.0.1 port {{ foodsoft_web_port }} for 3 cycles then restart
+  if 5 restarts within 5 cycles then timeout
+
+check process foodsoft-smtp
+  matching '^{{ foodsoft_user_home | replace("/", "\/") }}(.*)bin\/rails foodsoft:reply_email_smtp_server$'
+  start program = "/usr/sbin/service foodsoft-smtp start"
+  stop program = "/usr/sbin/service foodsoft-smtp stop"
+  if 2 restarts within 3 cycles then timeout
+  if cpu usage > 95% for 3 cycles then restart
+  if failed host 127.0.0.1 port {{ foodsoft_smtp_server_port }} for 3 cycles then restart
+  if 5 restarts within 5 cycles then timeout
+
+check process foodsoft-resque
+  matching '^resque-[0-9.]*: Waiting for'
+  start program = "/usr/sbin/service foodsoft-resque start"
+  stop program = "/usr/sbin/service foodsoft-resque stop"
+  if 2 restarts within 3 cycles then timeout
+  if cpu usage > 95% for 3 cycles then restart

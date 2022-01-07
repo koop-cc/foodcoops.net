@@ -1,0 +1,24 @@
+---
+foodsoft_git_url: https://github.com/foodcoops/foodsoft.git
+foodsoft_git_latest_tag_url: https://api.github.com/repos/foodcoops/foodsoft/tags
+foodsoft_home: /opt/foodsoft
+foodsoft_user: foodsoft
+foodsoft_user_home: "/var/lib/{{ foodsoft_user }}"
+foodsoft_db: foodsoft
+foodsoft_db_user: foodsoft
+foodsoft_environment_file: /etc/foodsoft/foodsoft.conf
+foodsoft_web_service: foodsoft-web
+foodsoft_smtp_service: foodsoft-smtp
+foodsoft_resque_service: foodsoft-resque
+foodsoft_web_bind_ip: "127.0.0.1"
+foodsoft_web_port: "3001"
+foodsoft_redis_url: redis://127.0.0.1:6379
+
+# Outgoing email delivery
+foodsoft_smtp_address: "127.0.0.1"
+foodsoft_smtp_port: "25"
+foodsoft_smtp_authentication: false
+foodsoft_smtp_enable_starttls_auto: false
+
+ruby_path: "{{ foodsoft_user_home}}/.rbenv"
+ruby_build_git_url: https://github.com/rbenv/ruby-build.git

@@ -1,0 +1,64 @@
+---
+# https://github.com/foodcoops/foodsoft/blob/master/config/schedule.rb
+
+- name: "cron | Insert ENV variables"
+  cron:
+    name: "{{ item. name }}"
+    job: "{{ item.job }}"
+    env: true
+    user: "{{ foodsoft_user }}"
+  loop:
+    - name: RAILS_ENV
+      job: production
+    - name: SECRET_KEY_BASE
+      job: "{{ vault_foodsoft_secret_key_base }}"
+    - name: REDIS_URL
+      job: "{{ foodsoft_redis_url }}"
+
+- name: "cron | install job 1"
+  cron:
+    name: Upcoming tasks notifier 1
+    user: "{{ foodsoft_user }}"
+    minute: "20"
+    hour: "07"
+    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:notify_upcoming_tasks --silent"
+
+- name: "cron | install job 2"
+  cron:
+    name: Upcoming tasks notifier 2
+    user: "{{ foodsoft_user }}"
+    minute: "20"
+    hour: "07"
+    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:notify_users_of_weekly_task --silent"
+
+- name: "cron | install job 3"
+  cron:
+    name: Import and assign bank transactions 1
+    user: "{{ foodsoft_user }}"
+    minute: "56"
+    hour: "05"
+    day: "1-5"
+    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:import_and_assign_bank_transactions --silent"
+
+- name: "cron | install job 4"
+  cron:
+    name: Import and assign bank transactions 2
+    user: "{{ foodsoft_user }}"
+    minute: "56"
+    hour: "18"
+    day: "1-5"
+    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:import_and_assign_bank_transactions --silent"
+
+- name: "cron | install job 5"
+  cron:
+    name: Create weekly tasks
+    user: "{{ foodsoft_user }}"
+    minute: "14"
+    hour: "07"
+    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:create_upcoming_periodic_tasks --silent"
+
+- name: "cron | install job 6"
+  cron:
+    name: Finish ended orders
+    user: "{{ foodsoft_user }}"
+    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:finish_ended_orders --silent"

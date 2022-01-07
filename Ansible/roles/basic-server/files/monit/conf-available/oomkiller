@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+
+check file oomkiller with path /var/log/syslog
+  if match "Out of memory: Kill process" then alert

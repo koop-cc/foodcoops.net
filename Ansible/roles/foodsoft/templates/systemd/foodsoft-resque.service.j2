@@ -1,0 +1,21 @@
+[Unit]
+Description=Foodsoft Queue
+Documentation=https://github.com/foodcoops/foodsoft/wiki
+After=network.target
+
+[Service]
+EnvironmentFile={{ foodsoft_environment_file }}
+User={{ foodsoft_user }}
+Group={{ foodsoft_user }}
+Type=exec
+Restart=on-failure
+RestartSec=10
+WorkingDirectory={{ foodsoft_home }}
+ExecStart=/bin/bash -l -c "${RBENV_CMD} rails resque:work"
+ProtectHome=true
+ProtectSystem=full
+PrivateTmp=true
+{% if foodsoft_smtp_address is defined and foodsoft_smtp_address %}
+PrivateUsers=true
+NoNewPrivileges=true
+{% endif %}
