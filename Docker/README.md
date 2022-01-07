@@ -1,10 +1,9 @@
-Foodcoops.net deployment
-========================
+Foodcoops.net Docker deployment
+===============================
 
-This is the production setup of the future [foodcoops.net](https://foodcoops.github.io/global-foodsoft-platform/).
-If you want to run it for yourself, see [setup](#setup), or if you'd like to modify the configuration,
-please proceed to [common tasks](#common-tasks).
+This was the production setup of the [foodcoops.net](https://foodcoops.github.io/global-foodsoft-platform/). Because we switched to an [Ansible](htps://www.ansible.com) based setup this instruction are no longer valid.
 
+If you want to run a Docker based deployment for yourself, see [setup](#setup), or if you'd like to modify the configuration, please proceed to [common tasks](#common-tasks).
 
 ## Setup
 
@@ -257,5 +256,3 @@ docker-compose run --rm --entrypoint ./docker-entrypoint.sh \
 cd /var/git/foodcoops.net
 docker-compose exec foodsoft bundle exec rails r 'FoodsoftConfig.foodcoops.each{|s| FoodsoftConfig.select_foodcoop(s) ; puts "#{User.maximum(:last_activity).rfc3339} #{s}"}'
 ```
-
-### Troubleshooting
