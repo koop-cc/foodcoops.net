@@ -3,7 +3,7 @@
   git:
     repo: "{{ sharedlists_git_url }}"
     dest: "{{ sharedlists_home }}"
-    version: main
+    version: "{{ sharedlists_git_branch }}"
     force: yes
 
 - name: "sharedlists | Ruby version lookup"

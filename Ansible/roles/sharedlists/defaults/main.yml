@@ -6,7 +6,8 @@ ruby_build_git_url: https://github.com/rbenv/ruby-build.git
 sharedlists_environment_file: /etc/sharedlists/sharedlists.conf
 sharedlists_db: sharedlists
 sharedlists_db_user: sharedlists
-sharedlists_git_url: https://git.systemausfall.org/foodcoops.net/sharedlists.git
+sharedlists_git_url: https://github.com/kidhab/sharedlists.git
+sharedlists_git_branch: developement
 sharedlists_home: /opt/sharedlists
 sharedlists_user: sharedlists
 sharedlists_user_home: "/var/lib/{{ sharedlists_user }}"
