@@ -1,7 +1,14 @@
 ---
+- name: "user | create group"
+  group:
+    name: "{{ sharedlists_user }}"
+    system: true
+
 - name: "user | create local user account"
   user:
     name: "{{ sharedlists_user }}"
+    group: "{{ sharedlists_user }}"
     shell: /bin/bash
     password_lock: yes
     home: "{{ sharedlists_user_home }}"
+    system: true

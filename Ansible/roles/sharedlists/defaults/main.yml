@@ -9,7 +9,7 @@ sharedlists_db_user: sharedlists
 sharedlists_git_url: https://github.com/kidhab/sharedlists.git
 sharedlists_git_branch: developement
 sharedlists_home: /opt/sharedlists
-sharedlists_user: sharedlists
+sharedlists_user: _sharedlists
 sharedlists_user_home: "/var/lib/{{ sharedlists_user }}"
 sharedlists_web_bind_ip: "127.0.0.1"
 sharedlists_web_port: "3000"
