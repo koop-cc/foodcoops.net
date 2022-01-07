@@ -1,4 +1,4 @@
-# Foodcoops.net Ansbile deployment
+# Foodcoops.net Ansible deployment
 
 In this folder you'll find a couple of [Ansible](https://www.ansible.com) roles to setup and manage the
 infrastructure for the [global Foodsoft platform](https://foodcoops.net/global-foodsoft-platform/) of
