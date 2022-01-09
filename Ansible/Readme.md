@@ -8,6 +8,7 @@ Foodcoops.net Ansible deployment
   - [Adding a new foodcoop](#adding-a-new-foodcoop)
   - [Deleting a foodcoop](#deleting-a-foodcoop)
   - [Adding a member to the hosting team](#adding-a-member-to-the-hosting-team)
+  - [Recreating the demo database](#recreating-the-demo-database)
 
 # Introduction
 In this folder you'll find a couple of [Ansible](https://www.ansible.com) roles to setup and manage the
@@ -84,3 +85,9 @@ If the deletion of a foocoop is requested follow these steps:
     ```shell
     postmap cdb:virtual_aliases
     ```
+
+## Recreating the demo database
+It can sometimes be useful to manually reset the demo instance with a new database, seeded from `small.en`. Run the following command as the Foodsoft system user:
+```shell
+DISABLE_DATABASE_ENVIRONMENT_CHECK=1 DATABASE_URL=mysql2://foodsoft:$DATABASE_PASSWORD@localhost/foodsoft_demo REDIS_URL=redis://127.0.0.1:6379 SECRET_KEY_BASE=$SECRET_KEY_BASE RAILS_ENV=production rbenv exec rails db:purge db:schema:load db:seed:small.en
+```
