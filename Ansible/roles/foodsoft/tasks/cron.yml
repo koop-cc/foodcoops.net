@@ -62,3 +62,11 @@
     name: Finish ended orders
     user: "{{ foodsoft_user }}"
     job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:finish_ended_orders --silent"
+
+- name: "cron | daily reset of demo database"
+  cron:
+    name: Daily reset of demo database
+    user: "{{ foodsoft_user }}"
+    minute: "00"
+    hour: "00"
+    job: /bin/bash -ls "cd {{ foodsoft_home }} && DISABLE_DATABASE_ENVIRONMENT_CHECK=1 DATABASE_URL=mysql2://{{ foodsoft_db_user }}:{{ vault_foodsoft_db_password }}@localhost/foodsoft_demo rbenv exec rails db:purge db:schema:load db:seed:small.en"
