@@ -15,6 +15,7 @@
       - locales
       - mc
       - monit
+      - moreutils
       - munin-node
       - ncdu
       - rsync

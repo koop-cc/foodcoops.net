@@ -33,4 +33,4 @@
     minute: "01"
     hour: "01"
     weekday: "07"
-    job: /usr/local/bin/antakya_get_products.sh >/dev/null
+    job: chronic /usr/local/bin/antakya_get_products.sh >/dev/null

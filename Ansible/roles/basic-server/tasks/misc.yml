@@ -34,6 +34,6 @@
 - name: "misc | Limit journald logging"
   cron:
     name: "Ansible: Limit Logging of journald"
-    job: "journalctl --vacuum-time={{ journald_logging_time|default('2d') }} >/dev/null"
+    job: "chronic journalctl --vacuum-time={{ journald_logging_time|default('2d') }} >/dev/null"
     hour: "00"
     minute: "01"
