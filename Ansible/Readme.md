@@ -7,6 +7,7 @@ Foodcoops.net Ansible deployment
 - [Common tasks](#common-tasks)
   - [Adding a new foodcoop](#adding-a-new-foodcoop)
   - [Deleting a foodcoop](#deleting-a-foodcoop)
+  - [Adding a member to the hosting team](#adding-a-member-to-the-hosting-team)
 
 # Introduction
 In this folder you'll find a couple of [Ansible](https://www.ansible.com) roles to setup and manage the
@@ -70,3 +71,16 @@ If the deletion of a foocoop is requested follow these steps:
 1. Delete the foodcoop's entry from `host_vars/focone.yml`.
 1. Upload the changes to our Git repository.
 1. Delete the two contact persons from our foodsoft announce mailing list.
+
+## Adding a member to the hosting team
+- Add to Github [operations team](https://github.com/orgs/foodcoops/teams/operations)
+- Add to relevant [mailing lists](https://foodcoops.listen.systemausfall.org) (support@lists.foodcoops.net  and foodcoops-announce@lists.foodcoops.net)
+- Obtain user's SSH key and verify it from a Github gist, Keybase or a video call.
+- Add SSH key file to `roles/basic-server/ssh_authorized_keys/admin` and start ansible:
+    ```shell
+    ansible-playbook playbooks/basic-server.yml --limit focone
+    ```
+- Add email address to `/etc/postfix/conf.d/virtual_aliases`, save the file and run postmap:
+    ```shell
+    postmap cdb:virtual_aliases
+    ```
