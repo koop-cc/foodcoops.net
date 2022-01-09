@@ -1,5 +1,14 @@
-# Foodcoops.net Ansible deployment
+Foodcoops.net Ansible deployment
+================================
 
+- [Foodcoops.net Ansible deployment](#foodcoopsnet-ansible-deployment)
+- [Introduction](#introduction)
+- [Roles overview](#roles-overview)
+- [Common tasks](#common-tasks)
+  - [Adding a new foodcoop](#adding-a-new-foodcoop)
+  - [Deleting a foodcoop](#deleting-a-foodcoop)
+
+# Introduction
 In this folder you'll find a couple of [Ansible](https://www.ansible.com) roles to setup and manage the
 infrastructure for the [global Foodsoft platform](https://foodcoops.net/global-foodsoft-platform/) of
 [foodcoops.net](https://foodcoops.net).
@@ -18,7 +27,7 @@ You can execute a role by using the corresponding [playbook](https://docs.ansibl
 ```shell
 ansible-playbook playbooks/foodsoft.yml
 ```
-## Roles overview
+# Roles overview
 | Name | Description |
 |------|-------------|
 | basic-server | Initial setup for a new server |
@@ -29,8 +38,8 @@ ansible-playbook playbooks/foodsoft.yml
 | foodsoft | Installation, configuration, updating of the Foodsoft |
 
 
-## Common tasks
-### Adding a new foodcoop
+# Common tasks
+## Adding a new foodcoop
 1. Gather all [information](https://foodcoops.net/.global-foodsoft-platform/#request-a-new-instance)
 1. Add the data to `host_vars/focone.yml` in the section `foodcoops`. Just follow the existing pattern.
 1. Upload the changes to our Git repository.
@@ -44,7 +53,7 @@ ansible-playbook playbooks/foodsoft.yml
 1. Please also communicate that this platform is run by volunteers from participating food cooperatives and depends on donations.
 1. Add the two contact persons to our foodsoft announce mailing list.
 
-### Deleting a foodcoop
+## Deleting a foodcoop
 If the deletion of a foocoop is requested follow these steps:
 
 1. Find the foodcoops's configuration at `host_vars/focone.yml`. Enter another entry called `deleted: true` to the array:
