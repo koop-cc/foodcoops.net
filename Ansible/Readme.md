@@ -10,9 +10,9 @@ apt install ansible ansible-mitogen
 ```
 
 We don't want to save internal data as clear text in this roles. For data encryption we make use of
-[ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html). To complete your Ansible setup just create a file called `.vault_pass` at the same level as this Readme file and include the vault password from our password database in this file. All variables that make use of the vault start with a prefix `vault_`.
+[ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html). To complete your Ansible setup just create a file called `.vault_pass` at the same level as this Readme file and include the vault password from our password database in this file. All variables that make use of the vault start with a prefix `vault_`. You will find them in a role's subfolder at `vars/main.yml`. To edit such a variable us a command like this: `ansible-vault edit roles/foodsoft/vars/main.yml`.
 
-Have a look at a role's directory to find our more details on how we implement the global Foodsoft platform.
+Have a look at a role's directory to find out more details on how we implement the global Foodsoft platform.
 
 You can execute a role by using the corresponding [playbook](https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html) which are named equally:
 ```shell
