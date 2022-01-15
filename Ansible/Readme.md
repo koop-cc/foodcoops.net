@@ -10,6 +10,7 @@ Foodcoops.net Ansible deployment
   - [Deleting a foodcoop](#deleting-a-foodcoop)
   - [Adding a member to the hosting team](#adding-a-member-to-the-hosting-team)
   - [Recreating the demo database](#recreating-the-demo-database)
+  - [Restore files from backup](#restore-files-from-backup)
 
 # Introduction
 In this folder you'll find a couple of [Ansible](https://www.ansible.com) roles to setup and manage the
@@ -120,3 +121,10 @@ It can sometimes be useful to manually reset the demo instance with a new databa
 ```shell
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 DATABASE_URL=mysql2://foodsoft:$DATABASE_PASSWORD@localhost/foodsoft_demo REDIS_URL=redis://127.0.0.1:6379 SECRET_KEY_BASE=$SECRET_KEY_BASE RAILS_ENV=production rbenv exec rails db:purge db:schema:load db:seed:small.en
 ```
+
+## Restore files from backup
+We create daily backups of all databases and also a full system backup. You will find the backups at the following locations:
+| Backup | Tool | Server | Location |
+|--------|------|--------|----------|
+| Databases | `automysqlbackup` | focone | `/var/lib/automysqlbackup` |
+| Full system | `rsnapshot` | fc-monitor | `/var/cache/rsnapshot` |
