@@ -5,6 +5,7 @@ Foodcoops.net Ansible deployment
 - [Introduction](#introduction)
 - [Roles overview](#roles-overview)
 - [Common tasks](#common-tasks)
+  - [Check and restart a service](#check-and-restart-a-service)
   - [Adding a new foodcoop](#adding-a-new-foodcoop)
   - [Deleting a foodcoop](#deleting-a-foodcoop)
   - [Adding a member to the hosting team](#adding-a-member-to-the-hosting-team)
@@ -41,6 +42,34 @@ ansible-playbook playbooks/foodsoft.yml
 
 
 # Common tasks
+## Check and restart a service
+We use different (systemd) services at focone:
+
+| Name | Description |
+|------|-------------|
+| foodsoft-web | Foodsoft web interface |
+| foodsoft-smtp | Foodsoft smtp server for incoming emails |
+| foodsoft-resque | Redis-based [backend](https://github.com/resque/resque) for background jobs |
+| sharedlists-web | Sharedlists web interface |
+| sharedlists-smtp | Sharedlists smtp server for article updates by email |
+
+You can check the status of a service with a command like this:
+```shell
+systemctl status foodsoft-web
+```
+If something seams wrong have a look at the log file, e.g:
+```shell
+journalctl -u foodsoft-web
+```
+There is also the [Monit](https://mmonit.com/monit/) output that tells you what's going on:
+```Shell
+monit status
+```
+Monit tries to restart a service in case of a failure. You can restart a service manually with systemd:
+```shell
+systemctl restart foodsoft-web
+```
+
 ## Adding a new foodcoop
 1. Gather all [information](https://foodcoops.net/.global-foodsoft-platform/#request-a-new-instance)
 1. Add the data to `host_vars/focone.yml` in the section `foodcoops`. Just follow the existing pattern.
