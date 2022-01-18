@@ -9,6 +9,7 @@
       - apache2-utils
       - dehydrated
       - haveged
+      - libwww-perl
       - moreutils
       - nginx-full
     cache_valid_time: 3600

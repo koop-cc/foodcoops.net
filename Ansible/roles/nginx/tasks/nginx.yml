@@ -13,6 +13,7 @@
     - request_limits.conf
     - reverse_proxy.conf
     - ssl.conf
+    - status.conf
   notify: reload nginx
 
 - name: "nginx | copy configuration to snippets"
@@ -23,6 +24,13 @@
     - add_headers.conf
     - letsencrypt.conf
   notify: reload nginx
+
+- name: "nginx | Add LE snippet to default page"
+  lineinfile:
+    path: /etc/nginx/sites-available/default
+    insertafter: 'root /var/www/html;'
+    line: '        include snippets/letsencrypt.conf;'
+  notify: reload nginx      
 
 - name: "nginx | create dhparam"
   openssl_dhparam:
@@ -44,3 +52,10 @@
     src: nginx-purge-ip
     dest: /etc/cron.daily/nginx-purge-ip
     mode: 0755
+
+- name: "nginx | Copy Munin configuration"
+  copy:
+    src: nginx.munin
+    dest: /etc/munin/plugin-conf.d/nginx
+  notify: restart munin-node
+  when: "'munin-node' in ansible_facts.packages"
