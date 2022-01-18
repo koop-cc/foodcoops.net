@@ -1,0 +1,26 @@
+---
+- name: "monitoring | Copy Monit configuration"
+  template:
+    src: monit.j2
+    dest: /etc/monit/conf-enabled/foodsoft
+  when: "'monit' in ansible_facts.packages"
+  notify: reload monit
+
+- name: "monitoring | Download Munin plugin"
+  get_url:
+    url: https://raw.githubusercontent.com/munin-monitoring/contrib/master/plugins/puma/puma_
+    dest: /usr/local/bin/puma_
+    mode: 0755
+
+- name: "monitoring | Enable Munin plugin"
+  file:
+    src: /usr/local/bin/puma_
+    dest: "/etc/munin/plugins/puma_{{ name }}"
+    state: link
+  loop_control:
+    loop_var: name
+  loop:
+    - average
+    - memory
+  when: "'munin-node' in ansible_facts.packages"
+  notify: restart munin-node

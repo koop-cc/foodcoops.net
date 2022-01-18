@@ -1,6 +1,0 @@
----
-- name: "monit | copy monitoring files"
-  template:
-    src: monit.j2
-    dest: /etc/monit/conf-enabled/foodsoft
-  notify: reload monit

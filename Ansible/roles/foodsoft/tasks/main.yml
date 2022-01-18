@@ -20,8 +20,8 @@
 - import_tasks: cron.yml
   tags: cron
 
-- import_tasks: monit.yml
-  tags: monit
+- import_tasks: monitoring.yml
+  tags: monitoring
 
 - import_tasks: webserver.yml
   tags: webserver
