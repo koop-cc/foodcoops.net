@@ -79,6 +79,7 @@ systemctl restart foodsoft-web
    ```shell
    ansible-playbook playbooks/foodsoft.yml --tags never,foodcoop_add
    ```
+   Adding a new Foodcoop will result in a restart of the Foodsoft service. Please execute the playbook in the late evening or preferably during the night to not disturb our users.
 1. Immediately login with `admin` / `secret` and change the user details and password. The `admin` user should become the user account of the first contact person, so use their email address here. We do not want to encourage an unused `admin` account.
 1. You may want to pre-set some configuration if you know a bit more about the foodcoop. It's always helpful for new foodcoops to have a setup that already reflects their intended use a bit. At least you should set a time zone.
 1. Send an email to the foodcoop's contact persons with the url and admin account details.
@@ -99,6 +100,7 @@ If the deletion of a foocoop is requested follow these steps:
    ```shell
    ansible-playbook playbooks/foodsoft --tags never,foodcoops_delete
    ```
+   Removing a Foodcoop will result in a restart of the Foodsoft service. Please execute the playbook in the late evening or preferably during the night to not disturb our users.
 1. Delete the foodcoop's entry from `host_vars/focone.yml`.
 1. Upload the changes to our Git repository.
 1. Delete the two contact persons from our foodsoft announce mailing list.

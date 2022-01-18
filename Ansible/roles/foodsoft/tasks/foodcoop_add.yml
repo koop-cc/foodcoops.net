@@ -8,7 +8,7 @@
     login_unix_socket: "{{ mariadb_socket }}"
     login_user: root
 
-- name: "foodcoop | {{ item.name }} | create database user"
+- name: "foodcoop | {{ item.name }} | Assign database permissions"
   mysql_user:
     name: "{{ foodsoft_db_user }}"
     password: "{{ vault_foodsoft_db_password }}"
@@ -69,3 +69,4 @@
         <<: *defaults
         database:
           database: {{ item.database }}
+  notify: restart foodsoft-web

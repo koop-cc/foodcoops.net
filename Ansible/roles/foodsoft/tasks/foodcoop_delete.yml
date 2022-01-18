@@ -16,3 +16,4 @@
         <<: *defaults
         database:
           database: {{ item.database }}
+  notify: restart foodsoft-web
