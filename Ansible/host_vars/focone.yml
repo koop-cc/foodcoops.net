@@ -66,6 +66,8 @@ foodcoops:
     database: foodsoft_lauterleben
   - name: lhgfg
     database: foodsoft_lhgfg
+  - name: lmdw
+    database: foodsoft_lmdw
   - name: lostfood
     database: foodsoft_lostfood
   - name: luzern
