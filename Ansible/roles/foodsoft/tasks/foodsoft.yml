@@ -8,8 +8,7 @@
   git:
     repo: "{{ foodsoft_git_url }}"
     dest: "{{ foodsoft_home }}"
-    version: master
-#   version: "{{ latest_tag.stdout }}"
+    version: "{{ foodsoft_version }}"
     force: yes
 
 - name: "foodsoft | Ruby version lookup"
