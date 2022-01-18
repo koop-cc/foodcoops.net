@@ -44,7 +44,7 @@
     DATABASE_URL: mysql2://{{ foodsoft_db_user }}:{{ vault_foodsoft_db_password}}@localhost/{{ item.database }}
   become: true
   become_user: "{{ foodsoft_user }}"
-  when: db_version == 0
+  when: db_version.stdout == "0"
 
 - name: "database | {{ item.name }} | Run seed.rb"
   shell:
@@ -57,13 +57,13 @@
     DATABASE_URL: mysql2://{{ foodsoft_db_user }}:{{ vault_foodsoft_db_password}}@localhost/{{ item.database }}
   become: true
   become_user: "{{ foodsoft_user }}"
-  when: db_version == 0 #db:seed is not idempotent in this case
+  when: db_version.stdout == "0" #db:seed is not idempotent in this case
 
 - name: "foodcoop | {{ item.name }} | Add new foodcoop to configuration file"
   blockinfile:
     path: "{{ foodsoft_home }}/config/app_config.yml"
-    insertafter: "### Ansible: multi_coop"
-    marker_begin: "{{ item.name }}"
+    insertafter: "### Ansible: multi_coop configuration"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
     block: |
       {{ item.name }}:
         <<: *defaults
