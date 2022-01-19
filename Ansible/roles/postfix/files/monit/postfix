@@ -5,4 +5,4 @@ check process postfix with pidfile /var/spool/postfix/pid/master.pid
   if failed port 25 protocol smtp with timeout 15 seconds for 3 cycles then restart
 
 check program postfix-mail-queue path "/usr/local/bin/check_postfix_queue"
-    if status != 0 then alert
+    if status != 0 for 2 cycles then alert
