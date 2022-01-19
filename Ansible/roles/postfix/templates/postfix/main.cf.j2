@@ -159,6 +159,8 @@ readme_directory = /usr/share/doc/postfix
 html_directory = /usr/share/doc/postfix/html
 
 ### Destination limits
+relay_destination_concurrency_limit = 2
+relay_destination_recipient_limit = 3
 dlimit_destination_concurrency_limit = 2
 dlimit_destination_recipient_limit = 3
 dlimit_destination_rate_delay = 5s
