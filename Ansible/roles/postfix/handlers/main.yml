@@ -23,3 +23,8 @@
   service:
     name: opendkim
     state: restarted
+
+- name: reload monit
+  service:
+    name: monit
+    state: reloaded
