@@ -93,11 +93,6 @@
     mode: 0600
     force: no
 
-- name: "foodsoft | insert marker for mutli_coop setup"
-  lineinfile:
-    path: "{{ foodsoft_home }}/config/app_config.yml"
-    line: '### Ansible: multi_coop'
-
 - name: "foodsoft | Add privileges to sharedlists suppliers"
   mysql_user:
     name: "{{ foodsoft_db_user }}"

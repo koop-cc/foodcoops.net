@@ -62,7 +62,6 @@
 - name: "foodcoop | {{ item.name }} | Add new foodcoop to configuration file"
   blockinfile:
     path: "{{ foodsoft_home }}/config/app_config.yml"
-    insertafter: "### Ansible: multi_coop configuration"
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
     block: |
       {{ item.name }}:
