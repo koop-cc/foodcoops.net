@@ -12,7 +12,7 @@
 
 - name: "postfix | Copy master.cf"
   copy:
-    src: master.cf
+    src: postfix/master.cf
     dest: /etc/postfix/master.cf
     backup: true
   notify: reload postfix
@@ -31,7 +31,7 @@
 
 - name: "postfix | copy configuration files"
   copy:
-    src: "{{ item }}"
+    src: "postfix/conf.d/{{ item }}"
     dest: "{{ postfix_conf_dir }}/{{ item }}"
   loop:
     - bogus_mx
