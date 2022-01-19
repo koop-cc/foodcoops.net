@@ -1,7 +1,14 @@
 ---
+- name: "user | create group"
+  group:
+    name: "{{ foodsoft_user }}"
+    system: true
+
 - name: "user | create local user account"
   user:
     name: "{{ foodsoft_user }}"
+    group: "{{ foodsoft_user }}"
     shell: /bin/bash
     password_lock: yes
     home: "{{ foodsoft_user_home }}"
+    system: true

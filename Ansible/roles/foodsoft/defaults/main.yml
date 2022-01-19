@@ -2,7 +2,7 @@
 foodsoft_git_url: https://github.com/foodcoops/foodsoft.git
 foodsoft_git_latest_tag_url: https://api.github.com/repos/foodcoops/foodsoft/tags
 foodsoft_home: /opt/foodsoft
-foodsoft_user: foodsoft
+foodsoft_user: _foodsoft
 foodsoft_user_home: "/var/lib/{{ foodsoft_user }}"
 foodsoft_db: foodsoft
 foodsoft_db_user: foodsoft
