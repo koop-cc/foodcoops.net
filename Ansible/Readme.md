@@ -126,7 +126,7 @@ DISABLE_DATABASE_ENVIRONMENT_CHECK=1 DATABASE_URL=mysql2://foodsoft:$DATABASE_PA
 
 ## Restore files from backup
 We create daily backups of all databases and also a full system backup. You will find the backups at the following locations:
-| Backup | Tool | Server | Location |
+| Backup | Tool | Backup server | Location |
 |--------|------|--------|----------|
 | Databases | `automysqlbackup` | focone | `/var/lib/automysqlbackup` |
 | Full system | `rsnapshot` | fc-monitor | `/var/cache/rsnapshot` |
