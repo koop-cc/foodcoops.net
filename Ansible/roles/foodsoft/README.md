@@ -9,8 +9,8 @@ Dependencies
 ------------
 
 Before you use this role make sure the following roles did run successfully on the server:
-- basic-server
-- mariadb
-- nginx
-- postfix
-- sharedlists
+- [basic-server](../basic-server)
+- [mariadb](../mariadb)
+- [nginx](../nginx)
+- [postfix](../postfix)
+- [sharedlists](../sharedlists)
