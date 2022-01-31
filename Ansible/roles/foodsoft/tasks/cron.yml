@@ -68,5 +68,13 @@
     name: Daily reset of demo database
     user: "{{ foodsoft_user }}"
     minute: "00"
-    hour: "00"
+    hour: "02"
     job: /bin/bash -lc "cd {{ foodsoft_home }} && DISABLE_DATABASE_ENVIRONMENT_CHECK=1 DATABASE_URL=mysql2://{{ foodsoft_db_user }}:{{ vault_foodsoft_db_password }}@localhost/foodsoft_demo rbenv exec rails db:purge db:schema:load db:seed:small.en"
+
+- name: "cron | clear cache after reset of demo database"
+  cron:
+    name: Clear cache after reset of demo database to delete cached settings
+    user: "{{ foodsoft_user }}"
+    minute: "01"
+    hour: "02"
+    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails tmp:cache:clear"
