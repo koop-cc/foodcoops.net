@@ -15,7 +15,7 @@
 
 - name: "Add phpMyAdmin"
   include_tasks: phpmyadmin.yml
-    args:
-      apply:
-        tags: phpmyadmin
+  args:
+    apply:
+      tags: phpmyadmin
   tags: never
