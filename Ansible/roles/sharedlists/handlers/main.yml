@@ -23,3 +23,8 @@
   service:
     name: "{{ sharedlists_smtp_service }}"
     state: restarted
+
+- name: restart sharedlists_web_socket
+  service:
+    name: "{{ sharedlists_web_socket }}"
+    state: restarted

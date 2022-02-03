@@ -1,4 +1,7 @@
 ---
+puma_sockets:
+  - 9292
+  - 9293
 ruby_version: "2.7.5"
 ruby_path: "{{ sharedlists_user_home }}/.rbenv"
 ruby_build_git_url: https://github.com/rbenv/ruby-build.git
@@ -13,5 +16,6 @@ sharedlists_user: _sharedlists
 sharedlists_user_home: "/var/lib/{{ sharedlists_user }}"
 sharedlists_web_bind_ip: "127.0.0.1"
 sharedlists_web_port: "3000"
-sharedlists_web_service: sharedlists-web
-sharedlists_smtp_service: sharedlists-smtp
+sharedlists_web_service: sharedlists-web.service
+sharedlists_smtp_service: sharedlists-smtp.service
+sharedlists_web_socket: sharedlists-web.socket

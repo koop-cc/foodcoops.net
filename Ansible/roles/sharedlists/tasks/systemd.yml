@@ -4,11 +4,13 @@
     src: "systemd/{{ item.src }}"
     dest: "/etc/systemd/system/{{ item.dest }}"
   loop:
-    - { src: sharedlists-web.service.j2, dest: "{{ sharedlists_web_service }}.service" }
-    - { src: sharedlists-smtp.service.j2, dest: "{{ sharedlists_smtp_service }}.service" }
+    - { src: sharedlists-web.service.j2, dest: "{{ sharedlists_web_service }}" }
+    - { src: sharedlists-smtp.service.j2, dest: "{{ sharedlists_smtp_service }}" }
+    - { src: sharedlists-web.socket.j2, dest: "{{ sharedlists_web_socket }}" }
   notify:
     - restart sharedlists_web
     - restart sharedlists_smtp
+    - restart sharedlists_web_socket
 
 - name: "systemd | create configuration directory"
   file:
@@ -30,5 +32,6 @@
     state: started
     name: "{{ item }}"
   loop:
+    - "{{ sharedlists_web_socket }}"
     - "{{ sharedlists_web_service }}"
     - "{{ sharedlists_smtp_service }}"

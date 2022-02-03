@@ -2,6 +2,7 @@
 Description=Sharedlists rails server
 Documentation=https://github.com/foodcoops/sharedlists
 After=network.target
+Requires={{ sharedlists_web_socket }}
 
 [Service]
 EnvironmentFile={{ sharedlists_environment_file }}
@@ -10,9 +11,12 @@ Group={{ sharedlists_user }}
 Restart=on-failure
 RestartSec=10
 WorkingDirectory={{ sharedlists_home }}
-ExecStart=/bin/bash -l -c "${RBENV_CMD} rails server -b ${SHAREDLISTS_BIND_IP} -p ${SHAREDLISTS_WEB_PORT}"
+ExecStart=/bin/bash -lc "${RBENV_CMD} rails server -b ${SHAREDLISTS_BIND_IP} -p ${SHAREDLISTS_WEB_PORT}"
 ProtectHome=true
 ProtectSystem=full
 PrivateTmp=true
 PrivateUsers=true
 NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
