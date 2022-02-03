@@ -4,11 +4,13 @@
     src: "systemd/{{ item.src }}"
     dest: "/etc/systemd/system/{{ item.dest }}"
   loop:
-    - { src: foodsoft-web.service.j2, dest: "{{ foodsoft_web_service }}.service" }
-    - { src: foodsoft-smtp.service.j2, dest: "{{ foodsoft_smtp_service }}.service" }
-    - { src: foodsoft-resque.service.j2, dest: "{{ foodsoft_resque_service }}.service" }
+    - { src: foodsoft-web.service.j2, dest: "{{ foodsoft_web_service }}" }
+    - { src: foodsoft-web.socket.j2, dest: "{{ foodsoft_web_socket }}" }
+    - { src: foodsoft-smtp.service.j2, dest: "{{ foodsoft_smtp_service }}" }
+    - { src: foodsoft-resque.service.j2, dest: "{{ foodsoft_resque_service }}" }
   notify:
     - restart foodsoft-web
+    - restart foodsoft-web-socket
     - restart foodsoft-smtp
     - restart foodsoft-resque
 
@@ -34,5 +36,6 @@
     name: "{{ item }}"
   loop:
     - "{{ foodsoft_web_service }}"
+    - "{{ foodsoft_web_socket }}"
     - "{{ foodsoft_smtp_service }}"
     - "{{ foodsoft_resque_service }}"

@@ -3,6 +3,7 @@ Description=Foodsoft rails server
 Documentation=https://github.com/foodcoops/foodsoft/wiki
 After=network.target
 Wants=sharedlists-smtp.service
+Requires={{ foodsoft_web_socket }}
 
 [Service]
 EnvironmentFile={{ foodsoft_environment_file }}
@@ -11,7 +12,7 @@ Group={{ foodsoft_user }}
 Restart=on-failure
 RestartSec=10
 WorkingDirectory={{ foodsoft_home }}
-ExecStart=/bin/bash -l -c "${RBENV_CMD} rails server -b ${FOODSOFT_BIND_IP} -p ${FOODSOFT_WEB_PORT}"
+ExecStart=/bin/bash -lc "${RBENV_CMD} rails server -b ${FOODSOFT_BIND_IP} -p ${FOODSOFT_WEB_PORT}"
 ProtectHome=true
 ProtectSystem=full
 PrivateTmp=true

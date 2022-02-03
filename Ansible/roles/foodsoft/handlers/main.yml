@@ -19,6 +19,11 @@
     name: "{{ foodsoft_web_service }}"
     state: restarted
 
+- name: restart foodsoft-web-socket
+  service:
+    name: "{{ foodsoft_web_socket }}"
+    state: restarted
+
 - name: restart foodsoft-smtp
   service:
     name: "{{ foodsoft_smtp_service }}"

@@ -7,9 +7,10 @@ foodsoft_user_home: "/var/lib/{{ foodsoft_user }}"
 foodsoft_db: foodsoft
 foodsoft_db_user: foodsoft
 foodsoft_environment_file: /etc/foodsoft/foodsoft.conf
-foodsoft_web_service: foodsoft-web
-foodsoft_smtp_service: foodsoft-smtp
-foodsoft_resque_service: foodsoft-resque
+foodsoft_web_service: foodsoft-web.service
+foodsoft_web_socket: foodsoft-web.socket
+foodsoft_smtp_service: foodsoft-smtp.service
+foodsoft_resque_service: foodsoft-resque.service
 foodsoft_web_bind_ip: "127.0.0.1"
 foodsoft_web_port: "3001"
 foodsoft_redis_url: redis://127.0.0.1:6379
@@ -20,6 +21,8 @@ foodsoft_smtp_address: "127.0.0.1"
 foodsoft_smtp_port: "25"
 foodsoft_smtp_authentication: false
 foodsoft_smtp_enable_starttls_auto: false
+
+puma_sockets: [ 9294, 9295 ]
 
 ruby_path: "{{ foodsoft_user_home}}/.rbenv"
 ruby_build_git_url: https://github.com/rbenv/ruby-build.git
