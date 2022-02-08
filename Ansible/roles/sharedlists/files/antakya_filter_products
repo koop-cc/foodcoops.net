@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+
+import os
+import re
+import sys
+
+
+#"";"15099";"Soya Drink ohne Zucker";;"PRO";"BE";"1l";"1.51";"19.0";"0.0";"8.0";"";"";"Soja-, Hafer- & Reisprodukte"
+COLUMN_REGEXES = [
+    ("Status", r'""$'),
+    ("Order number", r'"[0-9]{5}"$'),
+    ("Name", r'"[\w\s&\*\-\+\',\.:!\/\(\)%À-ÿ]*"$'),
+    ("Note", r'("[\w\s&\*\-,%À-ÿ]*")?$'),
+    ("Manufacturer", r'"([\w\s,\-\.:]*)?"$'),
+    ("Origin", r'"([A-Z]{2,3})?"$'),
+    ("Unit", r'"[\w\s\.,]*"$'),
+    ("Price (net)", r'"[\d\.\-]*"$'),
+    ("VAT", r'"[\d\.]*"$'),
+    ("Deposit", r'"[\d\.]*"$'),
+    ("Unit quantity", r'"[\d\.]*"$'),
+    ("Reserved", r'""$'),
+    ("Reserved", r'""$'),
+    ("Category", r'"[\w\s&\*\-,\.À-ÿ\/]*"$'),
+]
+
+
+def get_matching_lines(source, should_match=True):
+    compiled_regexes = [(label, re.compile(item)) for label, item in COLUMN_REGEXES]
+    max_count = None
+    best_line = None
+    for line in source:
+        failures = []
+        tokens = line.split(";")
+        for token, (label, regex) in zip(tokens, compiled_regexes):
+            if not regex.match(token):
+                failures.append(label)
+        if bool(failures) != should_match:
+            if failures:
+                yield line.strip() + " | Failures: " + " ".join(failures)
+            else:
+                yield line.strip()
+
+def main():
+    should_match = {"True": True, "False": False}[os.getenv("WANTED", "True")]
+    for output_line in get_matching_lines(sys.stdin, should_match):
+        print(output_line)
+
+
+if __name__ == "__main__":
+    main()

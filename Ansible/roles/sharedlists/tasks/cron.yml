@@ -27,10 +27,16 @@
     dest: /usr/local/bin/antakya_get_products.sh
     mode: 0755
 
+- name: "cron | copy Antakya filter script"
+  copy:
+    src: antakya_filter_products
+    dest: /usr/local/bin
+    mode: 0755
+
 - name: "cron | create Antakya cron job"
   cron:
     name: Update Bio Antakya products
     minute: "01"
     hour: "01"
     weekday: "07"
-    job: chronic /usr/local/bin/antakya_get_products.sh >/dev/null
+    job: chronic /usr/local/bin/antakya_get_products.sh
