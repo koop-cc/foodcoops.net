@@ -14,6 +14,7 @@
       - htop
       - locales
       - mc
+      - molly-guard
       - monit
       - moreutils
       - munin-node
