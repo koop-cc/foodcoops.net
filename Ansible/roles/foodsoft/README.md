@@ -14,3 +14,12 @@ Before you use this role make sure the following roles did run successfully on t
 - [nginx](../nginx)
 - [postfix](../postfix)
 - [sharedlists](../sharedlists)
+
+Customization
+-------------
+
+We [adapted](tasks/customizations.yml) the [stock](https://github.com/foodcoops/foodsoft/) Foodsoft version to our needs:
+
+- Disable the logging of IP addresses
+- Enforce stronger passwords
+- Allow decimal numbers in transaction collections
