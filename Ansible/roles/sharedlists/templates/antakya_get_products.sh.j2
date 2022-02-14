@@ -13,7 +13,7 @@ TO_ADDR={{ vault_antakya_to_address }}
 wget -O "$PRODUCTS" "$URL"
 
 # Delete invalid lines
-cat "$PRODUCTS" | antakya_filter_products > "$FILTERED_PRODUCTS"
+cat "$PRODUCTS" | /usr/local/bin/antakya_filter_products > "$FILTERED_PRODUCTS"
 
 echo "$SUBJECT" | mutt -s "$SUBJECT" -e 'my_hdr From:$FROM_ADDR' -e 'set envelope_from=yes' -e 'set send_charset==us-ascii:utf-8' -a "$FILTERED_PRODUCTS" -- "$TO_ADDR"
 
