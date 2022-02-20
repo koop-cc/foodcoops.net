@@ -48,7 +48,7 @@
     SECRET_KEY_BASE: "{{ vault_foodsoft_secret_key_base }}"
   become: true
   become_user: "{{ foodsoft_user }}"
-  when: db_version == 0
+  when: db_version.stdout == 0
 
 - name: "database | Run seed.rb"
   shell:
@@ -59,7 +59,7 @@
     SECRET_KEY_BASE: "{{ vault_foodsoft_secret_key_base }}"
   become: true
   become_user: "{{ foodsoft_user }}"
-  when: db_version == 0 #db:seed is not idempotent in this case
+  when: db_version.stdout == 0 #db:seed is not idempotent in this case
 
 - name: "database | compile assets"
   shell: 
