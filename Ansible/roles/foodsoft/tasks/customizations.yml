@@ -35,6 +35,12 @@
     replace: 'validates_length_of :password, :in => 10..50'
   notify: restart foodsoft-web
 
+- name: "customizations | Update demo seeds"
+  replace:
+    path: "{{ foodsoft_home }}/db/seeds/small.en.seeds.rb"
+    regexp: ':password => "secret"'
+    replace: 'password => "secret1234"'
+
 # https://github.com/foodcoops/foodsoft/pull/921
 - name: "customizations | Allow decimal numbers in transaction collections"
   replace:
