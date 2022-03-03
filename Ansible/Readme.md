@@ -98,7 +98,7 @@ If the deletion of a foocoop is requested follow these steps:
    ```
 1. Execute the playbook:
    ```shell
-   ansible-playbook playbooks/foodsoft --tags never,foodcoops_delete
+   ansible-playbook playbooks/foodsoft --tags never,foodcoop_delete
    ```
    Removing a Foodcoop will result in a restart of the Foodsoft service. Please execute the playbook in the late evening or preferably during the night to not disturb our users.
 1. Delete the foodcoop's entry from `host_vars/focone.yml`.

@@ -25,11 +25,3 @@
 
 - import_tasks: webserver.yml
   tags: webserver
-
-- name: "Delete Foodcoop"
-  include_tasks: foodcoop_delete.yml
-  args:
-    apply:
-      tags: foodcoop_delete
-  tags: never
-  when: item.deleted is defined and item.deleted

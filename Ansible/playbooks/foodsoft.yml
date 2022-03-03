@@ -12,3 +12,11 @@
           tags: foodcoop_add
       tags: never
       loop: "{{ foodcoops }}"
+    - name: "Delete a Foodcoop"
+      include_tasks: ../roles/foodsoft/tasks/foodcoop_delete.yml
+      args:
+        apply:
+          tags: foodcoop_delete
+      tags: never
+      loop: "{{ foodcoops }}"
+      when: item.deleted is defined and item.deleted

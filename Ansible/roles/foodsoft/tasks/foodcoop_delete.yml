@@ -10,10 +10,5 @@
   blockinfile:
     path: "{{ foodsoft_home }}/config/app_config.yml"
     state: absent
-    marker_begin: "{{ item.name }}"
-    block: |
-      {{ item.name }}:
-        <<: *defaults
-        database:
-          database: {{ item.database }}
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
   notify: restart foodsoft-web
