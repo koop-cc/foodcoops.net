@@ -22,8 +22,6 @@ foodcoops:
     database: foodsoft_demo
   - name: allmendetaucha
     database: foodsoft_allmendetaucha
-  - name: beisswat
-    database: foodsoft_beisswat
   - name: biwag
     database: foodsoft_biwag
   - name: boernicke
