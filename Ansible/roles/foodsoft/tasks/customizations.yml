@@ -41,6 +41,12 @@
     regexp: ':password => "secret"'
     replace: ':password => "secret1234"'
 
+- name: "customizations | Update minimal seeds"
+  replace:
+    path: "{{ foodsoft_home }}/db/seeds/minimal.seeds.rb"
+    regexp: ':password => "secret"'
+    replace: ':password => "secret1234"'
+
 # https://github.com/foodcoops/foodsoft/pull/921
 - name: "customizations | Allow decimal numbers in transaction collections"
   replace:
