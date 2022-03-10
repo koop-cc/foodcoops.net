@@ -46,6 +46,8 @@ foodcoops:
     database: foodsoft_frw
   - name: fuki
     database: foodsoft_fuki
+  - name: ga-montdor
+    database: foodsoft_gamontdor
   - name: guerckchen
     database: foodsoft_guerckchen
   - name: haarlem
