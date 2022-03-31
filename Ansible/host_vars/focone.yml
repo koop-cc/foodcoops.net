@@ -106,5 +106,7 @@ foodcoops:
     database: foodsoft_tuess
   - name: tutcoop
     database: foodsoft_tutcoop
+  - name: vitamaia
+    database: foodsoft_vitamaia
   - name: yamhi
     database: foodsoft_yamhi
