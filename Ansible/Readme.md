@@ -38,8 +38,8 @@ ansible-playbook playbooks/foodsoft.yml
 | nginx | Installation and configuration of Nginx |
 | mariadb | Installation and configuration of MariaDB |
 | postfix | Installation and configuration of Postfix for use with a real mail domain |
-| sharedlists | Installation, configuration, updating of sharedlists |
-| foodsoft | Installation, configuration, updating of the Foodsoft |
+| sharedlists | Installation, configuration, updating of sharedlists, uses [Kidhab fork](https://github.com/kidhab/sharedlists) |
+| foodsoft | Installation, configuration, updating of the Foodsoft, uses [upstream](https://github.com/foodcoops/foodsoft) version |
 
 
 # Common tasks
