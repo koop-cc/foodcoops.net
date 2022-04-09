@@ -91,7 +91,24 @@
     owner: "{{ foodsoft_user }}"
     group: "{{ foodsoft_user }}"
     mode: 0600
-    force: no
+    force: false
+
+- name: "foodsoft | copy Active Storage configuration"
+  copy:
+    src: "{{ foodsoft_home }}/config/storage.yml.SAMPLE"
+    dest: "{{ foodsoft_home }}/config/storage.yml"
+    remote_src: true
+    owner: "{{ foodsoft_user }}"
+    group: "{{ foodsoft_user }}"
+    mode: 0600
+    force: false
+
+- name: "foodsoft | create Active Storage directory"
+  file:
+    path: "{{ foodsoft_home }}/storage"
+    state: directory
+    owner: "{{ foodsoft_user }}"
+    group: "{{ foodsoft_user }}"
 
 - name: "foodsoft | Add privileges to sharedlists suppliers"
   mysql_user:
