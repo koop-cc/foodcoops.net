@@ -8,15 +8,6 @@
   changed_when: false
   register: railties_version
 
-- name: "customizations | Add Rails 6 Backport"
-  copy:
-    src: foodsoft/rails6_backports.rb
-    dest: "{{ foodsoft_home }}/config/initializers/rails6_backports.rb"
-    owner: "{{ foodsoft_user }}"
-    group: "{{ foodsoft_user }}"
-  when: railties_version.stdout <= "6.0.0"
-  notify: restart foodsoft-web
-
 # Copy only if version number matches.
 - name: "customizations | copy monkey path for anon logging"
   copy:
