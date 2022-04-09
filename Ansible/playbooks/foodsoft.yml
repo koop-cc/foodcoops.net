@@ -3,7 +3,6 @@
     - focone
   roles:
     - role: foodsoft
-      tags: role-foodsoft
   tasks:
     - name: "Add a new Foodcoop"
       include_tasks: ../roles/foodsoft/tasks/foodcoop_add.yml
