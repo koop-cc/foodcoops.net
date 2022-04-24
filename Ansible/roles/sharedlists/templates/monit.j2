@@ -4,7 +4,7 @@ check process sharedlists-web
   stop program = "/usr/sbin/service sharedlists-web stop"
   if 2 restarts within 3 cycles then timeout
   if cpu usage > 95% for 3 cycles then restart
-  if failed host {{ sharedlists_web_bind_ip }} port {{ puma_port }} for 3 cycles then restart
+  if failed host {{ sharedlists_web_bind_ip }} port {{ sharedlists_web_port }} for 3 cycles then restart
   if 5 restarts within 5 cycles then timeout
 
 check process sharedlists-smtp

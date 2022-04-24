@@ -3,6 +3,7 @@ RAILS_ENV=production
 RAILS_FORCE_SSL=false
 RAILS_SERVE_STATIC_FILES=true
 SHAREDLISTS_BIND_IP={{ sharedlists_web_bind_ip }}
+SHAREDLISTS_WEB_PORT={{ sharedlists_web_port }}
 SECRET_KEY_BASE={{ vault_sharedlists_secret_key_base }}
 {% if sharedlists_smtp_mailer_domain is defined %}
 MAILER_DOMAIN={{ sharedlists_smtp_mailer_domain }}
