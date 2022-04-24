@@ -52,3 +52,10 @@
     regexp: 'wure'
     replace: 'wurde'
   notify: restart foodsoft-web
+
+- name: "customizations | Enable systemd socket actication for Puma"
+  lineinfile:
+    path: "{{ foodsoft_home }}/config/puma.rb"
+    insertafter: '^port'
+    line: bind_to_activated_sockets
+  notify: restart foodsoft-web

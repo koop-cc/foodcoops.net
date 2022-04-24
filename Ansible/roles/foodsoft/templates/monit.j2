@@ -4,7 +4,7 @@ check process foodsoft-web
   stop program = "/usr/sbin/service foodsoft-web stop"
   if 2 restarts within 3 cycles then timeout
   if cpu usage > 95% for 3 cycles then restart
-  if failed host 127.0.0.1 port {{ foodsoft_web_port }} for 3 cycles then restart
+  if failed host {{ foodsoft_web_bind_ip }} port {{ foodsoft_web_port }} for 3 cycles then restart
   if 5 restarts within 5 cycles then timeout
 
 check process foodsoft-smtp
@@ -13,7 +13,7 @@ check process foodsoft-smtp
   stop program = "/usr/sbin/service foodsoft-smtp stop"
   if 2 restarts within 3 cycles then timeout
   if cpu usage > 95% for 3 cycles then restart
-  if failed host 127.0.0.1 port {{ foodsoft_smtp_server_port }} for 3 cycles then restart
+  if failed host {{ foodsoft_smtp_address }} port {{ foodsoft_smtp_server_port }} for 3 cycles then restart
   if 5 restarts within 5 cycles then timeout
 
 check process foodsoft-resque

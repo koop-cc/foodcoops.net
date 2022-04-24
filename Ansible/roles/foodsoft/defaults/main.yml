@@ -22,7 +22,7 @@ foodsoft_smtp_port: "25"
 foodsoft_smtp_authentication: false
 foodsoft_smtp_enable_starttls_auto: false
 
-puma_sockets: [ 9294, 9295 ]
+puma_port: "9294"
 
 ruby_path: "{{ foodsoft_user_home}}/.rbenv"
 ruby_build_git_url: https://github.com/rbenv/ruby-build.git
