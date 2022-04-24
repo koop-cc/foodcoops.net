@@ -1,5 +1,5 @@
 check process foodsoft-web
-  matching '"^puma [0-9.]* \(tcp:\/\/{{ foodsoft_web_bind_ip | replace(".", "\.") }}:{{ foodsoft_web_port }}\) \[foodsoft\]"'
+  matching '"^puma [0-9.]* \(tcp:\/\/{{ foodsoft_web_bind_ip | replace(".", "\.") }}:{{ foodsoft_web_port }}(.*)\) \[foodsoft\]"'
   start program = "/usr/sbin/service foodsoft-web start"
   stop program = "/usr/sbin/service foodsoft-web stop"
   if 2 restarts within 3 cycles then timeout

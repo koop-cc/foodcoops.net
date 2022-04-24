@@ -1,5 +1,5 @@
 check process sharedlists-web
-  matching '"^puma [0-9.]* \(tcp:\/\/{{ sharedlists_web_bind_ip | replace(".", "\.") }}:{{ puma_port }}\) \[sharedlists\]"'
+  matching '"^puma [0-9.]* \(tcp:\/\/{{ sharedlists_web_bind_ip | replace(".", "\.") }}:{{ sharedlists_web_port }}(.*)\) \[sharedlists\]"'
   start program = "/usr/sbin/service sharedlists-web start"
   stop program = "/usr/sbin/service sharedlists-web stop"
   if 2 restarts within 3 cycles then timeout
