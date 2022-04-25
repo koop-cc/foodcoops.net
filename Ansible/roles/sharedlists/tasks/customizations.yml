@@ -16,7 +16,7 @@
   register: railties_version
 
 # Copy only if version number matches.
-- name: "customizations | copy monkey path for anon logging"
+- name: "customizations | copy monkey patch for anon logging"
   copy:
     src: anon_logger.rb
     dest: "{{ sharedlists_home }}/config/initializers/anon_logger.rb"
