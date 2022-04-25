@@ -12,3 +12,8 @@
     password_lock: yes
     home: "{{ foodsoft_user_home }}"
     system: true
+
+- name: "user | set foodsoftctl alias"
+  lineinfile:
+    path: "{{ foodsoft_user_home }}/.bashrc"
+    line: alias foodsoftctl="REDIS_URL={{ foodsoft_redis_url }} RAILS_ENV=production SECRET_KEY_BASE={{ vault_foodsoft_secret_key_base }} rbenv exec bundle exec rails"

@@ -12,3 +12,8 @@
     password_lock: yes
     home: "{{ sharedlists_user_home }}"
     system: true
+
+- name: "user | set sharedlists alias "
+  lineinfile:
+    path: "{{ sharedlists_user_home }}/.bashrc"
+    line: alias sharedlistsctl="RAILS_ENV=production SECRET_KEY_BASE={{ vault_sharedlists_secret_key_base }} rbenv exec bundle exec rails"
