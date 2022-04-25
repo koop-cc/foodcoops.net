@@ -9,7 +9,7 @@
   register: railties_version
 
 # Copy only if version number matches.
-- name: "customizations | copy monkey path for anon logging"
+- name: "customizations | copy monkey patch for anon logging"
   copy:
     src: foodsoft/anon_logger.rb
     dest: "{{ foodsoft_home }}/config/initializers/anon_logger.rb"
@@ -44,18 +44,4 @@
     path: "{{ foodsoft_home }}/app/views/finance/financial_transactions/_ordergroup.haml"
     regexp: '%td= text_field_tag .financial_transactions\[\]\[amount\]., nil, class: .input-small.'
     replace: "%td= number_field_tag 'financial_transactions[][amount]', nil, class: 'input-small', step: 0.01"
-  notify: restart foodsoft-web
-
-- name: "customizations | Fix typo in German language file"
-  replace:
-    path: "{{ foodsoft_home }}/config/locales/de.yml"
-    regexp: 'wure'
-    replace: 'wurde'
-  notify: restart foodsoft-web
-
-- name: "customizations | Enable systemd socket actication for Puma"
-  lineinfile:
-    path: "{{ foodsoft_home }}/config/puma.rb"
-    insertafter: '^port'
-    line: bind_to_activated_sockets
   notify: restart foodsoft-web
