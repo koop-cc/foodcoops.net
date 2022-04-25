@@ -11,6 +11,7 @@ Foodcoops.net Ansible deployment
   - [Adding a member to the hosting team](#adding-a-member-to-the-hosting-team)
   - [Recreating the demo database](#recreating-the-demo-database)
   - [Restore files from backup](#restore-files-from-backup)
+  - [List the date of latest activity per instance](#list-the-date-of-latest-activity-per-instance)
 
 # Introduction
 In this folder you'll find a couple of [Ansible](https://www.ansible.com) roles to setup and manage the
@@ -129,3 +130,16 @@ We create daily backups of all databases and also a full system backup. You will
 |--------|------|--------|----------|
 | Databases | `automysqlbackup` | focone | `/var/lib/automysqlbackup` |
 | Full system | `rsnapshot` | fc-monitor | `/var/cache/rsnapshot` |
+
+## List the date of latest activity per instance
+You can intenify the date of the latest user activity of all Foodsoft instances:
+```Shell
+cd /opt/foodsoft
+
+su _foodsoft
+
+REDIS_URL="redis://127.0.0.1:6379" SECRET_KEY_BASE="abc..." RAILS_ENV="production" \
+  rbenv exec bundle exec rails r \
+  'FoodsoftConfig.foodcoops.each{|s| FoodsoftConfig.select_foodcoop(s) ; \
+  puts "#{User.maximum(:last_activity).rfc3339} #{s}"}' | sort
+```
