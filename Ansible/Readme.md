@@ -9,6 +9,7 @@ Foodcoops.net Ansible deployment
   - [Adding a new foodcoop](#adding-a-new-foodcoop)
   - [Deleting a foodcoop](#deleting-a-foodcoop)
   - [Adding a member to the hosting team](#adding-a-member-to-the-hosting-team)
+  - [Run rails commands](#run-rails-commands)
   - [Recreating the demo database](#recreating-the-demo-database)
   - [Restore files from backup](#restore-files-from-backup)
   - [List the date of latest activity per instance](#list-the-date-of-latest-activity-per-instance)
@@ -118,10 +119,19 @@ If the deletion of a foocoop is requested follow these steps:
     postmap cdb:virtual_aliases
     ```
 
+## Run rails commands
+Usually you have to pass at least these environment variables to make `rails` [commands](https://guides.rubyonrails.org/command_line.html) work:
+- `RAILS_ENV`
+- `REDIS_URL` (Foodsoft only)
+- `SECRET_KEY_BASE`
+  
+Additionally your need to run `rails` in the context of `rbenv`. This results in a very long command line argument.  You may use the bash [aliases](https://github.com/foodcoops/foodcoops.net/commit/a3b9818644e14eaa51af4a4e5db8d38a4474f59a) `foodsoftctl` and `sharedlistsctl` to shorten the `rails` commands.
+
 ## Recreating the demo database
 It can sometimes be useful to manually reset the demo instance with a new database, seeded from `small.en`. Run the following command as the Foodsoft system user:
 ```shell
-DISABLE_DATABASE_ENVIRONMENT_CHECK=1 DATABASE_URL=mysql2://foodsoft:$DATABASE_PASSWORD@localhost/foodsoft_demo REDIS_URL=redis://127.0.0.1:6379 SECRET_KEY_BASE=$SECRET_KEY_BASE RAILS_ENV=production rbenv exec rails db:purge db:schema:load db:seed:small.en && rbenv exec rails tmp:cache:clear
+DISABLE_DATABASE_ENVIRONMENT_CHECK=1 DATABASE_URL=mysql2://foodsoft:$DATABASE_PASSWORD@localhost/foodsoft_demo \  
+  foodsoftctl db:purge db:schema:load db:seed:small.en && foodsoftctl tmp:cache:clear
 ```
 
 ## Restore files from backup
@@ -138,8 +148,6 @@ cd /opt/foodsoft
 
 su _foodsoft
 
-REDIS_URL="redis://127.0.0.1:6379" SECRET_KEY_BASE="abc..." RAILS_ENV="production" \
-  rbenv exec bundle exec rails r \
-  'FoodsoftConfig.foodcoops.each{|s| FoodsoftConfig.select_foodcoop(s) ; \
+foodsoftctl r 'FoodsoftConfig.foodcoops.each{|s| FoodsoftConfig.select_foodcoop(s) ; \
   puts "#{User.maximum(:last_activity).rfc3339} #{s}"}' | sort
 ```
