@@ -27,7 +27,7 @@
     password: "{{ vault_phpmyadmin_password }}"
     owner: root
     group: www-data
-    mode: 06400
+    mode: 0640
 
 - name: "phpmyadmin | Check php version"
   shell:
