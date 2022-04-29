@@ -4,4 +4,3 @@
     - fc-monitor
   roles:
     - role: basic-server
-      tags: role-basic-server

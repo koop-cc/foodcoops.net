@@ -3,5 +3,3 @@
     - focone
   roles:
     - role: mariadb
-      tags: role-mariadb
-    - tasks:

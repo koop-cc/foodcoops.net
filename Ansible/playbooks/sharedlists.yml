@@ -3,4 +3,3 @@
     - focone
   roles:
     - role: sharedlists
-      tags: role-sharedlists
