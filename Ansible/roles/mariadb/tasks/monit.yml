@@ -1,0 +1,15 @@
+---
+- name: "monit | create sql account"
+  mysql_user:
+    name: "{{ monit_sql_user }}"
+    password: "{{ vault_monit_sql_password }}"
+    state: present
+    login_unix_socket: "{{ mariadb_socket }}"
+    login_user: root
+
+- name: "monit | copy configuration"
+  template:
+    src: monit-mariadb.j2
+    dest: /etc/monit/conf-enabled/mariadb
+    mode: 0600
+  notify: reload monit

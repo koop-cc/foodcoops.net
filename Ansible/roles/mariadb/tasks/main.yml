@@ -10,6 +10,11 @@
   when: "'munin' in ansible_facts.packages"
   tags: munin
 
+- name: "Monit"
+  include_tasks: monit.yml
+  when: "'monit' in ansible_facts.packages"
+  tags: monit
+
 - import_tasks: cron.yml
   tags: cron
 

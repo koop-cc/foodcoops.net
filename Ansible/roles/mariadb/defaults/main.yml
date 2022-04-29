@@ -1,5 +1,9 @@
 ---
+monit_sql_user: monit
+
 munin_sql_config_file: /etc/munin/plugin-conf.d/zzz-mariadb
 munin_sql_user: munin
+
 mariadb_server_config_file:  /etc/mysql/mariadb.conf.d/50-server.cnf
+
 phpmyadmin_htpasswd_file: /etc/nginx/snippets/.htpasswd
