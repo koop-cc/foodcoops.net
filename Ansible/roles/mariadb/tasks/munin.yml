@@ -2,10 +2,10 @@
 - name: "munin | create sql account"
   mysql_user:
     name: "{{ munin_sql_user }}"
-    password: "{{ munin_sql_password }}"
+    password: "{{ vault_munin_sql_password }}"
     priv: '*.*:PROCESS,REPLICATION CLIENT'
     state: present
-    login_unix_socket: "{{ mysql_socket }}"
+    login_unix_socket: "{{ mariadb_socket }}"
     login_user: root
 
 - name: "munin | insert account details"
