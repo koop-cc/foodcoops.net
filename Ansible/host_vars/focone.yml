@@ -110,5 +110,7 @@ foodcoops:
     database: foodsoft_tutcoop
   - name: vitamaia
     database: foodsoft_vitamaia
+  - name: voedselduin
+    database: foodsoft_voedselduin
   - name: yamhi
     database: foodsoft_yamhi
