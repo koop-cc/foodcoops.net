@@ -11,7 +11,6 @@ server {
     ssl_certificate /var/lib/dehydrated/certs/{{ foodsoft_domain }}/fullchain.pem;
     ssl_certificate_key /var/lib/dehydrated/certs/{{ foodsoft_domain }}/privkey.pem;
     include /etc/nginx/snippets/add_headers.conf;
-    include /etc/nginx/snippets/foodsoft_redirects.conf;
 
     location ~ ^/(.*)/sessions$ {
         limit_req zone=perip burst=5 nodelay;

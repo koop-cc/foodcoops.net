@@ -21,9 +21,3 @@
     dest: "/etc/nginx/sites-enabled/{{ foodsoft_domain }}"
     state: link
   notify: reload nginx
-
-- name: "webserver | copy redirect file"
-  copy:
-    src: nginx/foodsoft_redirects.conf
-    dest: /etc/nginx/snippets/foodsoft_redirects.conf
-  notify: reload nginx
