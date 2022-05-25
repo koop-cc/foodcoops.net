@@ -38,6 +38,8 @@ foodcoops:
     database: foodsoft_fairnetzt
   - name: fcbn
     database: foodsoft_fcbn
+  - name: fcschinke09
+    database: foodsoft_fcschinke09
   - name: fcww
     database: foodsoft_fcww
   - name: foodkorb
