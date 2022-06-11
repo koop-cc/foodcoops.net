@@ -12,11 +12,26 @@ Restart=on-failure
 RestartSec=10
 WorkingDirectory={{ sharedlists_home }}
 ExecStart=/bin/bash -lc "${RBENV_CMD} rails server -b ${SHAREDLISTS_BIND_IP} -p ${SHAREDLISTS_WEB_PORT}"
+
+# Hardening to improve security
+NoNewPrivileges=true
+ProtectClock=true
+ProtectControlGroups=true
 ProtectHome=true
-ProtectSystem=full
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=strict
+PrivateDevices=yes
 PrivateTmp=true
 PrivateUsers=true
-NoNewPrivileges=true
+ReadWritePaths={{ sharedlists_home }}
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+SystemCallErrorNumber=EPERM
+SystemCallFilter=@system-service
 
 [Install]
 WantedBy=multi-user.target
