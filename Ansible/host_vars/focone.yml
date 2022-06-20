@@ -24,6 +24,7 @@ foodcoops:
     database: foodsoft_allmendetaucha
   - name: biwag
     database: foodsoft_biwag
+    use_apple_points: false
   - name: boernicke
     database: foodsoft_boernicke
   - name: buda

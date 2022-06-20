@@ -80,6 +80,7 @@ systemctl restart foodsoft-web
    | Setting | Value |
    |---------|-------|
    | `stop_ordering_under` | int |
+   | `use_apple_points` | bol |
    | `use_nick` | bol |
 3. Upload the changes to our Git repository.
 4. Execute the playbook with:

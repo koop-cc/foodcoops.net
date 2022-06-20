@@ -71,6 +71,9 @@
       {% if item.stop_ordering_under is defined %}
         stop_ordering_under: {{ item.stop_ordering_under }}
       {% endif %}
+      {% if item.use_apple_points is defined %}
+        use_apple_points: {{ item.use_apple_points }}
+      {% endif %}
       {% if item.use_nick is defined %}
         use_nick: {{ item.use_nick }}
       {% endif %}
