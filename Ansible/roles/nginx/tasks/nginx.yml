@@ -1,5 +1,5 @@
 ---
-- name: "nginx | copy main configurationdeacticate access logging"
+- name: "nginx | copy main configuration"
   copy:
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
