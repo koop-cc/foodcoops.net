@@ -68,4 +68,10 @@
         <<: *defaults
         database:
           database: {{ item.database }}
+      {% if item.stop_ordering_under is defined %}
+        stop_ordering_under: {{ item.stop_ordering_under }}
+      {% endif %}
+      {% if item.use_nick is defined %}
+        use_nick: {{ item.use_nick }}
+      {% endif %}
   notify: restart foodsoft-web

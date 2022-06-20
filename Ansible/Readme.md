@@ -76,16 +76,21 @@ systemctl restart foodsoft-web
 ## Adding a new foodcoop
 1. Gather all [information](https://foodcoops.net/.global-foodsoft-platform/#request-a-new-instance)
 1. Add the data to `host_vars/focone.yml` in the section `foodcoops`. Just follow the existing pattern.
-1. Upload the changes to our Git repository.
-1. Execute the playbook with:
+2. Some custom [configuration](roles/foodsoft/Configuration.md) settings are available. At the moment this the Ansible role supports:
+   | Setting | Value |
+   |---------|-------|
+   | `stop_ordering_under` | int |
+   | `use_nick` | bol |
+3. Upload the changes to our Git repository.
+4. Execute the playbook with:
    ```shell
    ansible-playbook playbooks/foodsoft.yml --tags never,foodcoop_add
    ```
-1. Immediately login with `admin` / `secret1234` and change the user details and password. The `admin` user should become the user account of the first contact person, so use their email address here. We do not want to encourage an unused `admin` account.
-1. You may want to pre-set some configuration if you know a bit more about the foodcoop. It's always helpful for new foodcoops to have a setup that already reflects their intended use a bit. At least you should set a time zone.
-1. Send an email to the foodcoop's contact persons with the url and admin account details.
-1. Please also communicate that this platform is run by volunteers from participating food cooperatives and depends on donations.
-1. Add the two contact persons to our foodsoft announce mailing list.
+5. Immediately login with `admin` / `secret1234` and change the user details and password. The `admin` user should become the user account of the first contact person, so use their email address here. We do not want to encourage an unused `admin` account.
+6. You may want to pre-set some configuration if you know a bit more about the foodcoop. It's always helpful for new foodcoops to have a setup that already reflects their intended use a bit. At least you should set a time zone.
+7. Send an email to the foodcoop's contact persons with the url and admin account details.
+8. Please also communicate that this platform is run by volunteers from participating food cooperatives and depends on donations.
+9.  Add the two contact persons to our foodsoft announce mailing list.
 
 ## Deleting a foodcoop
 If the deletion of a foocoop is requested follow these steps:
