@@ -15,21 +15,25 @@
     state: reloaded
 
 - name: restart foodsoft-web
-  service:
+  systemd:
     name: "{{ foodsoft_web_service }}"
+    daemon_reload: true
     state: restarted
 
 - name: restart foodsoft-web-socket
-  service:
+  systemd:
     name: "{{ foodsoft_web_socket }}"
+    daemon_reload: true
     state: restarted
 
 - name: restart foodsoft-smtp
-  service:
+  systemd:
     name: "{{ foodsoft_smtp_service }}"
+    daemon_reload: true
     state: restarted
 
 - name: restart foodsoft-resque
-  service:
+  systemd:
     name: "{{ foodsoft_resque_service }}"
+    daemon_reload: true
     state: restarted
