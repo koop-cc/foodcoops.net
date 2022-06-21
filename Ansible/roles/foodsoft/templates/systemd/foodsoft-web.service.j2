@@ -13,9 +13,25 @@ Restart=on-failure
 RestartSec=10
 WorkingDirectory={{ foodsoft_home }}
 ExecStart=/bin/bash -lc "${RBENV_CMD} rails server -b ${FOODSOFT_BIND_IP} -p ${FOODSOFT_WEB_PORT}"
+
+# Hardening to improve security
+ProtectClock=true
+ProtectControlGroups=true
 ProtectHome=true
-ProtectSystem=full
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=strict
+PrivateDevices=yes
 PrivateTmp=true
+ReadWritePaths={{ foodsoft_home }}
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+SystemCallErrorNumber=EPERM
+SystemCallFilter=@system-service
+
 {% if foodsoft_smtp_address is defined and foodsoft_smtp_address %}
 PrivateUsers=true
 NoNewPrivileges=true

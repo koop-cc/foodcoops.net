@@ -11,8 +11,23 @@ Restart=on-failure
 RestartSec=10
 WorkingDirectory={{ foodsoft_home }}
 ExecStart=/bin/bash -lc "${RBENV_CMD} rails foodsoft:reply_email_smtp_server"
+
+# Hardening to improve security
+NoNewPrivileges=true
+ProtectClock=true
+ProtectControlGroups=true
 ProtectHome=true
-ProtectSystem=full
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=strict
+PrivateDevices=yes
 PrivateTmp=true
 PrivateUsers=true
-NoNewPrivileges=true
+ReadWritePaths={{ foodsoft_home }}
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+SystemCallErrorNumber=EPERM
+SystemCallFilter=@system-service
