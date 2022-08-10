@@ -55,6 +55,8 @@ foodcoops:
     database: foodsoft_gamontdor
   - name: ghj
     database: foodsoft_ghj
+  - name: goodmoodfood
+    database: foodsoft_goodmoodfood
   - name: guerckchen
     database: foodsoft_guerckchen
   - name: haarlem
