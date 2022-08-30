@@ -21,6 +21,8 @@ Have a look at the sample settings [file](https://github.com/foodcoops/foodsoft/
 | `foodsoft_url` | string | Custom foodsoft software URL (used in footer )
 | `help_url` | string | URL of your help pages |
 | `homepage` | string | URL of your website |
+| `instance_name` | string | Long name of your foodcoop (used at the login page) |
+| `logout_redirect_url` | string | URL of a website to redirect after a logout |
 | `name` | string | Name of your Foodcoop |
 | `page_footer` | string | Add a custom footer to your Foodsoft |
 
