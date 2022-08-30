@@ -1,0 +1,14 @@
+--- new.html.haml.orig  2022-08-30 22:06:55.670006232 +0200
++++ new.html.haml       2022-08-30 22:04:42.557210929 +0200
+@@ -4,7 +4,10 @@
+       $('#nick').focus();
+     });
+
+-- title t('.title')
++- if FoodsoftConfig[:instance_name].present?
++  - title FoodsoftConfig[:instance_name]
++- else
++  - title t('.title')
+
+ %noscript
+   .alert.alert-error

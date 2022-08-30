@@ -20,6 +20,7 @@ postfix_relay_port: "587"
 foodcoops:
   - name: demo
     database: foodsoft_demo
+    instance_name: Foodsoft Demo
     logout_redirect_url: https://foodcoops.net/demo
   - name: allmendetaucha
     database: foodsoft_allmendetaucha
