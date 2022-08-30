@@ -68,6 +68,9 @@
         <<: *defaults
         database:
           database: {{ item.database }}
+      {% if item.logout_redirect_url is defined %}
+        logout_redirect_url: {{ item.logout_redirect_url}}
+      {% endif %}
       {% if item.stop_ordering_under is defined %}
         stop_ordering_under: {{ item.stop_ordering_under }}
       {% endif %}

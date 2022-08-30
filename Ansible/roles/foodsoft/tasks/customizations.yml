@@ -37,3 +37,9 @@
     path: "{{ foodsoft_home }}/db/seeds/minimal.seeds.rb"
     regexp: ':password => "secret"'
     replace: ':password => "secret1234"'
+
+- name: "customizations | Apply redirect after logout patch"
+  patch:
+    src: foodsoft/redirect_after_logout.patch
+    dest: "{{ foodsoft_home }}/app/controllers/sessions_controller.rb"
+  notify: restart foodsoft-web
