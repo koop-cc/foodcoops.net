@@ -70,6 +70,8 @@
           database: {{ item.database }}
       {% if item.instance_name is defined %}
         instance_name: {{ item.instance_name }}
+      {% else %}
+        instance_name: {{ item.name }}
       {% endif %}
       {% if item.logout_redirect_url is defined %}
         logout_redirect_url: {{ item.logout_redirect_url}}
