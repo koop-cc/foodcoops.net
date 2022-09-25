@@ -9,7 +9,6 @@
       - curl
       - dehydrated
       - fail2ban
-      - ferm
       - git
       - htop
       - locales
@@ -27,3 +26,9 @@
       - vim
       - wget
     cache_valid_time: 3600
+
+- name: "packages | install ferm"
+  apt:
+    pkg:
+      - ferm
+  when: ferm.install is defined and ferm.install

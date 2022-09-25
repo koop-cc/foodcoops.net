@@ -1,4 +1,9 @@
 ---
+- name: "misc | Add backports repository"
+  apt_repository:
+    repo: "deb http://ftp.de.debian.org/debian {{ ansible_distribution_release }}-backports main contrib non-free"
+    state: present
+
 - name: "misc | setup local"
   locale_gen:
     name: en_US.UTF-8
@@ -30,6 +35,7 @@
     src: ferm.conf.j2
     dest: /etc/ferm/ferm.conf
   notify: restart ferm
+  when: "'ferm' in ansible_facts.packages"
 
 - name: "misc | Limit journald logging"
   cron:
