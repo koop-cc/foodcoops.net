@@ -1,5 +1,5 @@
 ---
-- name: "ssh | Import ssh keys of admins"
+- name: "admins | Import ssh keys of admins"
   authorized_key:
     user: root
     state: present
@@ -7,7 +7,7 @@
   with_fileglob:
     - ssh_authorized_keys/admins/*.pub
 
-- name: "ssh | Remove old ssh keys"
+- name: "admins | Remove old ssh keys"
   authorized_key:
     user: root
     state: absent
