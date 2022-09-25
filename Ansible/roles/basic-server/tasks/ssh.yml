@@ -6,7 +6,7 @@
     state: absent
   notify: restart ssh
 
-- name: "ssh | disable passworf authentication"
+- name: "ssh | disable password authentication"
   replace:
     path: /etc/ssh/sshd_config
     regexp: '^(#)?PasswordAuthentication yes'
