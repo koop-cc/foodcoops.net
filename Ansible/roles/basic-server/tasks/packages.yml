@@ -3,6 +3,12 @@
   package_facts:
     manager: apt
 
+- name: "packages | Add backports repository"
+  apt_repository:
+    repo: "deb http://ftp.de.debian.org/debian {{ ansible_distribution_release }}-backports main contrib non-free"
+    state: present
+
+
 - name: "packages | install packages"
   apt:
     pkg:

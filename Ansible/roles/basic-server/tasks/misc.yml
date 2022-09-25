@@ -1,9 +1,4 @@
 ---
-- name: "misc | Add backports repository"
-  apt_repository:
-    repo: "deb http://ftp.de.debian.org/debian {{ ansible_distribution_release }}-backports main contrib non-free"
-    state: present
-
 - name: "misc | setup local"
   locale_gen:
     name: en_US.UTF-8
