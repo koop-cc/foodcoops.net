@@ -23,10 +23,5 @@
 - import_tasks: admins.yml
   tags: admin
 
-- name: "Add rsnapshot"
-  include_tasks: rsnapshot.yml
-  args:
-    apply:
-      tags: rsnapshot
-  tags: never
-  when: backup_host is defined and backup_host
+- import_tasks: rsnapshot.yml
+  tags: rsnapshot
