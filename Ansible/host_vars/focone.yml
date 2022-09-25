@@ -37,6 +37,7 @@ foodcoops:
     database: foodsoft_ethelkidson
   - name: engelingshof
     database: foodsoft_engelingshof
+    use_apple_points: false
   - name: fairnetzt
     database: foodsoft_fairnetzt
   - name: fcbn
