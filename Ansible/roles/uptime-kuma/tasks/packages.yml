@@ -1,0 +1,19 @@
+---
+- name: "packages | Add nodesource apt key"
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    keyring: /etc/apt/trusted.gpg.d/nodesource.gpg
+
+- name: "packages | Add nodesource repository"
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_14.x {{ ansible_distribution_release }} main"
+    state: present
+
+- name: "packages | Install apt packages"
+  apt:
+    default_release: "{{ ansible_distribution_release }}-backports"
+    state: latest
+    pkg:
+      - nodejs
+
+

@@ -1,0 +1,7 @@
+---
+uptimekuma_github_api_url: https://api.github.com/repos/louislam/uptime-kuma/releases/latest
+uptimekuma_git_url: https://github.com/louislam/uptime-kuma.git
+
+uptimekuma_home: /opt/uptime-kuma
+uptimekuma_user: uptimekuma
+uptimekuma_user_home: /var/lib/uptimekuma

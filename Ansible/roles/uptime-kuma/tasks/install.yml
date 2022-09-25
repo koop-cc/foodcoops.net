@@ -1,0 +1,55 @@
+---
+- name: "install | Create group"
+  group:
+    name: "{{ uptimekuma_user }}"
+    state: present
+
+- name: "install | create system account"
+  user:
+    name: "{{ uptimekuma_user }}"
+    group: "{{ uptimekuma_user }}"
+    home: "{{ uptimekuma_user_home }}"
+    shell: /bin/bash
+    password_lock: yes
+    system: yes
+
+- name: "install | Check for latest version"
+  shell:
+    cmd: curl -sL "{{ uptimekuma_github_api_url }}" | jq -r ".tag_name"
+    warn: false
+  changed_when: false
+  register: latest_version
+
+- name: "install | Get Git Repository"
+  git:
+    repo: "{{ uptimekuma_git_url }}"
+    dest: "{{ uptimekuma_home }}"
+    version: "{{ latest_version.stdout }}"
+    force: yes
+
+- name: "install | Change ownership"
+  file:
+    path: "{{ uptimekuma_home }}"
+    state: directory
+    owner: "{{ uptimekuma_user }}"
+    group: "{{ uptimekuma_user }}"
+    recurse: true
+
+- name: "install | Install npm packages"
+  command:
+    cmd: npm run setup
+    chdir: "{{ uptimekuma_home}}"
+  become: true
+  become_user: "{{ uptimekuma_user }}"
+
+- name: "install | Copy systemd services file"
+  template:
+    src: uptime-kuma.service.j2
+    dest: /etc/systemd/system/uptime-kuma.service
+
+- name: "install | Enable systemd service"
+  systemd:
+    name: uptime-kuma
+    enabled: true
+    daemon_reload: true
+    state: started

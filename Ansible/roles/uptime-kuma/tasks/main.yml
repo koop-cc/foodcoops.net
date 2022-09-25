@@ -1,0 +1,6 @@
+---
+- import_tasks: packages.yml
+  tags: packages
+
+- import_tasks: install.yml
+  tags: install
