@@ -8,27 +8,20 @@
     pkg:
       - haveged
       - liblchown-perl
-
-# Get by download as the package is only in unstable
-- name: "rsnapshot | get deb package"
-  get_url:
-    url: "{{ rsnapshot_deb_url }}"
-    dest: /tmp/rsnapshot.deb
-  when: "'rsnapshot' not in ansible_facts.packages"
-
-- name: "rsnapshot | install package"
-  command: dpkg -i /tmp/rsnapshot.deb
-  when: "'rsnapshot' not in ansible_facts.packages"
+      - rsnapshot
+  when: backup_host is defined and backup_host
 
 - name: "rsnapshot | create ssh keys"
   command:
     cmd: ssh-keygen -a 100 -t ed25519 -N '' -f "{{ rsnapshot_ssh_key_file }}"
     creates: "{{ rsnapshot_ssh_key_file }}"
+  when: backup_host is defined and backup_host
 
 - name: "rsnapshot | create configuration directory"
   file:
     path: /etc/rsnapshot.d
     state: directory
+  when: backup_host is defined and backup_host
 
 - name: "rsnapshot | copy configuration files"
   copy:
@@ -36,15 +29,17 @@
     dest: "/etc/rsnapshot.d/{{ item }}"
   loop:
     - exclude.inc
+  when: backup_host is defined and backup_host
 
 - name: "rsnapshot | copy logssh"
   copy:
     src: rsnapshot/logssh.sh
     dest: /usr/local/bin/logssh.sh
     mode: 0666
-    when: backup_guest is defined and backup_guest
+  when: backup_guest is defined and backup_guest
 
 - name: "rsnapshot | copy cron file"
   copy:
     src: rsnapshot/cron
     dest: /etc/cron.d/rsnapshot
+  when: backup_host is defined and backup_host
