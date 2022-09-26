@@ -13,24 +13,12 @@ ExecStart=/usr/bin/npm run start-server
 Restart=on-failure
 
 # Hardening to improve security
-NoNewPrivileges=true
-ProtectClock=true
 ProtectControlGroups=true
 ProtectHome=true
-ProtectHostname=true
-ProtectKernelLogs=true
-ProtectKernelModules=true
-ProtectKernelTunables=true
 ProtectSystem=strict
-PrivateDevices=yes
+PrivateMounts=true
 PrivateTmp=true
-PrivateUsers=true
 ReadWritePaths={{ uptimekuma_home }}
-RestrictRealtime=true
-RestrictSUIDSGID=true
-SystemCallArchitectures=native
-SystemCallErrorNumber=EPERM
-SystemCallFilter=@system-service
 
 [Install]
 WantedBy=multi-user.target
