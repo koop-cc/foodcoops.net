@@ -5,6 +5,7 @@ Ressources
 
 - Database management with phpMyAdmin: https://dbadmin.foodcoops.net
 - Mailinglist management: https://lists.foodcoodps.net
+- Netcup customer control panel: https://www.customercontrolpanel.de/
 - Sharedlists web service: https://sharedlists.systemausfall.org
 - Status page for admins: https://status.foodcoops.net/status/admin
 - Status page for user: https://status.foodcoops.net
