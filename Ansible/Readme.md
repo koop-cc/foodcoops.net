@@ -11,7 +11,6 @@ Foodcoops.net Ansible deployment
   - [Adding a member to the hosting team](#adding-a-member-to-the-hosting-team)
   - [Run rails commands](#run-rails-commands)
   - [Recreating the demo database](#recreating-the-demo-database)
-  - [Restore files from backup](#restore-files-from-backup)
   - [List the date of latest activity per instance](#list-the-date-of-latest-activity-per-instance)
 
 # Introduction
@@ -139,13 +138,6 @@ It can sometimes be useful to manually reset the demo instance with a new databa
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 DATABASE_URL=mysql2://foodsoft:$DATABASE_PASSWORD@localhost/foodsoft_demo \  
   foodsoftctl db:purge db:schema:load db:seed:small.en && foodsoftctl tmp:cache:clear
 ```
-
-## Restore files from backup
-We create daily backups of all databases and also a full system backup. You will find the backups at the following locations:
-| Backup | Tool | Backup server | Location |
-|--------|------|--------|----------|
-| Databases | `automysqlbackup` | focone | `/var/lib/automysqlbackup` |
-| Full system | `rsnapshot` | fc-helper | `/data/backups/rsnapshot` |
 
 ## List the date of latest activity per instance
 You can intenify the date of the latest user activity of all Foodsoft instances:
