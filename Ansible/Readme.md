@@ -145,7 +145,7 @@ We create daily backups of all databases and also a full system backup. You will
 | Backup | Tool | Backup server | Location |
 |--------|------|--------|----------|
 | Databases | `automysqlbackup` | focone | `/var/lib/automysqlbackup` |
-| Full system | `rsnapshot` | fc-monitor | `/var/cache/rsnapshot` |
+| Full system | `rsnapshot` | fc-helper | `/data/backups/rsnapshot` |
 
 ## List the date of latest activity per instance
 You can intenify the date of the latest user activity of all Foodsoft instances:
