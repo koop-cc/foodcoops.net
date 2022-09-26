@@ -1,8 +1,0 @@
----
-backup_host: true
-ssh_port: "2242"
-icinga_api_port: "25665"
-firewall:
-  ports:
-   - http
-   - https
