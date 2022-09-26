@@ -15,10 +15,10 @@ Ressources
 
 We are running these two servers:
 
-| name | services |
-|------|----------|
-| focone | foodsoft, sharedlists, phpMyAdmin |
-| fc-helper | Uptime Kuma, Backups |
+| name | services | provider |
+|------|----------|----------|
+| focone | foodsoft, sharedlists, phpMyAdmin | Netcup |
+| fc-helper | Uptime Kuma, Backups | Sense.Lab |
 
 To gain access just paste these configuration snippets to you `~/.ssh/config`:
 ```Shell
