@@ -46,8 +46,6 @@ foodcoops:
     database: foodsoft_fcschinke09
     stop_ordering_under: 70
     use_nick: true
-  - name: fcww
-    database: foodsoft_fcww
   - name: foodkorb
     database: foodsoft_foodkorb
   - name: frw
