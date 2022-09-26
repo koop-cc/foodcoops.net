@@ -1,2 +1,6 @@
 ---
-# handlers file for roles/uptime-kuma
+- name: restart uptime-kuma
+  systemd:
+    name: uptime-kuma
+    daemon_reload: true
+    state: restarted
