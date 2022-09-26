@@ -5,3 +5,6 @@ uptimekuma_git_url: https://github.com/louislam/uptime-kuma.git
 uptimekuma_home: /opt/uptime-kuma
 uptimekuma_user: uptimekuma
 uptimekuma_user_home: /var/lib/uptimekuma
+
+uptimekuma_service: uptime-kuma.service
+uptimekuma_version_file: "{{ uptimekuma_home }}/.version"

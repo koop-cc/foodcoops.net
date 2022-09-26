@@ -27,6 +27,13 @@
     version: "{{ latest_version.stdout }}"
     force: yes
 
+- name: "install | Copy version file (needed for update script)"
+  template:
+    src: version.j2
+    dest: "{{ uptimekuma_version_file }}"
+    owner: "{{ uptimekuma_user }}"
+    group: "{{ uptimekuma_user }}"
+
 - name: "install | Change ownership"
   file:
     path: "{{ uptimekuma_home }}"
@@ -45,7 +52,7 @@
 - name: "install | Copy systemd services file"
   template:
     src: uptime-kuma.service.j2
-    dest: /etc/systemd/system/uptime-kuma.service
+    dest: "/etc/systemd/system/{{ uptimekuma_service }}"
   notify: restart uptime-kuma
 
 - name: "install | Enable systemd service"
@@ -54,3 +61,16 @@
     enabled: true
     daemon_reload: true
     state: started
+
+- name: "install | Copy update script"
+  template:
+    src: uptime-kuma-updater.j2
+    dest: /usr/local/bin/uptime-kuma-updater
+    mode: "0755"
+
+- name: "install | Add cron job for updates"
+  cron:
+    name: Update Uptime Kuma
+    job: uptime-kuma-updater upgrade
+    hour: "01"
+    minute: "30"

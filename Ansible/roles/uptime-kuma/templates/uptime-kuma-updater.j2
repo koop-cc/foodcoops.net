@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Update script for Uptime Kuma
+# {{ ansible_managed }}
+
+set -eu
+
+USER={{ uptimekuma_user }}
+PROJECT_URL={{ uptimekuma_github_api_url }}
+INSTALL_PATH={{ uptimekuma_home }}
+UPTIME_KUMA_SERVICE={{ uptimekuma_service }}
+VERSION_FILE={{ uptimekuma_version_file }}
+
+get_latest_version() {
+    curl -sL "$PROJECT_URL" | jq -r ".tag_name"
+}
+
+get_installed_version() {
+    # return the currently installed version (or empty, if not installed)
+    cat "$VERSION_FILE" 2>/dev/null || true
+}
+
+if [ $# -gt 0 ]; then
+    ACTION=$1
+    shift
+else
+    ACTION=status
+fi
+
+case "$ACTION" in
+    status)
+        printf 'Currently installed version:\t%s\n' "$(get_installed_version)"
+        printf 'Latest available version:\t%s\n' "$(get_latest_version)"
+        ;;
+    upgrade)
+        wanted_version=${1:-latest}
+        [ "$wanted_version" = "latest" ] && wanted_version=$(get_latest_version)
+        if [ "$wanted_version" = "$(get_installed_version)" ]; then
+            echo "Version '$wanted_version' is already installed. Nothing needs to be done."
+        else
+            echo "Update Uptime Kuma to latest version '$wanted_version' ..."
+            cd "$INSTALL_PATH"
+            systemctl stop "$UPTIME_KUMA_SERVICE"
+            sudo -u "$USER" git fetch --all
+            sudo -u "$USER" git checkout "$(get_latest_version)" --force
+            sudo -u "$USER" npm install --production
+            sudo -u "$USER" npm run download-dist
+            sudo -u "$USER" echo "$(get_latest_version)" > "$VERSION_FILE"
+            systemctl start "$UPTIME_KUMA_SERVICE"
+        fi
+        ;;
+    help|--help)
+        echo "Syntax: $(basename "$0") ACTION"
+        echo "    upgrade [VERSION]       - upgrade to the specified version (default: latest)"
+        echo "    status                  - output the currently installed and latest available version"
+        echo
+        ;;
+    *)
+        "$0" help >&2
+        exit 1
+        ;;
+esac

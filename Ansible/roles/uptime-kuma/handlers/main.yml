@@ -1,6 +1,6 @@
 ---
 - name: restart uptime-kuma
   systemd:
-    name: uptime-kuma
+    name: "{{ uptimekuma_service }}"
     daemon_reload: true
     state: restarted
