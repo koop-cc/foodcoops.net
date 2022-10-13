@@ -48,6 +48,7 @@
     chdir: "{{ uptimekuma_home}}"
   become: true
   become_user: "{{ uptimekuma_user }}"
+  notify: restart uptime-kuma
 
 - name: "install | Copy systemd services file"
   template:
