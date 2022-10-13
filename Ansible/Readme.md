@@ -98,7 +98,7 @@ If the deletion of a foocoop is requested follow these steps:
 1. Find the foodcoops's configuration at `host_vars/focone.yml`. Enter another entry called `deleted: true` to the array:
    ```yaml
    foodcoops:
-     - name: mycoop
+     - instance: mycoop
        database: foodsoft_mycoop
        deleted: true
    ```

@@ -1,5 +1,5 @@
 ---
-- name: "foodcoop | {{ item.name }} | Add database"
+- name: "foodcoop | {{ item.instance }} | Add database"
   mysql_db:
     name: "{{ item.database }}"
     state: present
@@ -8,7 +8,7 @@
     login_unix_socket: "{{ mariadb_socket }}"
     login_user: root
 
-- name: "foodcoop | {{ item.name }} | Assign database permissions"
+- name: "foodcoop | {{ item.instance }} | Assign database permissions"
   mysql_user:
     name: "{{ foodsoft_db_user }}"
     password: "{{ vault_foodsoft_db_password }}"
@@ -19,7 +19,7 @@
     login_user: root
 
 # If database schema is already loaded it outputs a version number > 0
-- name: "foodcoop | {{ item.name }} | test if database schema is already loaded"
+- name: "foodcoop | {{ item.instance }} | test if database schema is already loaded"
   shell:
     cmd: "rbenv exec rails db:version | grep ^Current | sed 's/^.*: //'"
     chdir: "{{ foodsoft_home }}"
@@ -33,7 +33,7 @@
   register: db_version
   changed_when: false
 
-- name: "database | {{ item.name }} | create schema"
+- name: "database | {{ item.instance }} | create schema"
   shell:  
     cmd: "rbenv exec rails db:schema:load"
     chdir: "{{ foodsoft_home }}"
@@ -46,7 +46,7 @@
   become_user: "{{ foodsoft_user }}"
   when: db_version.stdout == "0"
 
-- name: "database | {{ item.name }} | Run seed.rb"
+- name: "database | {{ item.instance }} | Run seed.rb"
   shell:
     cmd: "rbenv exec rails db:seed"
     chdir: "{{ foodsoft_home }}"
@@ -59,22 +59,22 @@
   become_user: "{{ foodsoft_user }}"
   when: db_version.stdout == "0" #db:seed is not idempotent in this case
 
-- name: "foodcoop | {{ item.name }} | Add new foodcoop to configuration file"
+- name: "foodcoop | {{ item.instance }} | Add new foodcoop to configuration file"
   blockinfile:
     path: "{{ foodsoft_home }}/config/app_config.yml"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.instance }}"
     block: |
-      {{ item.name }}:
+      {{ item.instance }}:
         <<: *defaults
         database:
           database: {{ item.database }}
-      {% if item.instance_name is defined %}
-        instance_name: {{ item.instance_name }}
-      {% else %}
-        instance_name: {{ item.name }}
-      {% endif %}
       {% if item.logout_redirect_url is defined %}
         logout_redirect_url: {{ item.logout_redirect_url}}
+      {% endif %}
+      {% if item.name is defined %}
+        name: {{ item.name }}
+      {% else %}
+        name: {{ item.instance }}
       {% endif %}
       {% if item.stop_ordering_under is defined %}
         stop_ordering_under: {{ item.stop_ordering_under }}
