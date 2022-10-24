@@ -5,6 +5,8 @@ After=network.target
 Requires={{ sharedlists_web_socket }}
 
 [Service]
+Type=notify
+WatchdogSec=10
 EnvironmentFile={{ sharedlists_environment_file }}
 User={{ sharedlists_user }}
 Group={{ sharedlists_user }}
