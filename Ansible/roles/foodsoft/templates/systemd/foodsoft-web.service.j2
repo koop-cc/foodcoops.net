@@ -7,6 +7,8 @@ Requires={{ foodsoft_web_socket }}
 
 [Service]
 EnvironmentFile={{ foodsoft_environment_file }}
+Type=notify
+WatchdogSec=10
 User={{ foodsoft_user }}
 Group={{ foodsoft_user }}
 Restart=on-failure

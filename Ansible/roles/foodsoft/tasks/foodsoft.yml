@@ -74,6 +74,23 @@
   become: true
   become_user: "{{ foodsoft_user }}"
 
+- name: "foodsoft | enable local Gemfile support"
+  blockinfile:
+    path: "{{ foodsoft_home }}/Gemfile"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK | local Gemfile support"
+    block: |
+      local_gemfile = File.join(File.dirname(__FILE__), "Gemfile.local")
+      if File.exist?(local_gemfile)
+        eval_gemfile local_gemfile
+      end
+
+- name: "foodsoft | copy Gemfile.local"
+  copy:
+   src: foodsoft/Gemfile.local
+   dest: "{{ foodsoft_home }}/Gemfile.local"
+   owner: "{{ foodsoft_user }}"
+   group: "{{ foodsoft_user }}"
+
 - name: "foodsoft | install ruby packages"
   command:
     cmd: "rbenv exec bundle install"
