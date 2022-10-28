@@ -48,6 +48,8 @@ foodcoops:
     use_nick: true
   - instance: foodkorb
     database: foodsoft_foodkorb
+  - instance: foodstommeln
+    database: foodsoft_foodstommeln
   - instance: frw
     database: foodsoft_frw
   - instance: fuki
