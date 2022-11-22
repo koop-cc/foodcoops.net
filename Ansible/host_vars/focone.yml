@@ -92,6 +92,8 @@ foodcoops:
     database: foodsoft_meierei
   - instance: minitopia
     database: foodsoft_minitopia
+  - instance: oekoma
+    database: foodsoft_oekoma
   - instance: oosterwold
     database: foodsoft_oosterwold
   - instance: radieschen
