@@ -25,7 +25,9 @@
   ansible.builtin.template:
     src: systemd/foodsoft.conf.j2
     dest: "{{ foodsoft_environment_file }}"
-    mode: 0644
+    owner: "{{ foodsoft_user }}"
+    group: root
+    mode: 0640
   notify:
     - restart foodsoft-web
     - restart foodsoft-smtp
