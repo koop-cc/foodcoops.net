@@ -1,8 +1,9 @@
 ---
 - name: "systemd | copy service files"
-  template:
+  ansible.builtin.template:
     src: "systemd/{{ item.src }}"
     dest: "/etc/systemd/system/{{ item.dest }}"
+    mode: 0644
   loop:
     - { src: foodsoft-web.service.j2, dest: "{{ foodsoft_web_service }}" }
     - { src: foodsoft-web.socket.j2, dest: "{{ foodsoft_web_socket }}" }
@@ -15,23 +16,25 @@
     - restart foodsoft-resque
 
 - name: "systemd | create configuration directory"
-  file:
+  ansible.builtin.file:
     path: /etc/foodsoft
     state: directory
+    mode: 0755
 
 - name: "systemd | copy configuration"
-  template:
+  ansible.builtin.template:
     src: systemd/foodsoft.conf.j2
     dest: "{{ foodsoft_environment_file }}"
+    mode: 0644
   notify:
     - restart foodsoft-web
     - restart foodsoft-smtp
     - restart foodsoft-resque
 
 - name: "systemd | enable service"
-  systemd:
-    enabled: yes
-    daemon_reload: yes
+  ansible.builtin.systemd:
+    enabled: true
+    daemon_reload: true
     state: started
     name: "{{ item }}"
   loop:

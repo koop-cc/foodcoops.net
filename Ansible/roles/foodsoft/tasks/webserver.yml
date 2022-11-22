@@ -1,22 +1,23 @@
 ---
 - name: "webserver | add domain"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/dehydrated/domains.txt
     line: "{{ foodsoft_domain }}"
   register: add_domain
   when: "'dehydrated' in ansible_facts.packages"
 
 - name: "webserver | create certificate"
-  command: dehydrated --cron -g
+  ansible.builtin.command: dehydrated --cron -g
   when: add_domain.changed and 'dehydrated' in ansible_facts.packages
 
 - name: "webserver | copy nginx sites"
-  template:
+  ansible.builtin.template:
     src: nginx.j2
     dest: "/etc/nginx/sites-available/{{ foodsoft_domain }}"
+    mode: 0644
 
 - name: "webserver | activate nginx site"
-  file:
+  ansible.builtin.file:
     src: "/etc/nginx/sites-available/{{ foodsoft_domain }}"
     dest: "/etc/nginx/sites-enabled/{{ foodsoft_domain }}"
     state: link

@@ -1,55 +1,57 @@
 ---
 - name: "foosoft | get latest tag"
-  shell:
+  ansible.builtin.shell:
     cmd: curl -sL "{{ foodsoft_git_latest_tag_url }}" | jq -r '.[0].name'
   register: latest_tag
 
 - name: "foodsoft | clone repository"
-  git:
+  ansible.builtin.git:
     repo: "{{ foodsoft_git_url }}"
     dest: "{{ foodsoft_home }}"
     version: "{{ foodsoft_version }}"
-    force: yes
+    force: true
 
 - name: "foodsoft | Ruby version lookup"
-  shell: cat "{{ foodsoft_home }}/.ruby-version"
+  ansible.builtin.shell: cat "{{ foodsoft_home }}/.ruby-version"
   register: ruby_version
   changed_when: false
 
 - name: "foodsoft | change owner"
-  file:
+  ansible.builtin.file:
     path: "{{ foodsoft_home }}"
     state: directory
-    recurse: yes
+    recurse: true
     owner: "{{ foodsoft_user }}"
     group: "{{ foodsoft_user }}"
 
 - name: "foodsoft | setup rbenv"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ foodsoft_user_home }}/.bashrc"
     line: eval "$(rbenv init -)"
 
 - name: "foodsoft | create rbenv plugin directory"
-  file:
+  ansible.builtin.file:
     path: "{{ ruby_path }}/plugins"
     state: directory
     owner: "{{ foodsoft_user }}"
     group: "{{ foodsoft_user }}"
+    mode: 0755
 
 - name: "foodsoft | install ruby-build"
-  git:
+  ansible.builtin.git:
     repo: "{{ ruby_build_git_url }}"
     dest: "{{ ruby_path }}/plugins/ruby-build"
+    version: master
 
 - name: "foodsoft | install ruby"
-  shell:
+  ansible.builtin.command:
     cmd: 'rbenv install {{ ruby_version.stdout }}'
     creates: "{{ ruby_path }}/versions/{{ ruby_version.stdout }}/bin/ruby"
   become: true
   become_user: "{{ foodsoft_user }}"
 
 - name: "foodsoft | install bundler"
-  command:
+  ansible.builtin.command:
     cmd: rbenv exec gem install bundler
     chdir: "{{ foodsoft_home }}"
     creates: "{{ ruby_path }}/versions/{{ ruby_version.stdout }}/bin/bundler"
@@ -58,7 +60,7 @@
 
 # https://nokogiri.org/tutorials/installing_nokogiri.html#installing-using-standard-system-libraries
 - name: "foodsoft | configure nokogiri"
-  command:
+  ansible.builtin.command:
     cmd: 'rbenv exec bundle config build.nokogiri "--use-system-libraries"'
     chdir: "{{ foodsoft_home }}"
   become: true
@@ -67,7 +69,7 @@
     RAILS_ENV: production
 
 - name: "foodsoft | set bundle options"
-  command:
+  ansible.builtin.command:
     cmd: "rbenv exec bundle config set --local without 'development test'"
     chdir: "{{ foodsoft_home }}"
     creates: "{{ foodsoft_home }}/.bundle/config"
@@ -75,7 +77,7 @@
   become_user: "{{ foodsoft_user }}"
 
 - name: "foodsoft | enable local Gemfile support"
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: "{{ foodsoft_home }}/Gemfile"
     marker: "# {mark} ANSIBLE MANAGED BLOCK | local Gemfile support"
     block: |
@@ -85,14 +87,15 @@
       end
 
 - name: "foodsoft | copy Gemfile.local"
-  copy:
-   src: foodsoft/Gemfile.local
-   dest: "{{ foodsoft_home }}/Gemfile.local"
-   owner: "{{ foodsoft_user }}"
-   group: "{{ foodsoft_user }}"
+  ansible.builtin.copy:
+    src: foodsoft/Gemfile.local
+    dest: "{{ foodsoft_home }}/Gemfile.local"
+    owner: "{{ foodsoft_user }}"
+    group: "{{ foodsoft_user }}"
+    mode: 0644
 
 - name: "foodsoft | install ruby packages"
-  command:
+  ansible.builtin.command:
     cmd: "rbenv exec bundle install"
     chdir: "{{ foodsoft_home }}"
   become: true
@@ -101,7 +104,7 @@
     RAILS_ENV: production
 
 - name: "foodsoft | copy default configuration"
-  copy:
+  ansible.builtin.copy:
     src: "{{ foodsoft_home }}/config/app_config.yml.SAMPLE"
     dest: "{{ foodsoft_home }}/config/app_config.yml"
     remote_src: true
@@ -111,7 +114,7 @@
     force: false
 
 - name: "foodsoft | copy Active Storage configuration"
-  copy:
+  ansible.builtin.copy:
     src: "{{ foodsoft_home }}/config/storage.yml.SAMPLE"
     dest: "{{ foodsoft_home }}/config/storage.yml"
     remote_src: true
@@ -121,14 +124,15 @@
     force: false
 
 - name: "foodsoft | create Active Storage directory"
-  file:
+  ansible.builtin.file:
     path: "{{ foodsoft_home }}/storage"
     state: directory
     owner: "{{ foodsoft_user }}"
     group: "{{ foodsoft_user }}"
+    mode: 0755
 
 - name: "foodsoft | Add privileges to sharedlists suppliers"
-  mysql_user:
+  ansible.builtin.mysql_user:
     name: "{{ foodsoft_db_user }}"
     priv: sharedlists.suppliers:SELECT/sharedlists.articles:SELECT
     append_privs: true
@@ -137,6 +141,7 @@
     login_user: root
 
 - name: "foodsoft | Add logrotate configuration"
-  template:
+  ansible.builtin.template:
     src: logrotate.d/foodsoft.j2
     dest: /etc/logrotate.d/foodsoft
+    mode: 0644

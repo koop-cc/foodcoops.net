@@ -1,19 +1,19 @@
 ---
 - name: "user | create group"
-  group:
+  ansible.builtin.group:
     name: "{{ foodsoft_user }}"
     system: true
 
 - name: "user | create local user account"
-  user:
+  ansible.builtin.user:
     name: "{{ foodsoft_user }}"
     group: "{{ foodsoft_user }}"
     shell: /bin/bash
-    password_lock: yes
+    password_lock: true
     home: "{{ foodsoft_user_home }}"
     system: true
 
 - name: "user | set foodsoftctl alias"
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ foodsoft_user_home }}/.bashrc"
     line: alias foodsoftctl="REDIS_URL={{ foodsoft_redis_url }} RAILS_ENV=production SECRET_KEY_BASE={{ vault_foodsoft_secret_key_base }} rbenv exec bundle exec rails"

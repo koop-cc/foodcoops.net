@@ -1,10 +1,10 @@
 ---
 - name: "packages | check facts"
-  package_facts:
+  ansible.builtin.package_facts:
     manager: apt
 
 - name: "packages | install packages"
-  apt:
+  ansible.builtin.apt:
     pkg:
       - default-libmysqlclient-dev
       - libmagic-dev

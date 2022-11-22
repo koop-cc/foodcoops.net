@@ -1,6 +1,6 @@
 ---
 - name: "foodcoop | {{ item.instance }} | Add database"
-  mysql_db:
+  ansible.builtin.mysql_db:
     name: "{{ item.database }}"
     state: present
     collation: utf8mb4_unicode_520_ci
@@ -9,7 +9,7 @@
     login_user: root
 
 - name: "foodcoop | {{ item.instance }} | Assign database permissions"
-  mysql_user:
+  ansible.builtin.mysql_user:
     name: "{{ foodsoft_db_user }}"
     password: "{{ vault_foodsoft_db_password }}"
     priv: "{{ item.database }}.*:ALL"

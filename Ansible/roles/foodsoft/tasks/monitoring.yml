@@ -1,19 +1,20 @@
 ---
 - name: "monitoring | Copy Monit configuration"
-  template:
+  ansible.builtin.template:
     src: monit.j2
     dest: /etc/monit/conf-enabled/foodsoft
+    mode: 0644
   when: "'monit' in ansible_facts.packages"
   notify: reload monit
 
 - name: "monitoring | Download Munin plugin"
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/munin-monitoring/contrib/master/plugins/puma/puma_
     dest: /usr/local/bin/puma_
     mode: 0755
 
 - name: "monitoring | Enable Munin plugin"
-  file:
+  ansible.builtin.file:
     src: /usr/local/bin/puma_
     dest: "/etc/munin/plugins/puma_{{ name }}"
     state: link

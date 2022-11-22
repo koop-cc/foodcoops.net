@@ -1,6 +1,6 @@
 ---
 - name: "database | create database"
-  mysql_db:
+  ansible.builtin.mysql_db:
     name: "{{ foodsoft_db }}"
     state: present
     collation: utf8mb4_unicode_520_ci
@@ -9,7 +9,7 @@
     login_user: root
 
 - name: "database | Add privileges to database user"
-  mysql_user:
+  ansible.builtin.mysql_user:
     name: "{{ foodsoft_db_user }}"
     priv: "{{ foodsoft_db }}.*:ALL"
     append_privs: true
@@ -19,7 +19,7 @@
     update_password: on_create
 
 - name: "database | copy database configuration"
-  template:
+  ansible.builtin.template:
     src: database.yml.j2
     dest: "{{ foodsoft_home }}/config/database.yml"
     owner: "{{ foodsoft_user }}"
@@ -28,7 +28,7 @@
 
 # If database schema is already loaded it outputs a version number > 0
 - name: "database | test if database schema is already loaded"
-  shell:
+  ansible.builtin.shell:
     cmd: "rbenv exec rails db:version | grep ^Current | sed 's/^.*: //'"
     chdir: "{{ foodsoft_home }}"
   environment:
@@ -40,7 +40,7 @@
   changed_when: false
 
 - name: "database | create schema"
-  shell:  
+  ansible.builtin.command:
     cmd: "rbenv exec rails db:schema:load"
     chdir: "{{ foodsoft_home }}"
   environment:
@@ -51,7 +51,7 @@
   when: db_version.stdout == 0
 
 - name: "database | Run seed.rb"
-  shell:
+  ansible.builtin.command:
     cmd: "rbenv exec rails db:seed"
     chdir: "{{ foodsoft_home }}"
   environment:
@@ -59,10 +59,10 @@
     SECRET_KEY_BASE: "{{ vault_foodsoft_secret_key_base }}"
   become: true
   become_user: "{{ foodsoft_user }}"
-  when: db_version.stdout == 0 #db:seed is not idempotent in this case
+  when: db_version.stdout == 0 # db:seed is not idempotent in this case
 
 - name: "database | run migrations"
-  shell:
+  ansible.builtin.command:
     cmd: "rbenv exec rails multicoops:run TASK=db:migrate"
     chdir: "{{ foodsoft_home }}"
   environment:
@@ -72,7 +72,7 @@
   become_user: "{{ foodsoft_user }}"
 
 - name: "database | compile assets"
-  shell: 
+  ansible.builtin.command:
     cmd: "rbenv exec rails assets:precompile"
     chdir: "{{ foodsoft_home }}"
   environment:

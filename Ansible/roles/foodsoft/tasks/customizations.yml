@@ -1,6 +1,6 @@
 ---
 - name: "customizations | check railties version"
-  shell:
+  ansible.builtin.shell:
     cmd: rbenv exec bundle info railties | grep "railties (" | cut -d ' ' -f5 | sed 's/[)(]//g'
     chdir: "{{ foodsoft_home }}"
   become: true
@@ -10,42 +10,43 @@
 
 # Copy only if version number matches.
 - name: "customizations | copy monkey patch for anon logging"
-  copy:
+  ansible.builtin.copy:
     src: foodsoft/anon_logger.rb
     dest: "{{ foodsoft_home }}/config/initializers/anon_logger.rb"
     owner: "{{ foodsoft_user }}"
     group: "{{ foodsoft_user }}"
+    mode: 0644
   when: railties_version.stdout <= "5.2.6"
   notify: restart foodsoft-web
 
 # https://github.com/foodcoops/foodsoft/pull/923
 - name: "customizations | Allow stronger passwords"
-  replace:
+  ansible.builtin.replace:
     path: "{{ foodsoft_home }}/app/models/user.rb"
     regexp: 'validates_length_of :password, :in => 5\.\.25'
     replace: 'validates_length_of :password, :in => 10..50'
   notify: restart foodsoft-web
 
 - name: "customizations | Update demo seeds"
-  replace:
+  ansible.builtin.replace:
     path: "{{ foodsoft_home }}/db/seeds/small.en.seeds.rb"
     regexp: ':password => "secret"'
     replace: ':password => "secret1234"'
 
 - name: "customizations | Update minimal seeds"
-  replace:
+  ansible.builtin.replace:
     path: "{{ foodsoft_home }}/db/seeds/minimal.seeds.rb"
     regexp: ':password => "secret"'
     replace: ':password => "secret1234"'
 
 - name: "customizations | Apply redirect after logout patch"
-  patch:
+  ansible.builtin.patch:
     src: foodsoft/redirect_after_logout.patch
     dest: "{{ foodsoft_home }}/app/controllers/sessions_controller.rb"
   notify: restart foodsoft-web
 
 - name: "customizations | Show the Foodcoop's name at the login page"
-  patch:
+  ansible.posix.patch:
     src: foodsoft/show_foodcoop_title.patch
     dest: "{{ foodsoft_home }}/app/views/sessions/new.html.haml"
   notify: restart foodsoft-web
