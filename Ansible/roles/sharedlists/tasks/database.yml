@@ -26,7 +26,7 @@
 
 - name: "database | run migrations"
   ansible.builtin.command:
-    cmd: "rbenv exec rails db:migrate"
+    cmd: "rbenv exec bundle exec rails db:migrate"
     chdir: "{{ sharedlists_home }}"
   environment:
     RAILS_ENV: production
@@ -36,7 +36,7 @@
 
 - name: "database | compile assets"
   ansible.builtin.command: 
-    cmd: "rbenv exec rails assets:precompile"
+    cmd: "rbenv exec bundle exec rails assets:precompile"
     chdir: "{{ sharedlists_home }}"
   environment:
     RAILS_ENV: production
