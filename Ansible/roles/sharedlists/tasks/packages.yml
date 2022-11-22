@@ -1,16 +1,16 @@
 ---
 - name: "packages | check facts"
-  package_facts:
+  ansible.builtin.package_facts:
     manager: apt
 
 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=940511
 - name: "packages | ensure cmdtest is not installed"
-  apt:
+  ansible.builtin.apt:
     name: cmdtest
     state: absent
 
 - name: "packages | install packages"
-  apt:
+  ansible.builtin.apt:
     pkg:
       - default-libmysqlclient-dev
       - libxml2-dev
@@ -20,7 +20,7 @@
       - yarnpkg
 
 - name: "packages | create yarn symlink"
-  file:
+  ansible.builtin.file:
     src: /usr/bin/yarnpkg
     dest: /usr/local/bin/yarn
     state: link

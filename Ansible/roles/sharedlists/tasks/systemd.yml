@@ -1,8 +1,9 @@
 ---
 - name: "systemd | copy service files"
-  template:
+  ansible.builtin.template:
     src: "systemd/{{ item.src }}"
     dest: "/etc/systemd/system/{{ item.dest }}"
+    mode: 0644
   loop:
     - { src: sharedlists-web.service.j2, dest: "{{ sharedlists_web_service }}" }
     - { src: sharedlists-smtp.service.j2, dest: "{{ sharedlists_smtp_service }}" }
@@ -13,22 +14,26 @@
     - restart sharedlists_web_socket
 
 - name: "systemd | create configuration directory"
-  file:
+  ansible.builtin.file:
     path: /etc/sharedlists
     state: directory
+    mode: 0755
 
 - name: "systemd | copy configuration"
-  template:
+  ansible.builtin.template:
     src: systemd/sharedlists.conf.j2
     dest: "{{ sharedlists_environment_file }}"
+    owner: "{{ sharedlists_user }}"
+    group: root
+    mode: 0640
   notify:
     - restart sharedlists_web
     - restart sharedlists_smtp
 
 - name: "systemd | enable service"
-  systemd:
-    enabled: yes
-    daemon_reload: yes
+  ansible.builtin.systemd:
+    enabled: true
+    daemon_reload: true
     state: started
     name: "{{ item }}"
   loop:

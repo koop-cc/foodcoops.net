@@ -1,19 +1,19 @@
 ---
 - name: "user | create group"
-  group:
+  ansible.builtin.group:
     name: "{{ sharedlists_user }}"
     system: true
 
 - name: "user | create local user account"
-  user:
+  ansible.builtin.user:
     name: "{{ sharedlists_user }}"
     group: "{{ sharedlists_user }}"
     shell: /bin/bash
-    password_lock: yes
+    password_lock: true
     home: "{{ sharedlists_user_home }}"
     system: true
 
 - name: "user | set sharedlists alias "
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ sharedlists_user_home }}/.bashrc"
     line: alias sharedlistsctl="RAILS_ENV=production SECRET_KEY_BASE={{ vault_sharedlists_secret_key_base }} rbenv exec bundle exec rails"

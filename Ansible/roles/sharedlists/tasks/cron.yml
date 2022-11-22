@@ -2,7 +2,7 @@
 # https://git.systemausfall.org/julius/sharedlists/src/branch/main/config/schedule.rb
 
 - name: "cron | Insert ENV variables"
-  cron:
+  ansible.builtin.cron:
     name: "{{ item. name }}"
     job: "{{ item.job }}"
     env: true
@@ -14,7 +14,7 @@
       job: "{{ vault_sharedlists_secret_key_base }}"
 
 - name: "cron | install job"
-  cron:
+  ansible.builtin.cron:
     name: Update suppliers
     user: "{{ sharedlists_user }}"
     minute: "14"
@@ -22,19 +22,19 @@
     job: /bin/bash -lc "cd {{ sharedlists_home }} && rbenv exec rails sync_ftp_files --silent > /dev/null"
 
 - name: "cron | copy Antakya update script"
-  template:
+  ansible.builtin.template:
     src: antakya_get_products.sh.j2
     dest: /usr/local/bin/antakya_get_products.sh
     mode: 0755
 
 - name: "cron | copy Antakya filter script"
-  copy:
+  ansible.builtin.copy:
     src: antakya_filter_products
     dest: /usr/local/bin
     mode: 0755
 
 - name: "cron | create Antakya cron job"
-  cron:
+  ansible.builtin.cron:
     name: Update Bio Antakya products
     minute: "01"
     hour: "01"
