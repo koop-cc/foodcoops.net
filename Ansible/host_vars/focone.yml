@@ -60,6 +60,8 @@ foodcoops:
     database: foodsoft_ghj
   - instance: goodmoodfood
     database: foodsoft_goodmoodfood
+  - instance: fraemsli-ost
+    database: foodsoft_fraemsliost
   - instance: guerckchen
     database: foodsoft_guerckchen
   - instance: haarlem
