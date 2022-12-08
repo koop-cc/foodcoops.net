@@ -31,6 +31,8 @@ foodcoops:
     database: foodsoft_boernicke
   - instance: buda
     database: foodsoft_buda
+  - instance: ekolivs
+    database: foodsoft_ekolivs
   - instance: eszi
     database: foodsoft_eszi
   - instance: ethelkidson
