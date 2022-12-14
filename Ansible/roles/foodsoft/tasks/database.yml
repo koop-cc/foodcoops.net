@@ -29,7 +29,7 @@
 # If database schema is already loaded it outputs a version number > 0
 - name: "database | test if database schema is already loaded"
   ansible.builtin.shell:
-    cmd: "rbenv exec rails db:version | grep ^Current | sed 's/^.*: //'"
+    cmd: "rbenv exec bundle exec rails db:version | grep ^Current | sed 's/^.*: //'"
     chdir: "{{ foodsoft_home }}"
   environment:
     RAILS_ENV: production
@@ -41,7 +41,7 @@
 
 - name: "database | create schema"
   ansible.builtin.command:
-    cmd: "rbenv exec rails db:schema:load"
+    cmd: "rbenv exec bundle exec rails db:schema:load"
     chdir: "{{ foodsoft_home }}"
   environment:
     RAILS_ENV: production
@@ -52,7 +52,7 @@
 
 - name: "database | Run seed.rb"
   ansible.builtin.command:
-    cmd: "rbenv exec rails db:seed"
+    cmd: "rbenv exec bundle exec rails db:seed"
     chdir: "{{ foodsoft_home }}"
   environment:
     RAILS_ENV: production
@@ -63,7 +63,7 @@
 
 - name: "database | run migrations"
   ansible.builtin.command:
-    cmd: "rbenv exec rails multicoops:run TASK=db:migrate"
+    cmd: "rbenv exec bundle exec rails multicoops:run TASK=db:migrate"
     chdir: "{{ foodsoft_home }}"
   environment:
     RAILS_ENV: production
@@ -73,7 +73,7 @@
 
 - name: "database | compile assets"
   ansible.builtin.command:
-    cmd: "rbenv exec rails assets:precompile"
+    cmd: "rbenv exec bundle exec rails assets:precompile"
     chdir: "{{ foodsoft_home }}"
   environment:
     RAILS_ENV: production
