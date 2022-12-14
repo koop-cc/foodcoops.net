@@ -75,7 +75,7 @@ systemctl restart foodsoft-web
 ## Adding a new foodcoop
 1. Gather all [information](https://foodcoops.net/.global-foodsoft-platform/#request-a-new-instance)
 1. Add the data to `host_vars/focone.yml` in the section `foodcoops`. Just follow the existing pattern.
-2. Some custom [configuration](roles/foodsoft/Configuration.md) settings are available. At the moment this the Ansible role supports:
+2. Some custom [configuration](roles/foodsoft/Configuration.md) settings are available. At the moment these settings are supported by this role:
    | Setting | Value |
    |---------|-------|
    | `stop_ordering_under` | int |
