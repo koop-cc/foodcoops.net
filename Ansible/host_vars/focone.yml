@@ -122,8 +122,6 @@ foodcoops:
     database: foodsoft_tanteemmen
   - instance: tuess
     database: foodsoft_tuess
-  - instance: tutcoop
-    database: foodsoft_tutcoop
   - instance: vitamaia
     database: foodsoft_vitamaia
   - instance: voedselduin
