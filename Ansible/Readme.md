@@ -24,7 +24,10 @@ apt install ansible ansible-mitogen
 ```
 
 We don't want to save internal data as clear text in this roles. For data encryption we make use of
-[ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html). To complete your Ansible setup just create a file called `.vault_pass` at the same level as this Readme file and include the vault password from our password database in this file. All variables that make use of the vault start with a prefix `vault_`. You will find them in a role's subfolder at `vars/main.yml`. To edit such a variable us a command like this: `ansible-vault edit roles/foodsoft/vars/main.yml`.
+[ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html). To complete your Ansible setup just create a file called `.vault_pass` at the same level as this Readme file and include the vault password from our password database in this file. All variables that make use of the vault start with a prefix `vault_`. You will find them in a role's subfolder at `vars/main.yml`. To edit such a variable us a command like this:
+```Shell
+ansible-vault edit roles/foodsoft/vars/main.yml
+```
 
 Have a look at a role's directory to find out more details on how we implement the global Foodsoft platform.
 
@@ -59,7 +62,7 @@ You can check the status of a service with a command like this:
 ```shell
 systemctl status foodsoft-web
 ```
-If something seams wrong have a look at the log file, e.g:
+If something seams to be wrong have a look at the log file, e.g:
 ```shell
 journalctl -u foodsoft-web
 ```
@@ -73,43 +76,73 @@ systemctl restart foodsoft-web
 ```
 
 ## Adding a new foodcoop
-1. Gather all [information](https://foodcoops.net/.global-foodsoft-platform/#request-a-new-instance)
-1. Add the data to `host_vars/focone.yml` in the section `foodcoops`. Just follow the existing pattern.
-2. Some custom [configuration](roles/foodsoft/Configuration.md) settings are available. At the moment these settings are supported by this role:
+- Gather all [information](https://foodcoops.net/.global-foodsoft-platform/#request-a-new-instance). You need at least the *short name* and the mail addresses of the *contact persons*.
+- Unlock the Ansible vault with:
+   ```Shell
+   ansible-vault edit roles/foodsoft/vars/main.yml
+   ```
+- Add the data to `roles/foodsoft/vars/main.yml` in the section `vault_foodcoops`. These settings are mandatory:
+   | Setting | Type | Value |
+   |---------|------|-------|
+   | `instance` | string | short name of the foodcoop |
+   | `database` | string | prefix `foodsoft_` + short name |
+- For administrational reason we save also the contact persons mail addresses:
+   ```YAML
+   contacts:
+     - name: alice
+       mail: alice@example.org
+     - name: bob
+       mail: bob@example.org
+   ```
+- Some custom [configuration](roles/foodsoft/Configuration.md) settings are available. At the moment these settings are supported by this role:
    | Setting | Value |
    |---------|-------|
    | `stop_ordering_under` | int |
    | `use_apple_points` | bol |
    | `use_nick` | bol |
-3. Upload the changes to our Git repository.
-4. Execute the playbook with:
+- Example configuration:
+   ```YAML
+   vault_foodcoops:
+     - instance: demo
+        database: foodsoft_demo
+        contacts:
+          - name: alice
+            mail: alice@example.org
+          - name: bob
+            mail: bob@example.org
+        stop_ordering_under: 70
+        use_apple_points: false
+        use_nick: true
+   ```
+- Upload the changes to our Git repository.
+- Execute the playbook with:
    ```shell
    ansible-playbook playbooks/foodsoft.yml --tags never,foodcoop_add
    ```
-5. Immediately login with `admin` / `secret1234` and change the user details and password. The `admin` user should become the user account of the first contact person, so use their email address here. We do not want to encourage an unused `admin` account.
-6. You may want to pre-set some configuration if you know a bit more about the foodcoop. It's always helpful for new foodcoops to have a setup that already reflects their intended use a bit. At least you should set a time zone.
-7. Send an email to the foodcoop's contact persons with the url and admin account details.
-8. Please also communicate that this platform is run by volunteers from participating food cooperatives and depends on donations.
-9.  Add the two contact persons to our foodsoft announce mailing list.
+- Immediately login with `admin` / `secret1234` and change the user details and password. The `admin` user should become the user account of the first contact person, so use their email address here. We do not want to encourage an unused `admin` account.
+- You may want to pre-set some configuration if you know a bit more about the foodcoop. It's always helpful for new foodcoops to have a setup that already reflects their intended use a bit. At least you should set a time zone.
+- Send an email to the foodcoop's contact persons with the url and admin account details.
+- Please also communicate that this platform is run by volunteers from participating food cooperatives and depends on donations.
+- Add the two contact persons to our foodsoft announce mailing list.
 
 ## Deleting a foodcoop
 If the deletion of a foocoop is requested follow these steps:
 
-1. Find the foodcoops's configuration at `host_vars/focone.yml`. Enter another entry called `deleted: true` to the array:
+- Find the foodcoops's configuration at `roles/foodsoft/vars/main.yml`. Enter another entry called `deleted: true` to the array:
    ```yaml
-   foodcoops:
+   vault_foodcoops:
      - instance: mycoop
        database: foodsoft_mycoop
        deleted: true
    ```
-1. Execute the playbook:
+- Execute the playbook:
    ```shell
    ansible-playbook playbooks/foodsoft --tags never,foodcoop_delete
    ```
    Removing a Foodcoop will result in a restart of the Foodsoft service. Please execute the playbook in the late evening or preferably during the night to not disturb our users.
-1. Delete the foodcoop's entry from `host_vars/focone.yml`.
-1. Upload the changes to our Git repository.
-1. Delete the two contact persons from our foodsoft announce mailing list.
+- Delete the foodcoop's entry from `roles/foodsoft/vars/main.yml`.
+- Upload the changes to our Git repository.
+- Delete the two contact persons from our foodsoft announce mailing list.
 
 ## Adding a member to the hosting team
 - Add to Github [operations team](https://github.com/orgs/foodcoops/teams/operations)
