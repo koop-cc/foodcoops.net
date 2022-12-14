@@ -50,3 +50,12 @@
     src: foodsoft/show_foodcoop_title.patch
     dest: "{{ foodsoft_home }}/app/views/sessions/new.html.haml"
   notify: restart foodsoft-web
+
+# https://github.com/lautis/uglifier/issues/127
+# If terser is installed (npm install -g terser) then it is chosen automatically
+# and the static asset building works without adaption.
+- name: "customizations | use ES6 syntax"
+  ansible.builtin.replace:
+    path: "{{ foodsoft_home }}/config/environments/production.rb"
+    regexp: 'config.assets.js_compressor = :uglifier'
+    replace: 'config.assets.js_compressor = Uglifier.new(harmony: true)'
