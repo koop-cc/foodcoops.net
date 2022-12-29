@@ -16,7 +16,6 @@
 - name: "install | Check for latest version"
   shell:
     cmd: curl -sL "{{ uptimekuma_github_api_url }}" | jq -r ".tag_name"
-    warn: false
   changed_when: false
   register: latest_version
 
