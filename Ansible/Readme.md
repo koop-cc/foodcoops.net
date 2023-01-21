@@ -39,11 +39,11 @@ ansible-playbook playbooks/foodsoft.yml
 | Name | Description |
 |------|-------------|
 | basic-server | Initial setup for a new server |
-| foodsoft | Installation, configuration, updating of the Foodsoft, uses [upstream](https://github.com/foodcoops/foodsoft) version |
+| foodsoft | Installation, configuration, updating of the Foodsoft |
 | mariadb | Installation and configuration of MariaDB |
 | nginx | Installation and configuration of Nginx |
 | postfix | Installation and configuration of Postfix for use with a real mail domain |
-| sharedlists | Installation, configuration, updating of sharedlists, uses [Kidhab fork](https://github.com/kidhab/sharedlists) |
+| sharedlists | Installation, configuration, updating of sharedlists |
 | uptime-kuma | Installation of Uptime Kuma a monitoring solution |
 
 # Common tasks
