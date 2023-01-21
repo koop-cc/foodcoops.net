@@ -1,7 +1,6 @@
 ---
 puma_port: "9292"
 
-ruby_version: "2.7.5"
 ruby_path: "{{ sharedlists_user_home }}/.rbenv"
 ruby_build_git_url: https://github.com/rbenv/ruby-build.git
 
