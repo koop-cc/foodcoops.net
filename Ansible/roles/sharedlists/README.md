@@ -1,7 +1,7 @@
 Sharedlists
 ===========
 
-This role installs [Sharedlists](https://github.com/kidhab/sharedlists), a simple rails driven database for managing multiple product lists of various suppliers.
+This role installs [Sharedlists](https://github.com/foodcoops/sharedlists), a simple rails driven database for managing multiple product lists of various suppliers.
 
 # Running the role
 
