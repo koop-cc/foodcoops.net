@@ -1,4 +1,8 @@
 ---
+- name: "Sharedlists | Configure git safe.directory"
+  ansible.builtin.command:
+    cmd: " git config --global --add safe.directory {{ sharedlists_home }}"
+
 - name: "sharedlists | clone repository"
   ansible.builtin.git:
     repo: "{{ sharedlists_git_url }}"
