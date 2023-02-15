@@ -19,12 +19,20 @@ infrastructure for the [global Foodsoft platform](https://foodcoops.net/global-f
 [foodcoops.net](https://foodcoops.net).
 
 To use this roles you have to install these packages:
-```shell
+```Shell
 apt install ansible ansible-mitogen
+```
+Our setup depends on external roles that are defined in this repository's `requirements.yml`. To install them run:
+```Shell
+ansible-galaxy install -r requirements.yml
+```
+The external roles are installed with a `galaxy-` prefix. Because there are no automatic updates for external roles you have to do it by yourself:
+```Shell
+ansible-galaxy install -r requirements.yml --force
 ```
 
 We don't want to save internal data as clear text in this roles. For data encryption we make use of
-[ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html). To complete your Ansible setup just create a file called `.vault_pass` at the same level as this Readme file and include the vault password from our password database in this file. All variables that make use of the vault start with a prefix `vault_`. You will find them in a role's subfolder at `vars/main.yml`. To edit such a variable us a command like this:
+[ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html). To complete your Ansible setup just create a file called `.vault_pass` at the same level as this Readme file and include the vault password from our password database in this file. All variables that make use of the vault start with a prefix `vault_`. You will find them in a role's subfolder at `vars/main.yml`. To edit such a variable use a command like this:
 ```Shell
 ansible-vault edit roles/foodsoft/vars/main.yml
 ```

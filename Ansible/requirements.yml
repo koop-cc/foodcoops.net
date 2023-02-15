@@ -1,0 +1,7 @@
+- src: git@git.systemausfall.org:senselab/ansible-role-dehydrated.git
+  scm: git
+  name: galaxy-dehydrated
+
+- src: git@git.systemausfall.org:senselab/ansible-role-mariadb.git
+  scm: git
+  name: galaxy-mariadb
