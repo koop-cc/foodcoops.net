@@ -1,0 +1,41 @@
+---
+- name: Install ufw firewall
+  ansible.builtin.apt:
+    name: ufw
+
+- name: Flush old ufw rules
+  ansible.builtin.command: "ufw --force reset"
+
+- name: Set specific ufw rules
+  ansible.builtin.command: "ufw {{ item  }}"
+  loop: "{{ firewall_rules | default([]) }}"
+
+- name: Allow forwarding
+  ansible.builtin.replace:
+    path: /etc/ufw/sysctl.conf
+    regexp: '#net\/ipv4\/ip_forward=1'
+    replace: net/ipv4/ip_forward=1
+  when: firewall_ipv4_forwarding is defined and firewall_ipv4_forwarding
+
+- name: Insert forwarding skeleton
+  ansible.builtin.blockinfile:
+    path: /etc/ufw/before.rules
+    marker: "# {mark} ANSIBLE MANAGED BLOCK "
+    insertbefore: BOF
+    block: |
+      *nat
+      :PREROUTING ACCEPT [0:0]
+      # forwarding rules
+      COMMIT
+
+- name: Insert forwarding rules
+  ansible.builtin.lineinfile:
+    path: "/etc/ufw/before.rules"
+    line: "{{ item }}"
+    state: present
+    insertafter: "# forwarding rules"
+  loop: "{{ firewall_forwarding_rules | default([]) }}"
+
+- name: Enable ufw
+  community.general.ufw:
+    state: enabled

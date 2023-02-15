@@ -5,3 +5,4 @@
     - fc-monitor
   roles:
     - role: basic-server
+    - role: configure-firewall
