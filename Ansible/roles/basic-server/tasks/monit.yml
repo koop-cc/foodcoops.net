@@ -1,36 +1,38 @@
 ---
-- name: "monit | copy configuration"
-  template:
-    src: monit/monitrc.j2
+- name: "Monit | Copy configuration"
+  ansible.builtin.template:
+    src: monit/monitrc
     dest: /etc/monit/monitrc
+    mode: 0640
   notify: restart monit
 
-- name: "monit | copy monitoring files"
-  copy:
+- name: "Monit | Copy monitoring files"
+  ansible.builtin.copy:
     src: "monit/conf-available/{{ item }}"
     dest: /etc/monit/conf-available/
+    mode: 0600
   loop:
     - fail2ban
     - oomkiller
-    - ssh
   notify: restart monit
 
-- name: "monit | link monitoring files"
-  file:
+- name: "Monit | Link monitoring files"
+  ansible.builtin.file:
     src: "/etc/monit/conf-available/{{ item }}"
     dest: "/etc/monit/conf-enabled/{{ item }}"
     state: link
   loop:
     - fail2ban
     - oomkiller
-    - ssh
   notify: restart monit
 
-- name: "monit | copy monitoring templates"
-  template:
-    src: "monit/conf-available/{{ item }}.j2"
+- name: "Monit | Copy monitoring templates"
+  ansible.builtin.template:
+    src: "monit/conf-available/{{ item }}"
     dest: "/etc/monit/conf-enabled/{{ item }}"
+    mode: 0644
   loop:
     - filesystem
+    - ssh
     - system
   notify: restart monit
