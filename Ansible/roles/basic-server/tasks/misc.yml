@@ -25,13 +25,6 @@
     value: "True"
     vtype: boolean
 
-- name: "misc | copy firewall configuration"
-  template:
-    src: ferm.conf.j2
-    dest: /etc/ferm/ferm.conf
-  notify: restart ferm
-  when: "'ferm' in ansible_facts.packages"
-
 - name: "misc | Limit journald logging"
   cron:
     name: "Ansible: Limit Logging of journald"

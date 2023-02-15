@@ -32,9 +32,3 @@
       - vim
       - wget
     cache_valid_time: 3600
-
-- name: "Packages | Install ferm"
-  ansible.builtin.apt:
-    pkg:
-      - ferm
-  when: ferm.install is defined and ferm.install
