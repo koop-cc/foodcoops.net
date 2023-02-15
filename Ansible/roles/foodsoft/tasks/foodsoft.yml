@@ -1,5 +1,9 @@
 ---
-- name: "foosoft | get latest tag"
+- name: "foodsoft | Configure git safe.directory"
+  ansible.builtin.command:
+    cmd: " git config --global --add safe.directory {{ foodsoft_home }}"
+
+- name: "foodsoft | get latest tag"
   ansible.builtin.shell:
     cmd: curl -sL "{{ foodsoft_git_latest_tag_url }}" | jq -r '.[0].name'
   register: latest_tag
