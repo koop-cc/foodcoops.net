@@ -1,10 +1,12 @@
 ---
-- name: "changetrack | configuration 1"
-  template:
-    src: changetrack.j2
+- name: "Changetrack | Copy default configuration"
+  ansible.builtin.template:
+    src: changetrack.conf
     dest: /etc/default/changetrack
+    mode: 0644
 
-- name: "changetrack | configuration 2"
-  copy:
+- name: "Changetrack | Copy configuration"
+  ansible.builtin.copy:
     src: changetrack.conf
     dest: /etc/changetrack.conf
+    mode: 0644

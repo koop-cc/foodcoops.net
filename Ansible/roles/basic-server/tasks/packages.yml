@@ -11,6 +11,7 @@
 - name: "Packages | Install packages"
   ansible.builtin.apt:
     pkg:
+      - changetrack
       - curl
       - dehydrated
       - fail2ban
