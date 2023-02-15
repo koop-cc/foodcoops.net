@@ -1,21 +1,14 @@
 ---
-- name: "ssh | ignore locale environment"
-  lineinfile:
+- name: "SSH | Copy configuration"
+  ansible.builtin.template:
+    src: ssh.conf
+    dest: "/etc/ssh/sshd_config.d/{{ ansible_hostname }}.conf"
+    mode: 0644
+  notify: restart ssh
+
+- name: "SSH | Ignore locale environment"
+  ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
-    line: '^AcceptEnv LANG LC_.*$'
+    line: '^AcceptEnv LANG LC_*$'
     state: absent
-  notify: restart ssh
-
-- name: "ssh | disable password authentication"
-  replace:
-    path: /etc/ssh/sshd_config
-    regexp: '^(#)?PasswordAuthentication yes'
-    replace: 'PasswordAuthentication no'
-  notify: restart ssh
-
-- name: "ssh | disable empty passwords"
-  replace:
-    path: /etc/ssh/sshd_config
-    regexp: '^(#)?PermitEmptyPasswords yes'
-    replace: 'PermitEmptyPasswords no'
   notify: restart ssh
