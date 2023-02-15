@@ -1,4 +1,8 @@
 ---
+- name: "Install | Configure git safe.directory"
+  ansible.builtin.command:
+    cmd: "git config --global --add safe.directory {{ uptimekuma_home }}"
+
 - name: "install | Create group"
   group:
     name: "{{ uptimekuma_user }}"
