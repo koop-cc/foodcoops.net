@@ -1,5 +1,4 @@
 firewall: true
-firewall_ipv4_forwarding: true
 firewall_rules:
   # public webserver
   - "allow in to any port 443"
