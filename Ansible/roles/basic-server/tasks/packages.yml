@@ -1,16 +1,15 @@
 ---
-- name: "packages | check facts"
-  package_facts:
+- name: "Packages | Get list of installed packages"
+  ansible.builtin.package_facts:
     manager: apt
 
-- name: "packages | Add backports repository"
-  apt_repository:
+- name: "Packages | Add Debian backports repository"
+  ansible.builtin.apt_repository:
     repo: "deb http://ftp.de.debian.org/debian {{ ansible_distribution_release }}-backports main contrib non-free"
     state: present
 
-
-- name: "packages | install packages"
-  apt:
+- name: "Packages | Install packages"
+  ansible.builtin.apt:
     pkg:
       - curl
       - dehydrated
@@ -33,8 +32,8 @@
       - wget
     cache_valid_time: 3600
 
-- name: "packages | install ferm"
-  apt:
+- name: "Packages | Install ferm"
+  ansible.builtin.apt:
     pkg:
       - ferm
   when: ferm.install is defined and ferm.install
