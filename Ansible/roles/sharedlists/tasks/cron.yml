@@ -1,6 +1,4 @@
 ---
-# https://git.systemausfall.org/julius/sharedlists/src/branch/main/config/schedule.rb
-
 - name: "cron | Insert ENV variables"
   ansible.builtin.cron:
     name: "{{ item. name }}"
