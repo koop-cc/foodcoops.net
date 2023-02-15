@@ -27,6 +27,7 @@
       :PREROUTING ACCEPT [0:0]
       # forwarding rules
       COMMIT
+  when: firewall_ipv4_forwarding is defined and firewall_ipv4_forwarding
 
 - name: Insert forwarding rules
   ansible.builtin.lineinfile:
@@ -35,6 +36,7 @@
     state: present
     insertafter: "# forwarding rules"
   loop: "{{ firewall_forwarding_rules | default([]) }}"
+  when: firewall_ipv4_forwarding is defined and firewall_ipv4_forwarding
 
 - name: Enable ufw
   community.general.ufw:
