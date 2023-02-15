@@ -4,6 +4,7 @@ changetrack:
   receiver: "changetrack@lists.foodcoops.net"
 foodsoft_domain: app.foodcoops.net
 phpmyadmin_domain: dbadmin.foodcoops.net
+phpmyadmin_password: "{{ vault_phpmyadmin_password }}"
 sharedlists_domain: sharedlists.foodcoops.net
 backup_guest: true
 ssh_port: "2243"

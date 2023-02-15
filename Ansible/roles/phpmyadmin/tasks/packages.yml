@@ -1,0 +1,12 @@
+---
+- name: "Packages | Get installed packages"
+  ansible.builtin.package_facts:
+    manager: apt
+
+- name: "Packages | Install packages"
+  ansible.builtin.apt:
+    pkg:
+      - python3-passlib
+      - phpmyadmin
+      - php-fpm
+    cache_valid_time: 3600

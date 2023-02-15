@@ -1,0 +1,2 @@
+---
+phpmyadmin_htpasswd_file: /etc/nginx/snippets/.htpasswd

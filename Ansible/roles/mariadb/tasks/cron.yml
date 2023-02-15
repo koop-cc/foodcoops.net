@@ -1,6 +1,0 @@
----
-- name: "cron | database optimization"
-  cron:
-    name: 'Weekly database optimizations'
-    job: 'chronic mysqlcheck --all-databases --optimize 2>&1'
-    special_time: weekly

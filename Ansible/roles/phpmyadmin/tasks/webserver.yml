@@ -1,0 +1,29 @@
+---
+- name: "Webserver | Add domain to certificate list"
+  ansible.builtin.lineinfile:
+    path: /etc/dehydrated/domains.txt
+    line: "{{ phpmyadmin_domain }}"
+  when: "'dehydrated' in ansible_facts.packages"
+  notify: Get certificate
+
+- name: "Webserver | Create htpasswd file"
+  community.general.htpasswd:
+    path: "{{ phpmyadmin_htpasswd_file }}"
+    name: "foodcoops.net"
+    password: "{{ vault_phpmyadmin_password }}"
+    owner: root
+    group: www-data
+    mode: 0640
+
+- name: "Webserver | Copy Nginx configuration"
+  ansible.builtin.template:
+    src: nginx.conf
+    dest: "/etc/nginx/sites-available/{{ phpmyadmin_domain }}"
+    mode: 0644
+
+- name: "Webserver | Enable Nginx configuration"
+  ansible.builtin.file:
+    src: "/etc/nginx/sites-available/{{ phpmyadmin_domain }}"
+    dest: "/etc/nginx/sites-enabled/{{ phpmyadmin_domain }}"
+    state: link
+  notify: reload nginx

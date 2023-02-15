@@ -1,0 +1,14 @@
+---
+- name: Get PHP version
+  ansible.builtin.shell:
+    cmd: php -v | grep -Po '(?<=PHP )([0-9.]{3})'
+  register: php_version
+  changed_when: false
+
+- name: Install packages
+  ansible.builtin.import_tasks: packages.yml
+  tags: packages
+
+- name: Configure webserver
+  ansible.builtin.import_tasks: webserver.yml
+  tags: webserver
