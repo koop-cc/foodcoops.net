@@ -48,8 +48,8 @@ ansible-playbook playbooks/foodsoft.yml
 |------|-------------|
 | basic-server | Initial setup for a new server |
 | foodsoft | Installation, configuration, updating of the Foodsoft |
-| mariadb | Installation and configuration of MariaDB |
 | nginx | Installation and configuration of Nginx |
+| phpmyadmin | Installation and configuration of phpMyAdmin |
 | postfix | Installation and configuration of Postfix for use with a real mail domain |
 | sharedlists | Installation, configuration, updating of sharedlists |
 | uptime-kuma | Installation of Uptime Kuma a monitoring solution |
