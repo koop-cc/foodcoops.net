@@ -1,4 +1,4 @@
 .fact_cache
 .vault_pass
 ansible.log
-galaxy-*/
+galaxy/
