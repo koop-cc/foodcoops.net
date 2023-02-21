@@ -1,0 +1,2 @@
+foodsoft_puma_threads: 8
+foodsoft_puma_web_concurrency: 0
