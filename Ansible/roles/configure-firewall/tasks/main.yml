@@ -1,5 +1,0 @@
----
-- name: Firewall task
-  ansible.builtin.import_tasks: firewall.yml
-  tags: firewall
-  when: firewall is defined and firewall

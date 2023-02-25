@@ -1,4 +1,8 @@
 roles:
+  - name: galaxy/senselab.configure-firewall
+    src: https://git.systemausfall.org/senselab/ansible-role-configure-firewall.git
+    scm: git
+
   - name: galaxy/senselab.dehydrated
     src: git@git.systemausfall.org:senselab/ansible-role-dehydrated.git
     scm: git

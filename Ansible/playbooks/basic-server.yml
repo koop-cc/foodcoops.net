@@ -5,4 +5,4 @@
     - fc-monitor
   roles:
     - role: basic-server
-    - role: configure-firewall
+    - role: galaxy/senselab.configure-firewall
