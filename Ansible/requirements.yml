@@ -4,9 +4,9 @@ roles:
     scm: git
 
   - name: galaxy/senselab.dehydrated
-    src: git@git.systemausfall.org:senselab/ansible-role-dehydrated.git
+    src: https://git.systemausfall.org/senselab/ansible-role-dehydrated.git
     scm: git
 
   - name: galaxy/senselab.mariadb
-    src: git@git.systemausfall.org:senselab/ansible-role-mariadb.git
+    src: https://git.systemausfall.org/senselab/ansible-role-mariadb.git
     scm: git
