@@ -154,7 +154,7 @@ If the deletion of a foocoop is requested follow these steps:
 
 ## Adding a member to the hosting team
 - Add to Github [operations team](https://github.com/orgs/foodcoops/teams/operations)
-- Add to relevant [mailing lists](https://lists.foodcoops.net) (support@lists.foodcoops.net  and foodcoops-announce@lists.foodcoops.net)
+- Add to relevant [mailing lists](https://lists.foodcoops.net) (support@lists.foodcoops.net and foodsoft-global-hosting@lists.foodcoops.net)
 - Obtain user's SSH key and verify it from a Github gist, Keybase or a video call.
 - Add SSH key file to `roles/basic-server/ssh_authorized_keys/admin` and start ansible:
     ```shell
