@@ -32,9 +32,9 @@ ansible-galaxy install -r requirements.yml --force
 ```
 
 We don't want to save internal data as clear text in this roles. For data encryption we make use of
-[ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html). To complete your Ansible setup just create a file called `.vault_pass` at the same level as this Readme file and include the vault password from our password database in this file. All variables that make use of the vault start with a prefix `vault_`. You will find them in a role's subfolder at `vars/main.yml`. To edit such a variable use a command like this:
+[ansible-vault](https://docs.ansible.com/ansible/latest/cli/ansible-vault.html). To complete your Ansible setup just create a file called `.vault_pass` at the same level as this Readme file and include the vault password from our password database in this file. All variables that make use of the vault start with a prefix `vault_`. You will find them in either in the `group_vars` or in a `host_vars` directory in a file named `vault.*.yml`. To edit such a variable use a command like this:
 ```Shell
-ansible-vault edit roles/foodsoft/vars/main.yml
+ansible-vault edit host_vars/focone/vault_foodcoops.yml
 ```
 
 Have a look at a role's directory to find out more details on how we implement the global Foodsoft platform.
@@ -87,9 +87,9 @@ systemctl restart foodsoft-web
 - Gather all [information](https://foodcoops.net/.global-foodsoft-platform/#request-a-new-instance). You need at least the *short name* and the mail addresses of the *contact persons*.
 - Unlock the Ansible vault with:
    ```Shell
-   ansible-vault edit roles/foodsoft/vars/main.yml
+   ansible-vault edit host_vars/focone/vault_foodcoops.yml
    ```
-- Add the data to `roles/foodsoft/vars/main.yml` in the section `vault_foodcoops`. These settings are mandatory:
+- Add the data to `host_vars/focone/vault_foodcoops.yml` in the section `vault_foodcoops`. These settings are mandatory:
    | Setting | Type | Value |
    |---------|------|-------|
    | `instance` | string | short name of the foodcoop |
