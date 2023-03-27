@@ -1,0 +1,24 @@
+{{ item.instance }}:
+  <<: *defaults
+  database:
+    database: {{ item.database }}
+{% if item.logout_redirect_url is defined %}
+  logout_redirect_url: {{ item.logout_redirect_url }}
+{% endif %}
+{% if item.name is defined %}
+  name: {{ item.name }}
+{% else %}
+  name: {{ item.instance }}
+{% endif %}
+{% if item.stop_ordering_under is defined %}
+  stop_ordering_under: {{ item.stop_ordering_under }}
+{% endif %}
+{% if item.use_apple_points is defined %}
+  use_apple_points: {{ item.use_apple_points }}
+{% endif %}
+{% if item.use_nick is defined %}
+  use_nick: {{ item.use_nick }}
+{% endif %}
+{% if item.use_messages is defined %}
+  use_messages: {{ item.use_messages }}
+{% endif %}
