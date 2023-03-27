@@ -2,4 +2,4 @@
 - hosts:
     - focone
   roles:
-    - role: nginx
+    - role: galaxy/senselab.nginx

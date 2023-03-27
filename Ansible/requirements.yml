@@ -10,3 +10,8 @@ roles:
   - name: galaxy/senselab.mariadb
     src: https://git.systemausfall.org/senselab/ansible-role-mariadb.git
     scm: git
+
+  - name: galaxy/senselab.nginx
+    src: https://git.systemausfall.org/senselab/ansible-role-nginx.git
+    scm: git
+
