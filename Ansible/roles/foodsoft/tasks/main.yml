@@ -34,7 +34,3 @@
 - name: Monitoring
   ansible.builtin.import_tasks: monitoring.yml
   tags: monitoring
-
-- name: Webserver
-  ansible.builtin.import_tasks: webserver.yml
-  tags: webserver
