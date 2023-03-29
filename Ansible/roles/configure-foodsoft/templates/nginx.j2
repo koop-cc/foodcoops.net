@@ -23,4 +23,8 @@ server {
     location / {
         proxy_pass http://localhost:{{ puma_port }};
     }
+    
+    location = /mila/foodcoop/users {
+        return 302 /mila;
+    }
 }
