@@ -45,12 +45,6 @@
     dest: "{{ foodsoft_home }}/app/controllers/sessions_controller.rb"
   notify: restart foodsoft-web
 
-- name: "Foodsoft | Show the Foodcoop's name at the login page"
-  ansible.builtin.patch:
-    src: foodsoft/show_foodcoop_title.patch
-    dest: "{{ foodsoft_home }}/app/views/sessions/new.html.haml"
-  notify: restart foodsoft-web
-
 - name: "Foodsoft | Enable local Gemfile support"
   ansible.builtin.blockinfile:
     path: "{{ foodsoft_home }}/Gemfile"
