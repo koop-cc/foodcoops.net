@@ -1,0 +1,12 @@
+--- _start_nav.haml.orig	2023-03-29 17:06:39.832022087 +0200
++++ _start_nav.haml	2023-03-27 20:06:17.742938957 +0200
+@@ -2,7 +2,8 @@
+   %h3= t '.title'
+   %ul.nav.nav-list
+     %li.nav-header= t '.foodcoop'
+-    %li= link_to t('.members'), foodcoop_users_path
++    - if !FoodsoftConfig[:hide_users]
++      %li= link_to t('.members'), foodcoop_users_path
+     %li= link_to t('.tasks'), user_tasks_path
+ 
+     - has_ordergroup = !@current_user.ordergroup.nil?

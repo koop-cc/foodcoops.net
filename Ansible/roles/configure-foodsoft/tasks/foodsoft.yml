@@ -40,9 +40,15 @@
     replace: ':password => "secret1234"'
 
 - name: "Foodsoft | Apply redirect after logout patch"
-  ansible.builtin.patch:
+  ansible.posix.patch:
     src: foodsoft/redirect_after_logout.patch
     dest: "{{ foodsoft_home }}/app/controllers/sessions_controller.rb"
+  notify: restart foodsoft-web
+
+- name: "Foodsoft | Apply hide users patch"
+  ansible.posix.patch:
+    src: foodsoft/hide_users.patch
+    dest: "{{ foodsoft_home }}/app/views/home/_start_nav.haml"
   notify: restart foodsoft-web
 
 - name: "Foodsoft | Enable local Gemfile support"
