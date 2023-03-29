@@ -51,6 +51,13 @@
     dest: "{{ foodsoft_home }}/app/views/home/_start_nav.haml"
   notify: restart foodsoft-web
 
+# https://github.com/foodcoops/foodsoft/issues/980
+- name: Foodsoft | Remove haml gem from Gemfile
+  ansible.builtin.lineinfile:
+    path: "{{ foodsoft_home }}/Gemfile"
+    line: gem 'haml'
+    state: absent
+
 - name: "Foodsoft | Enable local Gemfile support"
   ansible.builtin.blockinfile:
     path: "{{ foodsoft_home }}/Gemfile"
@@ -69,6 +76,16 @@
     group: "{{ foodsoft_user }}"
     mode: "0644"
   register: gemfile
+
+- name: "Foodsoft | Update Gemfile.lock"
+  ansible.builtin.command:
+    cmd: "rbenv exec bundle lock --update"
+    chdir: "{{ foodsoft_home }}"
+  become: true
+  become_user: "{{ foodsoft_user }}"
+  environment:
+    RAILS_ENV: production
+  when: gemfile.changed
 
 - name: "Foodsoft | Install ruby packages"
   ansible.builtin.command:
