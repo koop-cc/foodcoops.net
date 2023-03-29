@@ -1,14 +1,4 @@
 ---
-- name: reload monit
-  ansible.builtin.service:
-    name: monit
-    state: reloaded
-
-- name: restart munin-node
-  ansible.builtin.service:
-    name: munin-node
-    state: restarted
-
 - name: reload nginx
   ansible.builtin.service:
     name: nginx

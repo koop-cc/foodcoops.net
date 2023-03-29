@@ -9,11 +9,6 @@
     name: munin-node
     state: restarted
 
-- name: reload nginx
-  ansible.builtin.service:
-    name: nginx
-    state: reloaded
-
 - name: restart foodsoft-web
   ansible.builtin.systemd:
     name: "{{ foodsoft_web_service }}"
