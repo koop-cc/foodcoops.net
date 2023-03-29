@@ -1,21 +1,6 @@
 ---
-- hosts:
+- name: Playbook to install a Foodsoft instance
+  hosts:
     - focone
   roles:
     - role: foodsoft
-  tasks:
-    - name: "Add a new Foodcoop"
-      include_tasks: ../roles/foodsoft/tasks/foodcoop_add.yml
-      args:
-        apply:
-          tags: foodcoop_add
-      tags: never
-      loop: "{{ vault_foodcoops }}"
-    - name: "Delete a Foodcoop"
-      include_tasks: ../roles/foodsoft/tasks/foodcoop_delete.yml
-      args:
-        apply:
-          tags: foodcoop_delete
-      tags: never
-      loop: "{{ vault_foodcoops }}"
-      when: item.deleted is defined and item.deleted

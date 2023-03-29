@@ -6,9 +6,11 @@ foodsoft_user: _foodsoft
 foodsoft_user_home: "/var/lib/{{ foodsoft_user }}"
 foodsoft_db: foodsoft
 foodsoft_db_user: foodsoft
+foodsoft_db_password: "{{ lookup('password', '/tmp/foodsoft_database_pwd length=42 chars=ascii_letters,digits') }}"
 foodsoft_environment_file: /etc/foodsoft/foodsoft.conf
 foodsoft_web_service: foodsoft-web.service
 foodsoft_web_socket: foodsoft-web.socket
+foodsoft_secret_key_base: "{{ lookup('password', '/tmp/foodsoft_secret_key_base_pwd length=42 chars=ascii_letters,digits') }}"
 foodsoft_smtp_service: foodsoft-smtp.service
 foodsoft_resque_service: foodsoft-resque.service
 foodsoft_web_bind_ip: "127.0.0.1"
@@ -26,3 +28,6 @@ puma_port: "9294"
 
 ruby_path: "{{ foodsoft_user_home }}/.rbenv"
 ruby_build_git_url: https://github.com/rbenv/ruby-build.git
+ruby_build_version: master
+
+mariadb_socket: /run/mysqld/mysqld.sock

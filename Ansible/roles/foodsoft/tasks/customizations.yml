@@ -1,60 +1,8 @@
 ---
-- name: "customizations | check railties version"
-  ansible.builtin.shell:
-    cmd: rbenv exec bundle info railties | grep "railties (" | cut -d ' ' -f5 | sed 's/[)(]//g'
-    chdir: "{{ foodsoft_home }}"
-  become: true
-  become_user: "{{ foodsoft_user }}"
-  changed_when: false
-  register: railties_version
-
-# Copy only if version number matches.
-- name: "customizations | copy monkey patch for anon logging"
-  ansible.builtin.copy:
-    src: foodsoft/anon_logger.rb
-    dest: "{{ foodsoft_home }}/config/initializers/anon_logger.rb"
-    owner: "{{ foodsoft_user }}"
-    group: "{{ foodsoft_user }}"
-    mode: 0644
-  when: railties_version.stdout <= "5.2.6"
-  notify: restart foodsoft-web
-
-# https://github.com/foodcoops/foodsoft/pull/923
-- name: "customizations | Allow stronger passwords"
-  ansible.builtin.replace:
-    path: "{{ foodsoft_home }}/app/models/user.rb"
-    regexp: 'validates_length_of :password, :in => 5\.\.25'
-    replace: 'validates_length_of :password, :in => 10..50'
-  notify: restart foodsoft-web
-
-- name: "customizations | Update demo seeds"
-  ansible.builtin.replace:
-    path: "{{ foodsoft_home }}/db/seeds/small.en.seeds.rb"
-    regexp: ':password => "secret"'
-    replace: ':password => "secret1234"'
-
-- name: "customizations | Update minimal seeds"
-  ansible.builtin.replace:
-    path: "{{ foodsoft_home }}/db/seeds/minimal.seeds.rb"
-    regexp: ':password => "secret"'
-    replace: ':password => "secret1234"'
-
-- name: "customizations | Apply redirect after logout patch"
-  ansible.builtin.patch:
-    src: foodsoft/redirect_after_logout.patch
-    dest: "{{ foodsoft_home }}/app/controllers/sessions_controller.rb"
-  notify: restart foodsoft-web
-
-- name: "customizations | Show the Foodcoop's name at the login page"
-  ansible.builtin.patch:
-    src: foodsoft/show_foodcoop_title.patch
-    dest: "{{ foodsoft_home }}/app/views/sessions/new.html.haml"
-  notify: restart foodsoft-web
-
 # https://github.com/lautis/uglifier/issues/127
 # If terser is installed (npm install -g terser) then it is chosen automatically
 # and the static asset building works without adaption.
-- name: "customizations | use ES6 syntax"
+- name: "Customizations | Use ES6 syntax"
   ansible.builtin.replace:
     path: "{{ foodsoft_home }}/config/environments/production.rb"
     regexp: 'config.assets.js_compressor = :uglifier'

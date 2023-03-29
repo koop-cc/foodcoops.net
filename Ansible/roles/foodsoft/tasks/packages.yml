@@ -1,9 +1,9 @@
 ---
-- name: "packages | check facts"
+- name: "Packages | check facts"
   ansible.builtin.package_facts:
     manager: apt
 
-- name: "packages | install packages"
+- name: "Packages | install packages"
   ansible.builtin.apt:
     pkg:
       - default-libmysqlclient-dev

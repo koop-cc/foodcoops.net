@@ -39,20 +39,21 @@ ansible-vault edit host_vars/focone/vault_foodcoops.yml
 
 Have a look at a role's directory to find out more details on how we implement the global Foodsoft platform.
 
-You can execute a role by using the corresponding [playbook](https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html) which are named equally:
+You can execute a role by using the corresponding [playbook](https://docs.ansible.com/ansible/latest/cli/ansible-playbook.html):
 ```shell
 ansible-playbook playbooks/foodsoft.yml
 ```
 # Roles overview
 | Name | Description |
 |------|-------------|
-| basic-server | Initial setup for a new server |
-| foodsoft | Installation, configuration, updating of the Foodsoft |
-| nginx | Installation and configuration of Nginx |
-| phpmyadmin | Installation and configuration of phpMyAdmin |
-| postfix | Installation and configuration of Postfix for use with a real mail domain |
-| sharedlists | Installation, configuration, updating of sharedlists |
-| uptime-kuma | Installation of Uptime Kuma a monitoring solution |
+| `basic-server` | Initial setup for a new server |
+| `foodsoft` | Installation and updating of the Foodsoft |
+| `configure-foodsoft` | Configuration of the Foodsoft, Add and delete new foodcoops |
+| `nginx` | Installation and configuration of Nginx |
+| `phpmyadmin` | Installation and configuration of phpMyAdmin |
+| `postfix` | Installation and configuration of Postfix for use with a real mail domain |
+| `sharedlists` | Installation, configuration, updating of sharedlists |
+| `uptime-kuma` | Installation of Uptime Kuma a monitoring solution |
 
 # Common tasks
 ## Check and restart a service
@@ -60,11 +61,11 @@ We use different (systemd) services at focone:
 
 | Name | Description |
 |------|-------------|
-| foodsoft-web | Foodsoft web interface |
-| foodsoft-smtp | Foodsoft smtp server for incoming emails |
-| foodsoft-resque | Redis-based [backend](https://github.com/resque/resque) for background jobs |
-| sharedlists-web | Sharedlists web interface |
-| sharedlists-smtp | Sharedlists smtp server for article updates by email |
+| `foodsoft-web` | Foodsoft web interface |
+| `foodsoft-smtp` | Foodsoft smtp server for incoming emails |
+| `foodsoft-resque` | Redis-based [backend](https://github.com/resque/resque) for background jobs |
+| `sharedlists-web` | Sharedlists web interface |
+| `sharedlists-smtp` | Sharedlists smtp server for article updates by email |
 
 You can check the status of a service with a command like this:
 ```shell
@@ -108,6 +109,7 @@ systemctl restart foodsoft-web
    | `stop_ordering_under` | int |
    | `use_apple_points` | bol |
    | `use_nick` | bol |
+   | `use_massages` | bol |
 - Example configuration:
    ```YAML
    vault_foodcoops:
@@ -121,11 +123,12 @@ systemctl restart foodsoft-web
         stop_ordering_under: 70
         use_apple_points: false
         use_nick: true
+        use_massages: false
    ```
 - Upload the changes to our Git repository.
 - Execute the playbook with:
    ```shell
-   ansible-playbook playbooks/foodsoft.yml --tags never,foodcoop_add
+   ansible-playbook playbooks/configure-foodsoft.yml --tags never,foodcoop_add
    ```
 - Immediately login with `admin` / `secret1234` and change the user details and password. The `admin` user should become the user account of the first contact person, so use their email address here. We do not want to encourage an unused `admin` account.
 - You may want to pre-set some configuration if you know a bit more about the foodcoop. It's always helpful for new foodcoops to have a setup that already reflects their intended use a bit. At least you should set a time zone.
@@ -145,7 +148,7 @@ If the deletion of a foocoop is requested follow these steps:
    ```
 - Execute the playbook:
    ```shell
-   ansible-playbook playbooks/foodsoft --tags never,foodcoop_delete
+   ansible-playbook playbooks/configure-foodsoft --tags never,foodcoop_delete
    ```
    Removing a Foodcoop will result in a restart of the Foodsoft service. Please execute the playbook in the late evening or preferably during the night to not disturb our users.
 - Delete the foodcoop's entry from `roles/foodsoft/vars/main.yml`.

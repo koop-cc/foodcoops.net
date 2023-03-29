@@ -1,0 +1,10 @@
+galaxy_info:
+  author: foodcoops.net administrators
+  description: Install and setup a multicoop Foodsoft instance
+  company: foodcoops.net
+  license: GPLv3
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Debian
+      versions:
+        - bullseye

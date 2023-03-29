@@ -1,0 +1,9 @@
+---
+- name: "Sharedlists | Add privileges to sharedlists suppliers"
+  community.mysql.mysql_user:
+    name: "{{ foodsoft_db_user }}"
+    priv: "{{ sharedlists.database }}.suppliers:SELECT/sharedlists.articles:SELECT"
+    append_privs: true
+    state: present
+    login_unix_socket: "{{ mariadb_socket }}"
+    login_user: root

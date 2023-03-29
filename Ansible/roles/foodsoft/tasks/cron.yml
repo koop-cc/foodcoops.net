@@ -1,9 +1,9 @@
 ---
 # https://github.com/foodcoops/foodsoft/blob/master/config/schedule.rb
 
-- name: "cron | Insert ENV variables"
+- name: "Cron | Insert ENV variables"
   ansible.builtin.cron:
-    name: "{{ item. name }}"
+    name: "{{ item.name }}"
     job: "{{ item.job }}"
     env: true
     user: "{{ foodsoft_user }}"
@@ -11,70 +11,45 @@
     - name: RAILS_ENV
       job: production
     - name: SECRET_KEY_BASE
-      job: "{{ vault_foodsoft_secret_key_base }}"
+      job: "{{ foodsoft_secret_key_base }}"
     - name: REDIS_URL
       job: "{{ foodsoft_redis_url }}"
 
-- name: "cron | install job 1"
+- name: "Cron | Setup task notifier job"
   ansible.builtin.cron:
-    name: Upcoming tasks notifier 1
+    name: Upcoming tasks notifier
     user: "{{ foodsoft_user }}"
     minute: "20"
     hour: "07"
-    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:notify_upcoming_tasks --silent"
+    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec bundle exec rails multicoops:run TASK=foodsoft:notify_upcoming_tasks --silent"
 
-- name: "cron | install job 2"
+- name: "Cron | Setup weekly task notifier job"
   ansible.builtin.cron:
-    name: Upcoming tasks notifier 2
+    name: Weekly tasks notifier
     user: "{{ foodsoft_user }}"
     minute: "20"
     hour: "07"
-    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:notify_users_of_weekly_task --silent"
+    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec bundle exec rails multicoops:run TASK=foodsoft:notify_users_of_weekly_task --silent"
 
-- name: "cron | install job 3"
+- name: "Cron | Setup bank transactions job"
   ansible.builtin.cron:
-    name: Import and assign bank transactions 1
+    name: Import and assign bank transactions
     user: "{{ foodsoft_user }}"
-    minute: "56"
-    hour: "05"
+    minute: "00"
+    hour: "05,18"
     day: "1-5"
-    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:import_and_assign_bank_transactions --silent"
+    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec bundle exec rails multicoops:run TASK=foodsoft:import_and_assign_bank_transactions --silent"
 
-- name: "cron | install job 4"
-  ansible.builtin.cron:
-    name: Import and assign bank transactions 2
-    user: "{{ foodsoft_user }}"
-    minute: "56"
-    hour: "18"
-    day: "1-5"
-    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:import_and_assign_bank_transactions --silent"
-
-- name: "cron | install job 5"
+- name: "Cron | setup weekly tasks job"
   ansible.builtin.cron:
     name: Create weekly tasks
     user: "{{ foodsoft_user }}"
     minute: "14"
     hour: "07"
-    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:create_upcoming_periodic_tasks --silent"
+    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec bundle exec rails multicoops:run TASK=foodsoft:create_upcoming_periodic_tasks --silent"
 
-- name: "cron | install job 6"
+- name: "Cron | Setup finish order job"
   ansible.builtin.cron:
     name: Finish ended orders
     user: "{{ foodsoft_user }}"
-    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails multicoops:run TASK=foodsoft:finish_ended_orders --silent"
-
-- name: "cron | daily reset of demo database"
-  ansible.builtin.cron:
-    name: Daily reset of demo database
-    user: "{{ foodsoft_user }}"
-    minute: "00"
-    hour: "02"
-    job: sleep 30; /bin/bash -lc "cd {{ foodsoft_home }} && DISABLE_DATABASE_ENVIRONMENT_CHECK=1 DATABASE_URL=mysql2://{{ foodsoft_db_user }}:{{ vault_foodsoft_db_password }}@localhost/foodsoft_demo rbenv exec rails db:purge db:schema:load db:seed:small.en"
-
-- name: "cron | clear cache after reset of demo database"
-  ansible.builtin.cron:
-    name: Clear cache after reset of demo database to delete cached settings
-    user: "{{ foodsoft_user }}"
-    minute: "01"
-    hour: "02"
-    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec rails tmp:cache:clear"
+    job: /bin/bash -lc "cd {{ foodsoft_home }} && rbenv exec bundle exec rails multicoops:run TASK=foodsoft:finish_ended_orders --silent"

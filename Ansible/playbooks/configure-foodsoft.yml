@@ -1,0 +1,24 @@
+---
+- name: Playbook to configure a Foodsoft installation
+  hosts:
+    - focone
+  roles:
+    - role: configure-foodsoft
+  tasks:
+    - name: Include Vars
+      ansible.builtin.include_vars: ../roles/foodsoft/defaults/main.yml
+    - name: "Add a new Foodcoop"
+      ansible.builtin.include_tasks: ../roles/configure-foodsoft/tasks/foodcoop_add.yml
+      args:
+        apply:
+          tags: foodcoop_add
+      tags: never
+      loop: "{{ vault_foodcoops }}"
+    - name: "Delete a Foodcoop"
+      ansible.builtin.include_tasks: ../roles/configure-foodsoft/tasks/foodcoop_delete.yml
+      args:
+        apply:
+          tags: foodcoop_delete
+      tags: never
+      loop: "{{ vault_foodcoops }}"
+      when: item.deleted is defined and item.deleted

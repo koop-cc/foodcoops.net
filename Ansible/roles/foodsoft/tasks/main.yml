@@ -1,27 +1,40 @@
 ---
-- import_tasks: packages.yml
+- name: Packages
+  ansible.builtin.import_tasks: packages.yml
   tags: packages
 
-- import_tasks: user.yml
+- name: User
+  ansible.builtin.import_tasks: user.yml
   tags: user
 
-- import_tasks: foodsoft.yml
+- name: Foodsoft
+  ansible.builtin.import_tasks: foodsoft.yml
   tags: foodsoft
 
-- import_tasks: customizations.yml
+- name: Sharedlists
+  ansible.builtin.import_tasks: sharedlists.yml
+  when: sharedlists.enabled is defined and sharedlists.enabled
+
+- name: Customizations
+  ansible.builtin.import_tasks: customizations.yml
   tags: customizations
 
-- import_tasks: database.yml
+- name: Database
+  ansible.builtin.import_tasks: database.yml
   tags: database
 
-- import_tasks: systemd.yml
+- name: Systemd
+  ansible.builtin.import_tasks: systemd.yml
   tags: systemd
 
-- import_tasks: cron.yml
+- name: Cron
+  ansible.builtin.import_tasks: cron.yml
   tags: cron
 
-- import_tasks: monitoring.yml
+- name: Monitoring
+  ansible.builtin.import_tasks: monitoring.yml
   tags: monitoring
 
-- import_tasks: webserver.yml
+- name: Webserver
+  ansible.builtin.import_tasks: webserver.yml
   tags: webserver

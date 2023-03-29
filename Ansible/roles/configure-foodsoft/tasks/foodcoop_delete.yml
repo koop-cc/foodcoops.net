@@ -1,14 +1,14 @@
 ---
-- name: "delete | {{ item.instance }} | Delete database"
+- name: "Delete | Delete database | {{ item.name }}"
   ansible.builtin.mysql_db:
     name: "{{ item.database }}"
     state: absent
     login_unix_socket: "{{ mariadb_socket }}"
     login_user: root
 
-- name: "delete | {{ item.instance }} | Delete foodcoop from configuration file"
+- name: "Delete | Delete foodcoop from configuration file | {{ item.name }}"
   ansible.builtin.blockinfile:
     path: "{{ foodsoft_home }}/config/app_config.yml"
     state: absent
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.instance }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.name }}"
   notify: restart foodsoft-web

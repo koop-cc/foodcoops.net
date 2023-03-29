@@ -1,0 +1,39 @@
+---
+- name: reload monit
+  ansible.builtin.service:
+    name: monit
+    state: reloaded
+
+- name: restart munin-node
+  ansible.builtin.service:
+    name: munin-node
+    state: restarted
+
+- name: reload nginx
+  ansible.builtin.service:
+    name: nginx
+    state: reloaded
+
+- name: restart foodsoft-web
+  ansible.builtin.systemd:
+    name: "{{ foodsoft_web_service }}"
+    daemon_reload: true
+    state: restarted
+
+- name: restart foodsoft-web-socket
+  ansible.builtin.systemd:
+    name: "{{ foodsoft_web_socket }}"
+    daemon_reload: true
+    state: restarted
+
+- name: restart foodsoft-smtp
+  ansible.builtin.systemd:
+    name: "{{ foodsoft_smtp_service }}"
+    daemon_reload: true
+    state: restarted
+
+- name: restart foodsoft-resque
+  ansible.builtin.systemd:
+    name: "{{ foodsoft_resque_service }}"
+    daemon_reload: true
+    state: restarted

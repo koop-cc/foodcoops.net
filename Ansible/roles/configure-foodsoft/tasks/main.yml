@@ -1,0 +1,12 @@
+---
+- name: Foodsoft
+  ansible.builtin.import_tasks: foodsoft.yml
+  tags: foodsoft
+
+- name: Cron
+  ansible.builtin.import_tasks: cron.yml
+  tags: cron
+
+- name: Webserver
+  ansible.builtin.import_tasks: webserver.yml
+  tags: webserver
