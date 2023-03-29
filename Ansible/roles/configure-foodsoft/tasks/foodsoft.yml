@@ -62,6 +62,7 @@
     owner: "{{ foodsoft_user }}"
     group: "{{ foodsoft_user }}"
     mode: "0644"
+  register: gemfile
 
 - name: "Foodsoft | Install ruby packages"
   ansible.builtin.command:
@@ -71,3 +72,4 @@
   become_user: "{{ foodsoft_user }}"
   environment:
     RAILS_ENV: production
+  when: gemfile.changed
