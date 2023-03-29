@@ -5,8 +5,8 @@
    def destroy
      logout
 -    redirect_to login_url, :notice => I18n.t('sessions.logged_out')
-+    if FoodsoftConfig[:logout_redirect_url].present?
-+      redirect_to FoodsoftConfig[:logout_redirect_url]
++    if FoodsoftConfig[:logout_redirect_to].present?
++      redirect_to FoodsoftConfig[:logout_redirect_to]
 +    else
 +      redirect_to login_url, :notice => I18n.t('sessions.logged_out')
 +    end
