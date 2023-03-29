@@ -1,7 +1,7 @@
 check process foodsoft-web
   matching '"^puma [0-9.]* \(tcp:\/\/{{ foodsoft_web_bind_ip | replace(".", "\.") }}:{{ foodsoft_web_port }}(.*)\) \[foodsoft\]"'
-  start program = "/usr/sbin/service foodsoft-web start"
-  stop program = "/usr/sbin/service foodsoft-web stop"
+  start program = "/usr/sbin/service {{ foodsoft_web_service | splitext | first }} start"
+  stop program = "/usr/sbin/service {{ foodsoft_web_service | splitext | first }} stop"
   if 2 restarts within 3 cycles then timeout
   if cpu usage > 95% for 3 cycles then restart
   if failed host {{ foodsoft_web_bind_ip }} port {{ foodsoft_web_port }} for 3 cycles then restart
@@ -9,8 +9,8 @@ check process foodsoft-web
 
 check process foodsoft-smtp
   matching '^{{ foodsoft_user_home | replace("/", "\/") }}(.*)bin\/rails foodsoft:reply_email_smtp_server$'
-  start program = "/usr/sbin/service foodsoft-smtp start"
-  stop program = "/usr/sbin/service foodsoft-smtp stop"
+  start program = "/usr/sbin/service {{ foodsoft_smtp_service | splitext | first }} start"
+  stop program = "/usr/sbin/service {{ foodsoft_smtp_service | splitext | first }} stop"
   if 2 restarts within 3 cycles then timeout
   if cpu usage > 95% for 3 cycles then restart
   if failed host {{ foodsoft_smtp_address }} port {{ foodsoft_smtp_server_port }} for 3 cycles then restart
@@ -18,7 +18,7 @@ check process foodsoft-smtp
 
 check process foodsoft-resque
   matching '^resque-[0-9.]*: Waiting for'
-  start program = "/usr/sbin/service foodsoft-resque start"
-  stop program = "/usr/sbin/service foodsoft-resque stop"
+  start program = "/usr/sbin/service {{ foodsoft_resque_service | splitext | first }} start"
+  stop program = "/usr/sbin/service {{ foodsoft_resque_service | splitext | first }} stop"
   if 2 restarts within 3 cycles then timeout
   if cpu usage > 95% for 3 cycles then restart
