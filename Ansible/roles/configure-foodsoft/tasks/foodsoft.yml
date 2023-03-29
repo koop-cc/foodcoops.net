@@ -96,3 +96,7 @@
   environment:
     RAILS_ENV: production
   when: gemfile.changed
+  notify:
+    - restart foodsoft-web
+    - restart foodsoft-smtp
+    - restart foodsoft-resque
