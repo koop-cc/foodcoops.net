@@ -1,4 +1,7 @@
 ---
+- name: Get certificate
+  ansible.builtin.command: dehydrated --cron -g
+
 - name: reload nginx
   ansible.builtin.service:
     name: nginx
