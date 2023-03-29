@@ -103,7 +103,7 @@ systemctl restart foodsoft-web
      - name: bob
        mail: bob@example.org
    ```
-- Some custom [configuration](roles/foodsoft/Configuration.md) settings are available. At the moment these settings are supported by this role:
+- Some custom [configuration](roles/configure-foodsoft/Configuration.md) settings are available. At the moment these settings are supported by this role:
    | Setting | Value |
    |---------|-------|
    | `stop_ordering_under` | int |
