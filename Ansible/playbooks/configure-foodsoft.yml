@@ -2,11 +2,12 @@
 - name: Playbook to configure a Foodsoft installation
   hosts:
     - focone
-  roles:
-    - role: configure-foodsoft
   tasks:
-    - name: Include Vars
+    - name: Include vars
       ansible.builtin.include_vars: ../roles/foodsoft/defaults/main.yml
+    - name: Include role
+      ansible.builtin.include_role:
+        name: configure-foodsoft
     - name: "Add a new Foodcoop"
       ansible.builtin.include_tasks: ../roles/configure-foodsoft/tasks/foodcoop_add.yml
       args:
