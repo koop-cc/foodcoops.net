@@ -11,12 +11,12 @@
 - name: "Database | Add privileges to database user"
   community.mysql.mysql_user:
     name: "{{ foodsoft_db_user }}"
+    password: "{{ foodsoft_db_password }}"
     priv: "{{ foodsoft_db }}.*:ALL"
     append_privs: true
     state: present
     login_unix_socket: "{{ mariadb_socket }}"
     login_user: root
-    update_password: on_create
 
 - name: "Database | copy database configuration"
   ansible.builtin.template:
@@ -48,7 +48,7 @@
     SECRET_KEY_BASE: "{{ foodsoft_secret_key_base }}"
   become: true
   become_user: "{{ foodsoft_user }}"
-  when: db_version.stdout == 0
+  when: db_version.stdout|int == 0
 
 - name: "Database | Run seed.rb"
   ansible.builtin.command:
@@ -59,7 +59,7 @@
     SECRET_KEY_BASE: "{{ foodsoft_secret_key_base }}"
   become: true
   become_user: "{{ foodsoft_user }}"
-  when: db_version.stdout == 0 # db:seed is not idempotent in this case
+  when: db_version.stdout|int == 0 # db:seed is not idempotent in this case
 
 - name: "Database | Run migrations"
   ansible.builtin.command:
