@@ -1,0 +1,10 @@
+---
+- name: "Postinstall | Compile assets"
+  ansible.builtin.command:
+    cmd: "rbenv exec bundle exec rails assets:precompile"
+    chdir: "{{ foodsoft_home }}"
+  environment:
+    RAILS_ENV: production
+    SECRET_KEY_BASE: "{{ foodsoft_secret_key_base }}"
+  become: true
+  become_user: "{{ foodsoft_user }}"

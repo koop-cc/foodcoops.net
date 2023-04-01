@@ -11,10 +11,6 @@
   ansible.builtin.import_tasks: foodsoft.yml
   tags: foodsoft
 
-- name: Sharedlists
-  ansible.builtin.import_tasks: sharedlists.yml
-  when: sharedlists.enabled is defined and sharedlists.enabled
-
 - name: Customizations
   ansible.builtin.import_tasks: customizations.yml
   tags: customizations
@@ -22,6 +18,10 @@
 - name: Database
   ansible.builtin.import_tasks: database.yml
   tags: database
+
+- name: Postinstall
+  Dansible.builtin.import_tasks: postinstall.yml
+  tags: postinstall
 
 - name: Systemd
   ansible.builtin.import_tasks: systemd.yml

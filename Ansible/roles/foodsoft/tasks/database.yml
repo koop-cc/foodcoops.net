@@ -71,12 +71,12 @@
   become: true
   become_user: "{{ foodsoft_user }}"
 
-- name: "Database | Compile assets"
-  ansible.builtin.command:
-    cmd: "rbenv exec bundle exec rails assets:precompile"
-    chdir: "{{ foodsoft_home }}"
-  environment:
-    RAILS_ENV: production
-    SECRET_KEY_BASE: "{{ foodsoft_secret_key_base }}"
-  become: true
-  become_user: "{{ foodsoft_user }}"
+- name: "Database | Add privileges to sharedlists suppliers"
+  community.mysql.mysql_user:
+    name: "{{ foodsoft_db_user }}"
+    priv: "{{ sharedlists.database }}.suppliers:SELECT/sharedlists.articles:SELECT"
+    append_privs: true
+    state: present
+    login_unix_socket: "{{ mariadb_socket }}"
+    login_user: root
+  when: sharedlists.enabled is defined and sharedlists.enabled
