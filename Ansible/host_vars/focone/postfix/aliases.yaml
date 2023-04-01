@@ -1,0 +1,7 @@
+postfix_aliases:
+  - domain:
+    name: app.foodcoops.net
+    aliases:
+      - name: 
+        dest:
+         - 

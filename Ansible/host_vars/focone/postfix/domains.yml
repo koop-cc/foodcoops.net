@@ -1,0 +1,3 @@
+postfix_domains:
+  - name: app.foodcoops.net
+    type: relay
