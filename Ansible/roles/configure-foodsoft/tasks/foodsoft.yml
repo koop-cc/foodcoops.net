@@ -39,12 +39,6 @@
     regexp: ':password => "secret"'
     replace: ':password => "secret1234"'
 
-- name: "Foodsoft | Apply redirect after logout patch"
-  ansible.posix.patch:
-    src: foodsoft/redirect_after_logout.patch
-    dest: "{{ foodsoft_home }}/app/controllers/sessions_controller.rb"
-  notify: restart foodsoft-web
-
 - name: "Foodsoft | Apply hide users patch"
   ansible.posix.patch:
     src: foodsoft/hide_users.patch
@@ -75,7 +69,6 @@
     owner: "{{ foodsoft_user }}"
     group: "{{ foodsoft_user }}"
     mode: "0644"
-  register: gemfile
 
 - name: "Foodsoft | Update Gemfile.lock"
   ansible.builtin.command:
@@ -85,7 +78,6 @@
   become_user: "{{ foodsoft_user }}"
   environment:
     RAILS_ENV: production
-  when: gemfile.changed
 
 - name: "Foodsoft | Install ruby packages"
   ansible.builtin.command:
@@ -95,7 +87,6 @@
   become_user: "{{ foodsoft_user }}"
   environment:
     RAILS_ENV: production
-  when: gemfile.changed
   notify:
     - restart foodsoft-web
     - restart foodsoft-smtp
