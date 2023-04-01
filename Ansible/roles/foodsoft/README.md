@@ -59,3 +59,14 @@ The Foodsoft provides an internal SMTP server that processes incomming mails.
 |--|--|--|
 | `foodsoft_smtp_server_host` | `0.0.0.0` | Listen address for the internal Foodsoft SMTP server |
 | `foodsoft_smtp_server_port` | `2525` | Listen port for the internal Foodsoft SMTP server |
+
+### Connect to Sharedlists database
+
+It's possbile to access the [Sharedlists][https://github.com/foodcoops/sharedlists] database
+from within the Foodsoft. Just use the following variables to grant the Foodsoft database user
+`SELECT` access to the Sharedlists database.
+
+| Name | Default | Note |
+|--|--|--|
+| `sharedlists.enabled` | `False` | `True` if you want to connect a Sharedlists database |
+| `sharedlists.database` | `nil` | Name of the sharedlists database |
