@@ -109,7 +109,7 @@ systemctl restart foodsoft-web
    | `stop_ordering_under` | int |
    | `use_apple_points` | bol |
    | `use_nick` | bol |
-   | `use_massages` | bol |
+   | `use_messages` | bol |
 - Example configuration:
    ```YAML
    vault_foodcoops:
@@ -123,7 +123,7 @@ systemctl restart foodsoft-web
         stop_ordering_under: 70
         use_apple_points: false
         use_nick: true
-        use_massages: false
+        use_messages: false
    ```
 - Upload the changes to our Git repository.
 - Execute the playbook with:
