@@ -1,5 +1,5 @@
 ---
-- name: "Foodcoop | Add database | {{ item.name }}"
+- name: "Foodcoop | Add database | {{ item.instance }}"
   community.mysql.mysql_db:
     name: "{{ item.database }}"
     state: present
@@ -8,7 +8,7 @@
     login_unix_socket: "{{ mariadb_socket }}"
     login_user: root
 
-- name: "Foodcoop | Assign database permissions | {{ item.name }}"
+- name: "Foodcoop | Assign database permissions | {{ item.instance }}"
   ansible.builtin.mysql_user:
     name: "{{ foodsoft_db_user }}"
     password: "{{ foodsoft_db_password }}"
@@ -19,7 +19,7 @@
     login_user: root
 
 # If database schema is already loaded it outputs a version number > 0
-- name: "Foodcoop | Test if database schema is already loaded | {{ item.name }}"
+- name: "Foodcoop | Test if database schema is already loaded | {{ item.instance }}"
   ansible.builtin.shell:
     cmd: "rbenv exec bundle exec rails db:version | grep ^Current | sed 's/^.*: //'"
     chdir: "{{ foodsoft_home }}"
@@ -33,7 +33,7 @@
   register: db_version
   changed_when: false
 
-- name: "Foodcoop | Create database schema | {{ item.name }}"
+- name: "Foodcoop | Create database schema | {{ item.instance }}"
   ansible.builtin.shell:  
     cmd: "rbenv exec rails db:schema:load"
     chdir: "{{ foodsoft_home }}"
@@ -46,7 +46,7 @@
   become_user: "{{ foodsoft_user }}"
   when: db_version.stdout == "0"
 
-- name: "Foodcoop | Run seed.rb | {{ item.name }}"
+- name: "Foodcoop | Run seed.rb | {{ item.instance }}"
   ansible.builtin.shell:
     cmd: "rbenv exec rails db:seed"
     chdir: "{{ foodsoft_home }}"
@@ -59,7 +59,7 @@
   become_user: "{{ foodsoft_user }}"
   when: db_version.stdout == "0" # db:seed is not idempotent in this case
 
-- name: "Foodcoop | Add new foodcoop to configuration file | {{ item.name }}"
+- name: "Foodcoop | Add new foodcoop to configuration file | {{ item.instance }}"
   ansible.builtin.blockinfile:
     path: "{{ foodsoft_home }}/config/app_config.yml"
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.instance }}"
