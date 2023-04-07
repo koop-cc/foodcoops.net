@@ -1,0 +1,3 @@
+borg_install_method: package
+borg_ssh_key_name: "{{ inventory_hostname }}_backup"
+borgmatic_timer: cron
