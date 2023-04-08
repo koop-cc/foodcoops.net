@@ -1,6 +1,6 @@
 ---
 - name: "Delete | Delete database | {{ item.instance }}"
-  ansible.builtin.mysql_db:
+  community.mysql.mysql_db:
     name: "{{ item.database }}"
     state: absent
     login_unix_socket: "{{ mariadb_socket }}"
@@ -12,3 +12,41 @@
     state: absent
     marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.instance }}"
   notify: restart foodsoft-web
+
+- name: "Delete | Create directory for old database backups"
+  ansible.builtin.file:
+    path: "{{ old_db_backup_path }}"
+    state: directory
+    mode: "0755"
+
+- name: "Delete | Copy old database backups"
+  ansible.builtin.copy:
+    src: "{{ database_backup_latest_path }}/{{ item.database }}"
+    dest: "{{ old_db_backup_path }}/"
+    mode: "0644"
+    remote_src: true
+  register: copy
+  failed_when: "'not found' not in copy.msg"
+
+- name: "Delete | Search for old database backups"
+  ansible.builtin.find:
+    paths: "{{ database_backup_path }}"
+    patterns: "{{ item.database }}"
+    file_type: directory
+    recurse: true
+  register: database_backups
+
+- name: "Delete | Delete database backups from backup directory"
+  ansible.builtin.file:
+    path: "{{ paths }}"
+    state: absent
+  loop_control:
+    loop_var: paths
+  loop: "{{ database_backups.files | map(attribute='path') | list }}"
+
+- name: "Delete | Add cron job to delete old database backups"
+  ansible.builtin.cron:
+    name: Delete old database backups
+    job: "find {{ old_db_backup_path }} -mtime +{{ delete_marked_db_backups_period }} -type f -exec rm -f {} \\;"
+    day: "01"
+    hour: "01"

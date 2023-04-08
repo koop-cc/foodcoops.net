@@ -1,0 +1,4 @@
+database_backup_path: /var/lib/automysqlbackup
+database_backup_latest_path: "{{ database_backup_path }}/latest"
+old_db_backup_path: "{{ database_backup_path }}/_delete"
+delete_marked_db_backups_period: 90

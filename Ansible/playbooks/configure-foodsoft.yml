@@ -6,22 +6,5 @@
   handlers:
     - name: Import handlers
       ansible.builtin.import_tasks: ../roles/foodsoft/handlers/main.yml
-  tasks:
-    - name: Include role
-      ansible.builtin.include_role:
-        name: configure-foodsoft
-    - name: "Add a new Foodcoop"
-      ansible.builtin.include_tasks: ../roles/configure-foodsoft/tasks/foodcoop_add.yml
-      args:
-        apply:
-          tags: foodcoop_add
-      tags: never
-      loop: "{{ vault_foodcoops }}"
-    - name: "Delete a Foodcoop"
-      ansible.builtin.include_tasks: ../roles/configure-foodsoft/tasks/foodcoop_delete.yml
-      args:
-        apply:
-          tags: foodcoop_delete
-      tags: never
-      loop: "{{ vault_foodcoops }}"
-      when: item.deleted is defined and item.deleted
+  roles:
+    - role: configure-foodsoft
