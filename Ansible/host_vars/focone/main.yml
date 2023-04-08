@@ -6,7 +6,6 @@ foodsoft_domain: app.foodcoops.net
 phpmyadmin_domain: dbadmin.foodcoops.net
 phpmyadmin_password: "{{ vault_phpmyadmin_password }}"
 sharedlists_domain: sharedlists.foodcoops.net
-backup_guest: true
 ssh_port: "2243"
 
 mail_fqdn: app.foodcoops.net
@@ -15,3 +14,5 @@ mail_mx: mx.app.foodcoops.net
 postfix_public: true
 postfix_relay: mail.senselab.org
 postfix_relay_port: "587"
+
+borgbase_api_key: "{{ vault_borgbase_api_key }}"

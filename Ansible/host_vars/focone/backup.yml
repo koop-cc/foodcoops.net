@@ -1,0 +1,9 @@
+borgbase: true
+borg_encryption_passphrase: "{{ vault_borg_encryption_passphrase }}"
+borg_repository:
+  - "ssh://{{ borgbase_repo.repo_id }}@{{ borgbackup_ssh_host }}/./repo"
+borg_source_directories:
+  - /etc
+  - /root
+  - /opt
+  - /var/lib/automysqlbackup

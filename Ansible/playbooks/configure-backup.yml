@@ -1,0 +1,6 @@
+---
+- name: Playbook to configure borgbase backups
+  hosts:
+    - focone
+  roles:
+    - role: galaxy/senselab.borgbackup

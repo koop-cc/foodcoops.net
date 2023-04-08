@@ -1,6 +1,7 @@
 roles:
-  - name: galaxy/borgbase.borgbackup
-    src: m3nu.ansible_role_borgbackup
+  - name: galaxy/senselab.borgbackup
+    src: https://git.systemausfall.org/senselab/ansible-role-borgbackup.git
+    scm: git
 
   - name: galaxy/senselab.configure-firewall
     src: https://git.systemausfall.org/senselab/ansible-role-configure-firewall.git
@@ -17,3 +18,6 @@ roles:
   - name: galaxy/senselab.nginx
     src: https://git.systemausfall.org/senselab/ansible-role-nginx.git
     scm: git
+
+collections:
+  - name: adhawkins.borgbase
