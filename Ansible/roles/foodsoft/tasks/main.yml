@@ -20,7 +20,7 @@
   tags: database
 
 - name: Postinstall
-  Dansible.builtin.import_tasks: postinstall.yml
+  ansible.builtin.import_tasks: postinstall.yml
   tags: postinstall
 
 - name: Systemd
