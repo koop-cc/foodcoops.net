@@ -39,12 +39,6 @@
     regexp: ':password => "secret"'
     replace: ':password => "secret1234"'
 
-- name: "Foodsoft | Apply hide users patch"
-  ansible.posix.patch:
-    src: foodsoft/hide_users.patch
-    dest: "{{ foodsoft_home }}/app/views/home/_start_nav.haml"
-  notify: restart foodsoft-web
-
 # https://github.com/foodcoops/foodsoft/issues/980
 - name: Foodsoft | Remove haml gem from Gemfile
   ansible.builtin.lineinfile:
