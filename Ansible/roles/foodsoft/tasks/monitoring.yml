@@ -7,21 +7,36 @@
   when: "'monit' in ansible_facts.packages"
   notify: reload monit
 
-- name: "Monitoring | Download Munin plugin"
-  ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/munin-monitoring/contrib/master/plugins/puma/puma_
-    dest: /usr/local/bin/puma_
-    mode: "0755"
-
-- name: "Monitoring | Enable Munin plugin"
+- name: "Monitoring | Create directory for local Munin plugins"
   ansible.builtin.file:
-    src: /usr/local/bin/puma_
-    dest: "/etc/munin/plugins/puma_{{ name }}"
+    path: "{{ munin_local_plugins_path }}"
+    state: directory
+    mode: "0755"
+  when: "'munin-node' in ansible_facts.packages"
+
+- name: "Monitoring | Download Munin plugins"
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ munin_local_plugins_path }}/{{ item.name }}"
+    mode: "0755"
+  loop: "{{ munin_plugins }}"
+  when: "'munin-node' in ansible_facts.packages"
+
+- name: "Monitoring | Enable Munin Puma plugin"
+  ansible.builtin.file:
+    src: "{{ munin_local_plugins_path }}/puma_"
+    dest: "{{ munin_plugins_path }}/puma_{{ item }}"
     state: link
-  loop_control:
-    loop_var: name
   loop:
     - average
     - memory
+  when: "'munin-node' in ansible_facts.packages"
+  notify: restart munin-node
+
+- name: "Monitoring | Enable Munin Redis plugin"
+  ansible.builtin.file:
+    src: "{{ munin_local_plugins_path }}/redis"
+    dest: "{{ munin_plugins_path }}/redis"
+    state: link
   when: "'munin-node' in ansible_facts.packages"
   notify: restart munin-node

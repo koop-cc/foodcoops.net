@@ -31,3 +31,12 @@ ruby_build_git_url: https://github.com/rbenv/ruby-build.git
 ruby_build_version: master
 
 mariadb_socket: /run/mysqld/mysqld.sock
+
+munin_local_plugins_path: /usr/local/share/munin/plugins
+munin_plugins_path: /etc/munin/plugins
+
+munin_plugins:
+  - name: puma_
+    url: https://raw.githubusercontent.com/munin-monitoring/contrib/master/plugins/puma/puma_
+  - name: redis
+    url: https://raw.githubusercontent.com/munin-monitoring/contrib/master/plugins/redis/redis
