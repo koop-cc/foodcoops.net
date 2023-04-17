@@ -39,13 +39,6 @@
     regexp: ':password => "secret"'
     replace: ':password => "secret1234"'
 
-# https://github.com/foodcoops/foodsoft/issues/980
-- name: Foodsoft | Remove haml gem from Gemfile
-  ansible.builtin.lineinfile:
-    path: "{{ foodsoft_home }}/Gemfile"
-    line: gem 'haml'
-    state: absent
-
 - name: "Foodsoft | Enable local Gemfile support"
   ansible.builtin.blockinfile:
     path: "{{ foodsoft_home }}/Gemfile"
