@@ -1,3 +1,14 @@
 postfix_domains:
   - name: app.foodcoops.net
     type: relay
+    relay:
+      - src: "/^sharedlists\\+[0-9]*\\.([0-9A-Z])*@app\\.foodcoops\\.net$/"
+        dest: "smtp:[127.0.0.1]:2525"
+      - src: "/^(.*)\\.[0-9\\.]*\\.[A-Z0-9]*@app\\.foodcoops\\.net$/"
+        dest: "smtp:[127.0.0.1]:2526"
+      - src: "/^(.*)@app\\.foodcoops\\.net$/"
+        dest: "discard:"
+    mta_sts:
+      enabled: true
+    mx_server:
+      - mx.app.foodcoops.net

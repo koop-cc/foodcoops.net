@@ -24,6 +24,10 @@ foodsoft_smtp_port: "25"
 foodsoft_smtp_authentication: false
 foodsoft_smtp_enable_starttls_auto: false
 
+# Internal SMTP Server for mail replies
+foodsoft_smtp_server_port: "2526"
+foodsoft_smtp_server_host: "127.0.0.1"
+
 puma_port: "9294"
 
 ruby_path: "{{ foodsoft_user_home }}/.rbenv"

@@ -1,0 +1,2 @@
+postfix_header_treatment:
+  - "/^Received:.* with (E?SMTPS?A?) id ([a-zA-Z0-9]+)/ REPLACE Received: by app.foodcoops.net (Postfix) with $1 id $2"

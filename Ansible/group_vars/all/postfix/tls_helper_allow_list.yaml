@@ -1,0 +1,17 @@
+postfix_tls_helper_allowlist:
+  - asl.uni-kassel.de
+  - elkm.de
+  - emptybottle.de
+  - heilpraxis-roth.de
+  - johanniter.de
+  - kabelmail.de
+  - kjhv-mv.de
+  - nnn.de
+  - regiocast.de
+  - schlau-werkstatt.de
+  - stud.leuphana.de
+  - student.uni-kassel.de
+  - superabschneiden.de
+  - uni-kassel.deA
+  - vhs-nwm.de
+  - wiz.uni-kassel.de

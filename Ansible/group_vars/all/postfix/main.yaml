@@ -1,0 +1,11 @@
+postfix_conf_dir: /etc/postfix/conf.d
+
+postfix_message_size_limit: 41838184
+postfix_pflogsum_recipient: "mail-log@app.foodcoops.net"
+postfix_pflogsum_mail_subject: Mailserver Statistics
+
+postfix_tls_helper_domain: app.foodcoops.net
+postfix_tls_helper_recipient: tls-summary@app.foodcoops.net
+postfix_tls_helper_sender: postmaster@app.foodcoops.net
+
+postfix_smtpd_banner: "$myhostname ESMTP $mail_name"

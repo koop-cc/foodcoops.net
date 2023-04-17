@@ -1,5 +1,0 @@
-# {{ ansible_managed }}
-
-bankingrapid.com                    REJECT  No spammers
-happy-cash-club.com                 REJECT  No spammers
-milliondollarbinary.trade           REJECT  no spammers

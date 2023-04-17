@@ -1,4 +1,0 @@
----
-mail_sasl_log: mail-sasl.log
-postfix_conf_dir: /etc/postfix/conf.d
-postfix_sasl_password_file: sasl_password

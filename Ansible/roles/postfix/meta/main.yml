@@ -1,9 +1,0 @@
-galaxy_info:
-  author: foodcoops.net
-  description: Installation and configuration of Postfix
-  company: foodcoops.net
-  min_ansible_version: 2.9
-  platforms:
-  - name: Debian
-    versions:
-      - Bullseye

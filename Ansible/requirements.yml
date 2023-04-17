@@ -19,5 +19,9 @@ roles:
     src: https://git.systemausfall.org/senselab/ansible-role-nginx.git
     scm: git
 
+  - name: galaxy/senselab.postfix
+    src: https://git.systemausfall.org/senselab/ansible-role-postfix.git
+    scm: git
+
 collections:
   - name: adhawkins.borgbase

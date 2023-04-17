@@ -1,0 +1,4 @@
+postfix_transport_global_exceptions:
+  - address: "/^noreply(\\+.*)?@discard\\.local$/"
+    state: "discard:"
+    comment: "Mails an diese Adressen werden angenommen und verworfen"

@@ -57,8 +57,8 @@ The Foodsoft provides an internal SMTP server that processes incomming mails.
 
 | Name | Default | Note |
 |--|--|--|
-| `foodsoft_smtp_server_host` | `0.0.0.0` | Listen address for the internal Foodsoft SMTP server |
-| `foodsoft_smtp_server_port` | `2525` | Listen port for the internal Foodsoft SMTP server |
+| `foodsoft_smtp_server_host` | `127.0.0.1` | Listen address for the internal Foodsoft SMTP server |
+| `foodsoft_smtp_server_port` | `2526` | Listen port for the internal Foodsoft SMTP server |
 
 ### Connect to Sharedlists database
 

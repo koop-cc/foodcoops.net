@@ -1,5 +1,0 @@
-# {{ ansible_managed }}
-
-/^{{ sharedlists_smtp_mailer_prefix|replace('+', '\+') }}[0-9]*\.([0-9A-Z])*@{{ mail_fqdn|replace('.', '\.') }}$/  smtp:[127.0.0.1]:{{ sharedlists_smtp_server_port }}
-/^(.*)\.[0-9\.]*\.[A-Z0-9]*@{{ mail_fqdn|replace('.', '\.') }}$/         smtp:[127.0.0.1]:{{ foodsoft_smtp_server_port }}
-/^(.*)@{{ mail_fqdn|replace('.', '\.') }}$/                              discard:

@@ -2,27 +2,31 @@ postfix_myorigin: app.foodcoops.net
 postfix_pflogsum_recipient: 
 postfix_smtpd_tls_cert_file: /var/lib/dehydrated/certs/mx.app.foodcoops.net/fullchain.pem
 postfix_smtpd_tls_key_file: /var/lib/dehydrated/certs/mx.app.foodcoops.net/privkey.pem
-postfix_message_size_limit: 20480000
+
+postfix_mydestination:
+  - localhost
+
+postfix_mynetworks:
+  - "127.0.0.0/8"
+  - "[::ffff:127.0.0.0]/104"
 
 postfix_smtp_tls_policy_maps:
   - path: "127.0.0.1:8461:postfix"
-  - type: "socketmap:inet"
+    type: "socketmap:inet"
 
 postfix_relay_domains:
   - path: "{{ postfix_conf_dir }}/relay_domains"
-    tpye: cdb
+    type: cdb
 
 postfix_transport_maps:
   - path: "{{ postfix_conf_dir }}/transport_relay"
     type: pcre
-  - path: "{{ postfix_conf_dir }}/transport_foodsoft"
-    tpye: pcre
   - path: "{{ postfix_conf_dir }}/destination_limit"
-    type: pcre
+    type: cdb
 
 postfix_virtual_alias_maps:
   - path: "{{ postfix_conf_dir }}/virtual_aliases"
-    tpye: cdb
+    type: cdb
 
 postfix_smtpd_milters:
   - address: "localhost:8891"

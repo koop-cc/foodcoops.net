@@ -1,5 +1,6 @@
 ---
-- hosts:
+- name: Install and configure Postfix
+  hosts:
     - focone
   roles:
-    - role: postfix
+    - role: galaxy/senselab.postfix

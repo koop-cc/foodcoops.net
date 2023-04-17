@@ -1,7 +1,0 @@
-#!/bin/bash
-
-set -eu
-
-MAXMSG=20
-MSG=$(postqueue -p | tail -n1 | awk '{print $5}')
-[ ${MSG:-0} -le $MAXMSG ] && exit 0 || exit 1

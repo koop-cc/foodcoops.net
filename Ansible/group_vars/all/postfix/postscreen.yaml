@@ -1,0 +1,7 @@
+postfix_postscreen_dnsbl_sites:
+  - name: bl.spamcop.net
+    multiplier: 1
+  - name: ix.dnsbl.manitu.net
+    multiplier: 2
+  - name: zen.spamhaus.org
+    multiplier: 2

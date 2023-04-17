@@ -1,0 +1,4 @@
+postfix_default_helo_checks:
+  - client: "/^ylmf\\-pc$/"
+    state: "550 Unacceptable HELO"
+
