@@ -16,6 +16,8 @@ postfix_aliases:
         dest: "{{ postfix.aliases.monit }}"
       - name: root
         dest: "{{ postfix.aliases.root }}"
+      - name: tls-summary
+        dest: "{{ postfix.aliases.tls_summary }}"
       - name: _foodsoft
         dest: "{{ postfix.aliases._foodsoft }}"
       - name: _sharedlists
