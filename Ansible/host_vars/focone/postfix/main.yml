@@ -1,5 +1,4 @@
 postfix_myorigin: app.foodcoops.net
-postfix_pflogsum_recipient: 
 postfix_smtpd_tls_cert_file: /var/lib/dehydrated/certs/mx.app.foodcoops.net/fullchain.pem
 postfix_smtpd_tls_key_file: /var/lib/dehydrated/certs/mx.app.foodcoops.net/privkey.pem
 
