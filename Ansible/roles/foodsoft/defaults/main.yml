@@ -6,7 +6,6 @@ foodsoft_user: _foodsoft
 foodsoft_user_home: "/var/lib/{{ foodsoft_user }}"
 foodsoft_db: foodsoft
 foodsoft_db_user: foodsoft
-foodsoft_db_password: "{{ lookup('password', '/tmp/foodsoft_database_pwd length=42 chars=ascii_letters,digits') }}"
 foodsoft_environment_file: /etc/foodsoft/foodsoft.conf
 foodsoft_web_service: foodsoft-web.service
 foodsoft_web_socket: foodsoft-web.socket
