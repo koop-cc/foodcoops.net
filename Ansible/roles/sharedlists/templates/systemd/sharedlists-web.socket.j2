@@ -3,7 +3,7 @@ Description=Sharedlists HTTP Server Accept Sockets
 Documentation=https://github.com/puma/puma/blob/master/docs/systemd.md
 
 [Socket]
-ListenStream={{ sharedlists_web_bind_ip }}:{{ puma_port }}
+ListenStream={{ sharedlists_web_bind_ip }}:{{ sharedlists_puma_port }}
 
 # Socket options matching Puma defaults
 NoDelay=true
