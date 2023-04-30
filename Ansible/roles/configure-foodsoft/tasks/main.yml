@@ -15,14 +15,6 @@
   ansible.builtin.import_tasks: webserver.yml
   tags: webserver
 
-- name: "Add a new Foodcoop"
-  ansible.builtin.include_tasks: foodcoop_add.yml
-  args:
-    apply:
-      tags: foodcoop_add
-  tags: never
-  loop: "{{ vault_foodcoops }}"
-
 - name: "Delete a Foodcoop"
   ansible.builtin.include_tasks: foodcoop_delete.yml
   args:

@@ -4,6 +4,8 @@ foodsoft_puma_web_concurrency: 8
 foodsoft_db_password: "{{ vault_foodsoft_db_password }}"
 foodsoft_secret_key_base: "{{ vault_foodsoft_secret_key_base }}"
 
+foodsoft_multi_coops: "{{ vault_foodcoops }}"
+
 sharedlists:
   enabled: true
   database: sharedlists

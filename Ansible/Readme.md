@@ -94,10 +94,13 @@ systemctl restart foodsoft-web
    ```Shell
    ansible-vault edit host_vars/focone/vault_foodcoops.yml
    ```
-- Add the data to `host_vars/focone/vault_foodcoops.yml` in the section `vault_foodcoops`. These settings are mandatory:
+- Edit the data in the vault:
+  ```Shell
+  ansible-vault edit host_vars/focone/vault_foodcoops.yml
+- Add to the section `vault_foodcoops` the following mandatory settings:
    | Setting | Type | Value |
    |---------|------|-------|
-   | `instance` | string | short name of the foodcoop |
+   | `name` | string | short name of the foodcoop |
    | `database` | string | prefix `foodsoft_` + short name |
 - For administrational reason we save also the contact persons mail addresses:
    ```YAML
@@ -107,32 +110,27 @@ systemctl restart foodsoft-web
      - name: bob
        mail: bob@example.org
    ```
-- Some custom [configuration](roles/configure-foodsoft/Configuration.md) settings are available. At the moment these settings are supported by this role:
-   | Setting | Value |
-   |---------|-------|
-   | `stop_ordering_under` | int |
-   | `use_apple_points` | bol |
-   | `use_nick` | bol |
-   | `use_messages` | bol |
+- Some custom [configuration](roles/configure-foodsoft/Configuration.md) settings are available. At the moment every key-value-pair is supported by this role. Just add them to the `config` dictionary as shown in the example below.
 - Example configuration:
    ```YAML
    vault_foodcoops:
-     - instance: demo
+     - name: demo
         database: foodsoft_demo
         contacts:
           - name: alice
             mail: alice@example.org
           - name: bob
             mail: bob@example.org
-        stop_ordering_under: 70
-        use_apple_points: false
-        use_nick: true
-        use_messages: false
+        config:
+          stop_ordering_under: 70
+          use_apple_points: false
+          use_nick: true
+          use_messages: false
    ```
 - Upload the changes to our Git repository.
 - Execute the playbook with:
    ```shell
-   ansible-playbook playbooks/configure-foodsoft.yml --tags never,foodcoop_add
+   ansible-playbook playbooks/foodsoft.yml --tags multi_coop,foodsoft_app_config
    ```
 - Immediately login with `admin` / `secret1234` and change the user details and password. The `admin` user should become the user account of the first contact person, so use their email address here. We do not want to encourage an unused `admin` account.
 - You may want to pre-set some configuration if you know a bit more about the foodcoop. It's always helpful for new foodcoops to have a setup that already reflects their intended use a bit. At least you should set a time zone.
@@ -143,10 +141,10 @@ systemctl restart foodsoft-web
 ## Deleting a foodcoop
 If the deletion of a foocoop is requested follow these steps:
 
-- Find the foodcoops's configuration at `roles/foodsoft/vars/main.yml`. Enter another entry called `deleted: true` to the array:
+- Find the foodcoops's configuration at `host_vars/focone/vault_foodcoops.yml`. Enter another entry called `deleted: true` to the array:
    ```yaml
    vault_foodcoops:
-     - instance: mycoop
+     - name: mycoop
        database: foodsoft_mycoop
        deleted: true
    ```
@@ -155,7 +153,7 @@ If the deletion of a foocoop is requested follow these steps:
    ansible-playbook playbooks/configure-foodsoft --tags never,foodcoop_delete
    ```
    Removing a Foodcoop will result in a restart of the Foodsoft service. Please execute the playbook in the late evening or preferably during the night to not disturb our users.
-- Delete the foodcoop's entry from `roles/foodsoft/vars/main.yml`.
+- Delete the foodcoop's entry from the vault file.
 - Upload the changes to our Git repository.
 - Delete the two contact persons from our foodsoft announce mailing list.
 
@@ -167,9 +165,9 @@ If the deletion of a foocoop is requested follow these steps:
     ```shell
     ansible-playbook playbooks/basic-server.yml --limit focone
     ```
-- Add email address to `/etc/postfix/conf.d/virtual_aliases`, save the file and run postmap:
-    ```shell
-    postmap cdb:virtual_aliases
+- Add the admin's email address to `host_vars/focone/vault_postfix.yml`, save the file and run the postfix playbook:
+    ```Shell
+    ansible-playbook playbooks/postfix.yml
     ```
 
 ## Run rails commands
