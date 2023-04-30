@@ -3,7 +3,7 @@
   hosts:
     - focone
   roles:
-    - role: foodsoft
+    - role: galaxy/foodsoft
       foodsoft_git_url: https://github.com/kidhab/foodsoft.git
       foodsoft_version: staging
       foodsoft_user: _staging

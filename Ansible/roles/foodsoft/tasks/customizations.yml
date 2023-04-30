@@ -1,9 +1,0 @@
----
-# https://github.com/lautis/uglifier/issues/127
-# If terser is installed (npm install -g terser) then it is chosen automatically
-# and the static asset building works without adaption.
-- name: "Customizations | Use ES6 syntax"
-  ansible.builtin.replace:
-    path: "{{ foodsoft_home }}/config/environments/production.rb"
-    regexp: 'config.assets.js_compressor = :uglifier'
-    replace: 'config.assets.js_compressor = Uglifier.new(harmony: true)'

@@ -3,7 +3,7 @@
   hosts:
     - focone
   roles:
-    - role: foodsoft
+    - role: galaxy/foodsoft
       foodsoft_user: _demo
       foodsoft_home: /opt/foodsoft-demo
       foodsoft_db: foodsoft-demo
