@@ -15,5 +15,6 @@
       - default-libmysqlclient-dev
       - libxml2-dev
       - libxslt-dev
+      - libyaml-dev
       - pkg-config
       - rbenv
