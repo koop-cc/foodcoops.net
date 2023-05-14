@@ -1,5 +1,0 @@
----
-- hosts:
-    - fc-helper
-  roles:
-    - role: uptime-kuma

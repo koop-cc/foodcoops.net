@@ -57,7 +57,6 @@ ansible-playbook playbooks/foodsoft.yml
 | `configure-foodsoft` | Configuration of the Foodsoft, Add and delete new foodcoops |
 | `phpmyadmin` | Installation and configuration of phpMyAdmin |
 | `sharedlists` | Installation, configuration, updating of sharedlists |
-| `uptime-kuma` | Installation of Uptime Kuma a monitoring solution |
 
 # Common tasks
 ## Check and restart a service
