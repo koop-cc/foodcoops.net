@@ -15,6 +15,7 @@
       foodsoft_secret_key_base: "{{ lookup('password', '/tmp/foodsoft_demo_secret_key_base_pwd length=42 chars=ascii_letters,digits') }}"
       foodsoft_smtp_service: foodsoft-demo-smtp.service
       foodsoft_smtp_server_port: "2527"
+      foodsoft_redis_url: redis://127.0.0.1:6379/2
       foodsoft_resque_service: foodsoft-demo-resque.service
       foodsoft_web_port: "3002"
       puma_port: "9295"
