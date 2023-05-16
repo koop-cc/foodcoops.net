@@ -23,7 +23,7 @@ foodsoft_config_notification_error_recipients:
       - notifications-foodsoft@lists.foodcoops.net
 
 foodsoft_config_notificatin_feedback_recipients:
-      - support@lists.foodcoops.net
+      - hosting@lists.foodcoops.net
 
 foodsoft_config_contact:
   street: Grüne Straße 103
