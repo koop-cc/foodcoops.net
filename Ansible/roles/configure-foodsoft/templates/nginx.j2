@@ -17,11 +17,11 @@ server {
         limit_req zone=perserver burst=10;
         limit_req_status 429;
         limit_conn addr 5;
-        proxy_pass http://localhost:{{ puma_port }};
+        proxy_pass http://localhost:{{ foodsoft_web_port }};
     }
 
     location / {
-        proxy_pass http://localhost:{{ puma_port }};
+        proxy_pass http://localhost:{{ foodsoft_web_port }};
     }
     
     location = /mila/foodcoop/users {

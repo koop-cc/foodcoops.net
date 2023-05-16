@@ -1,0 +1,43 @@
+foodsoft_config:
+  multi_coop_install: false
+  default_scope: 'demo'
+  name: Foodcoop Demo
+  homepage: https://foodcoops.net
+  help_url: https://foodcoops.readthedocs.io
+  applepear_url: https://github.com/foodcoops/foodsoft/wiki/%C3%84pfel-u.-Birnen
+  price_markup: 2.0
+  tax_default: 7.0
+  tolerance_is_costly: false
+  use_nick: false
+  page_footer:  <a href="https://foodcoops.net/global-foodsoft-platform/">Global Foodsoft platform</a> | <a href="https://foodcoops.net/tos/">Terms of Service</a>
+  email_sender: noreply@app.foodcoops.net
+  reply_email_domain: app.foodcoops.net
+  protocol: https
+  host: app.foodcoops.net
+
+foodsoft_config_notification:
+    sender_address: '"\"Foodsoft Error\" <noreply@app.foodcoops.net>"'
+    email_prefix: '"[Foodsoft]"'
+
+foodsoft_config_notification_error_recipients:
+      - notifications-foodsoft@lists.foodcoops.net
+
+foodsoft_config_notificatin_feedback_recipients:
+      - support@lists.foodcoops.net
+
+foodsoft_config_contact:
+  street: Grüne Straße 103
+  zip_code: "10997"
+  city: Berlin
+  country: Deutschland
+  email: foodsoft@foodcoop.test
+  phone: '"030 123 45678"'
+
+foodsoft_config_shared_lists:
+  adapter: mysql2
+  host: localhost
+  database: "{{ sharedlists.database }}"
+  username: "{{ foodsoft_db_user }}"
+  password: "{{ foodsoft_db_password }}"
+  encoding: utf8
+  socket: "{{ mariadb_socket }}"

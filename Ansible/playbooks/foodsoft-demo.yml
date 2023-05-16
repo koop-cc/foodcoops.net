@@ -2,6 +2,10 @@
 - name: Playbook to install a Foodsoft demo instance
   hosts:
     - focone
+  tasks:
+    - name: Include vars for Foodsoft configuration
+      ansible.builtin.include_vars:
+        file: ../host_vars/focone/foodsoft/app_config_demo.yml
   roles:
     - role: galaxy/foodsoft
       foodsoft_user: _demo
@@ -18,4 +22,4 @@
       foodsoft_redis_url: redis://127.0.0.1:6379/2
       foodsoft_resque_service: foodsoft-demo-resque.service
       foodsoft_web_port: "3002"
-      puma_port: "9295"
+      monit_foodsoft_config_file: foodsoft-demo
