@@ -1,6 +1,5 @@
 postfix_aliases:
-  - domain:
-    name: app.foodcoops.net
+  - domain: app.foodcoops.net
     aliases:
       - name: abuse
         dest: "{{ postfix.aliases.abuse }}"
