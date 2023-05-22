@@ -1,23 +1,25 @@
 postfix_aliases:
   - domain: app.foodcoops.net
     aliases:
-      - name: abuse
-        dest: "{{ postfix.aliases.abuse }}"
-      - name: postmaster
-        dest: "{{ postfix.aliases.postmaster }}"
-      - name: foodsoft
-        dest: "{{ postfix.aliases.foodsoft }}"
-      - name: backup
-        dest: "{{ postfix.aliases.backup }}"
-      - name: mail-log
-        dest: "{{ postfix.aliases.mail_log }}"
-      - name: monit
-        dest: "{{ postfix.aliases.monit }}"
-      - name: root
-        dest: "{{ postfix.aliases.root }}"
-      - name: tls-summary
-        dest: "{{ postfix.aliases.tls_summary }}"
       - name: _foodsoft
         dest: "{{ postfix.aliases._foodsoft }}"
       - name: _sharedlists
         dest: "{{ postfix.aliases._sharedlists }}"
+      - name: abuse
+        dest: "{{ postfix.aliases.abuse }}"
+      - name: backup
+        dest: "{{ postfix.aliases.backup }}"
+      - name: foodsoft
+        dest: "{{ postfix.aliases.foodsoft }}"
+      - name: foodsoft-notifications
+        dest: "{{ postfix.aliases.foodsoft-notifications }}"
+      - name: mail-log
+        dest: "{{ postfix.aliases.mail_log }}"
+      - name: monit
+        dest: "{{ postfix.aliases.monit }}"
+      - name: postmaster
+        dest: "{{ postfix.aliases.postmaster }}"
+      - name: root
+        dest: "{{ postfix.aliases.root }}"
+      - name: tls-summary
+        dest: "{{ postfix.aliases.tls_summary }}"

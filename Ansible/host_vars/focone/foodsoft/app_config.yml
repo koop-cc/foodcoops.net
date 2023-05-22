@@ -20,7 +20,7 @@ foodsoft_config_notification:
     email_prefix: '"[Foodsoft]"'
 
 foodsoft_config_notification_error_recipients:
-      - notifications-foodsoft@lists.foodcoops.net
+      - foodsoft-notifications@app.foodcoops.net
 
 foodsoft_config_notificatin_feedback_recipients:
       - hosting@lists.foodcoops.net
