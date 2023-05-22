@@ -47,14 +47,16 @@ ansible-playbook playbooks/foodsoft.yml
 | Name | Description |
 |------|-------------|
 | `basic-server` | Initial setup for a new server |
+| `configure-foodsoft` | Configuration of the Foodsoft, Add and delete new foodcoops |
+| `configure-sharedlists` | Configuration of Sharedlists |
 | `galaxy/foodsoft` | Installation and updating of the Foodsoft |
+| `galaxy/sharedlists` | Installation of the Sharedlists |
 | `galaxy/senselab.borgbackup` | Configure (borg)backups |
 | `galaxy/senselab.configure-firewall` | Configure UFW firewall |
 | `galaxy/senselab.dehydrated` | Installation and initial setup of dehydrated |
 | `galaxy/senselab.mariadb` | Installation and initial setup of MariaDB |
 | `galaxy/senselab.nginx` | Installation and configuration of Nginx |
 | `galaxy/senselab.postfix` | Installation and configuration of Postfix for use with a real mail domain |
-| `configure-foodsoft` | Configuration of the Foodsoft, Add and delete new foodcoops |
 | `phpmyadmin` | Installation and configuration of phpMyAdmin |
 | `sharedlists` | Installation, configuration, updating of sharedlists |
 
