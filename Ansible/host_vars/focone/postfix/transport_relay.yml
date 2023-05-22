@@ -1,0 +1,7 @@
+postfix_transport_relay_domains:
+  - name: "/hotmail(\\.[a-z]{2,3}){1,2}$/"
+    relay: "relay:[mail.systemausfall.org]:25"
+  - name: /live(\\.[a-z]{2,3}){1,2}$/
+    relay: "relay:[mail.systemausfall.org]:25"
+  - name: /outlook(\\.[a-z]{2,3}){1,2}$/
+    relay: "relay:[mail.systemausfall.org]:25"

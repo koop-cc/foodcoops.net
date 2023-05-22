@@ -2,10 +2,6 @@
 - name: Playbook to install a Foodsoft instance
   hosts:
     - focone
-  tasks:
-    - name: Include vars for Foodsoft configuration
-      ansible.builtin.include_vars:
-        file: ../host_vars/focone/foodsoft/app_config.yml
   roles:
     - role: galaxy/foodsoft
       foodsoft_git_url: https://github.com/kidhab/foodsoft.git
