@@ -6,3 +6,4 @@
     - role: galaxy/foodsoft
       foodsoft_git_url: https://github.com/kidhab/foodsoft.git
       foodsoft_version: foodcoops.net
+    - role: configure-foodsoft
