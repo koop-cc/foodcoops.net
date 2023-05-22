@@ -9,6 +9,8 @@ postfix_aliases:
         dest: "{{ postfix.aliases.abuse }}"
       - name: backup
         dest: "{{ postfix.aliases.backup }}"
+      - name: changetrack
+        dest: "{{ postfix.aliases.changetrack }}"
       - name: foodsoft
         dest: "{{ postfix.aliases.foodsoft }}"
       - name: foodsoft-notifications

@@ -1,7 +1,7 @@
 ---
 changetrack:
   sender: "{{ ansible_hostname }}+changetrack@{{ mail_fqdn }}"
-  receiver: "changetrack@lists.foodcoops.net"
+  receiver: "changetrack@app.foodcoops.net"
 foodsoft_domain: app.foodcoops.net
 phpmyadmin_domain: dbadmin.foodcoops.net
 phpmyadmin_password: "{{ vault_phpmyadmin_password }}"
