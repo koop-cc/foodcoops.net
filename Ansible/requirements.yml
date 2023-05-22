@@ -27,5 +27,10 @@ roles:
     src: https://git.systemausfall.org/senselab/ansible-role-postfix.git
     scm: git
 
+  - name: galaxy/sharedlists
+    src: https://github.com/foodcoops/ansible-role-sharedlists.git
+    scm: git
+
+
 collections:
   - name: adhawkins.borgbase

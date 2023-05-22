@@ -1,14 +1,14 @@
 ---
-- name: "customizations | disable bundle plattform warnings"
+- name: "Customizations | Disable bundle plattform warnings"
   ansible.builtin.command:
     cmd: rbenv exec bundle config --local disable_platform_warnings true
     chdir: "{{ sharedlists_home }}"
   become: true
   become_user: "{{ sharedlists_user }}"
 
-- name: "customizations | check railties version"
+- name: "Customizations | Check railties version"
   ansible.builtin.shell:
-    cmd: rbenv exec bundle info railties | grep "railties (" | cut -d ' ' -f5 | sed 's/[)(]//g'
+    cmd: rbenv exec bundle info railties | grep -m1 "railties (" | cut -d ' ' -f5 | sed 's/[)(]//g'
     chdir: "{{ sharedlists_home }}"
   become: true
   become_user: "{{ sharedlists_user }}"
@@ -16,11 +16,11 @@
   register: railties_version
 
 # Copy only if version number matches.
-- name: "customizations | copy monkey patch for anon logging"
+- name: "Customizations | Copy monkey patch for anon logging"
   ansible.builtin.copy:
     src: anon_logger.rb
     dest: "{{ sharedlists_home }}/config/initializers/anon_logger.rb"
     owner: "{{ sharedlists_user }}"
     group: "{{ sharedlists_user }}"
-    mode: 0644
-  when: railties_version.stdout <= "6.1.4.4"
+    mode: "0644"
+  when: railties_version.stdout|float == rails_version|float

@@ -1,5 +1,9 @@
 ---
-- hosts:
+- name: Role to install Sharedlists
+  hosts:
     - focone
   roles:
-    - role: sharedlists
+    - role: galaxy/sharedlists
+      sharedlists_db_password: "{{ vault_sharedlists_db_password }}"
+      sharedlists_secret_key_base: "{{ vault_sharedlists_secret_key_base }}"
+    - role: configure-sharedlists

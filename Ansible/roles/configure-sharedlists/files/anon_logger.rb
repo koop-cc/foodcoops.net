@@ -1,5 +1,5 @@
 # Monkey patch ip address logging
-# https://github.com/rails/rails/blob/6-1-stable/railties/lib/rails/rack/logger.rb
+# https://github.com/rails/rails/blob/7-1-stable/railties/lib/rails/rack/logger.rb
 
 module Rails
   module Rack

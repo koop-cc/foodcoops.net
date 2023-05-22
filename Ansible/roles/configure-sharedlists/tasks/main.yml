@@ -1,0 +1,12 @@
+---
+- name: Customization
+  ansible.builtin.import_tasks: customizations.yml
+  tags: customizations
+
+- name: Cron
+  ansible.builtin.import_tasks: cron.yml
+  tags: cron
+
+- name: Webserver
+  ansible.builtin.import_tasks: webserver.yml
+  tags: webserver

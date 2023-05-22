@@ -1,0 +1,20 @@
+---
+- name: "Cron | Copy Antakya update script"
+  ansible.builtin.template:
+    src: antakya_get_products.sh.j2
+    dest: /usr/local/bin/antakya_get_products.sh
+    mode: "0755"
+
+- name: "Cron | Copy Antakya filter script"
+  ansible.builtin.copy:
+    src: antakya_filter_products
+    dest: /usr/local/bin
+    mode: "0755"
+
+- name: "Cron | Create Antakya cron job"
+  ansible.builtin.cron:
+    name: Update Bio Antakya products
+    minute: "01"
+    hour: "01"
+    weekday: "07"
+    job: chronic /usr/local/bin/antakya_get_products.sh
