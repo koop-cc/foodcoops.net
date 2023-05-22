@@ -1,8 +1,6 @@
 ---
 - hosts:
     - focone
-    - fc-helper
-    - fc-monitor
   roles:
     - role: basic-server
     - role: galaxy/senselab.configure-firewall
