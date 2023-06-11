@@ -14,7 +14,7 @@ postfix_aliases:
       - name: foodsoft
         dest: "{{ postfix.aliases.foodsoft }}"
       - name: foodsoft-notifications
-        dest: "{{ postfix.aliases.foodsoft-notifications }}"
+        dest: "{{ postfix.aliases.foodsoft_notifications }}"
       - name: mail-log
         dest: "{{ postfix.aliases.mail_log }}"
       - name: monit
