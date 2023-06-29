@@ -1,6 +1,8 @@
 postfix_aliases:
   - domain: app.foodcoops.net
     aliases:
+      - name: _demo
+        dest: "{{ postfix.aliases._demo }}"
       - name: _foodsoft
         dest: "{{ postfix.aliases._foodsoft }}"
       - name: _sharedlists
