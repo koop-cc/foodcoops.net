@@ -53,12 +53,13 @@ ansible-playbook playbooks/foodsoft.yml
 | `galaxy/sharedlists` | Installation of the Sharedlists |
 | `galaxy/senselab.borgbackup` | Configure (borg)backups |
 | `galaxy/senselab.configure-firewall` | Configure UFW firewall |
+| `galaxy/foodsoft` | Role to install the Foodsoft |
 | `galaxy/senselab.dehydrated` | Installation and initial setup of dehydrated |
 | `galaxy/senselab.mariadb` | Installation and initial setup of MariaDB |
 | `galaxy/senselab.nginx` | Installation and configuration of Nginx |
 | `galaxy/senselab.postfix` | Installation and configuration of Postfix for use with a real mail domain |
+| `galaxy/sharedlists` | Role to install the Sharedlists application |
 | `phpmyadmin` | Installation and configuration of phpMyAdmin |
-| `sharedlists` | Installation, configuration, updating of sharedlists |
 
 # Common tasks
 ## Check and restart a service
