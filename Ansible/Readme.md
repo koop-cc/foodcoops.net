@@ -152,7 +152,7 @@ If the deletion of a foocoop is requested follow these steps:
    ```
 - Execute the playbook:
    ```shell
-   ansible-playbook playbooks/configure-foodsoft --tags never,foodcoop_delete
+   ansible-playbook playbooks/configure-foodsoft.yml --tags never,foodcoop_delete
    ```
    Removing a Foodcoop will result in a restart of the Foodsoft service. Please execute the playbook in the late evening or preferably during the night to not disturb our users.
 - Delete the foodcoop's entry from the vault file.
