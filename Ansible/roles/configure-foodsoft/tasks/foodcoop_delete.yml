@@ -6,11 +6,13 @@
     login_unix_socket: "{{ mariadb_socket }}"
     login_user: root
 
-- name: "Delete | Delete foodcoop from configuration file | {{ item.instance }}"
-  ansible.builtin.blockinfile:
-    path: "{{ foodsoft_home }}/config/app_config.yml"
-    state: absent
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{ item.instance }}"
+- name: "Delete | Recreate Foodsoft configuration"
+  ansible.builtin.template:
+    src: ../galaxy/foodsoft/templates/foodsoft/app_config.yml.j2
+    dest: "{{ foodsoft_home }}/config/app_config.yml"
+    owner: "{{ foodsoft_user }}"
+    group: "{{ foodsoft_user }}"
+    mode: "0600"
   notify: restart foodsoft-web
 
 - name: "Delete | Create directory for old database backups"
