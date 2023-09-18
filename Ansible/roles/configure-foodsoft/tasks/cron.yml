@@ -5,7 +5,7 @@
     user: "{{ foodsoft_user }}"
     minute: "00"
     hour: "02"
-    job: sleep 30; /bin/bash -lc "cd {{ foodsoft_home }} && DISABLE_DATABASE_ENVIRONMENT_CHECK=1 DATABASE_URL=mysql2://{{ foodsoft_db_user }}:{{ foodsoft_db_password }}@localhost/foodsoft_demo rbenv exec bundle exec rails db:purge db:schema:load db:seed:small.en >/dev/null"
+    job: sleep 30; /bin/bash -lc "cd {{ foodsoft_home }} && DISABLE_DATABASE_ENVIRONMENT_CHECK=1 DATABASE_URL=mysql2://{{ foodsoft_db_user }}:{{ foodsoft_db_password }}@localhost/{{ foodsoft_demo_database_name }} rbenv exec bundle exec rails db:purge db:schema:load db:seed:small.en >/dev/null"
 
 - name: "Cron | Setup clear cache after reset of demo database job"
   ansible.builtin.cron:

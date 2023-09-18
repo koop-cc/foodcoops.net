@@ -30,11 +30,13 @@
 - name: "Foodsoft | Update demo seeds"
   ansible.builtin.replace:
     path: "{{ foodsoft_home }}/db/seeds/small.en.seeds.rb"
-    regexp: ':password => "secret"'
-    replace: ':password => "secret1234"'
+    regexp: "password: 'secret',"
+    replace: "password: 'secret1234',"
+  tags: seeds
 
 - name: "Foodsoft | Update minimal seeds"
   ansible.builtin.replace:
     path: "{{ foodsoft_home }}/db/seeds/minimal.seeds.rb"
-    regexp: ':password => "secret"'
-    replace: ':password => "secret1234"'
+    regexp: "password: 'secret',"
+    replace: "password: 'secret1234',"
+  tags: seeds

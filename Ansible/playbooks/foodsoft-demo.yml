@@ -2,23 +2,41 @@
 - name: Playbook to install a Foodsoft demo instance
   hosts:
     - focone
-  roles:
-    - role: galaxy/foodsoft
-      foodsoft_user: _demo
-      foodsoft_home: /opt/foodsoft-demo
-      foodsoft_db: foodsoft-demo
-      foodsoft_db_user: foodsoft-demo
-      foodsoft_db_password: "{{ lookup('password', '/tmp/foodsoft_demo_database_pwd length=42 chars=ascii_letters,digits') }}"
-      foodsoft_environment_file: /etc/foodsoft/foodsoft-demo.conf
-      foodsoft_web_service: foodsoft-demo-web.service
-      foodsoft_web_socket: foodsoft-demo-web.socket
-      foodsoft_secret_key_base: "{{ lookup('password', '/tmp/foodsoft_demo_secret_key_base_pwd length=42 chars=ascii_letters,digits') }}"
-      foodsoft_smtp_service: foodsoft-demo-smtp.service
-      foodsoft_smtp_server_port: "2527"
-      foodsoft_redis_url: redis://127.0.0.1:6379/2
-      foodsoft_resque_service: foodsoft-demo-resque.service
-      foodsoft_web_port: "3002"
-      monit_foodsoft_config_file: foodsoft-demo
-      foodsoft_config:
+  vars:
+    - foodsoft_domain: demo.foodcoops.net
+    - foodsoft_demo_database_name: "{{ foodsoft_db }}"
+    - foodsoft_user: _demo
+    - foodsoft_home: /opt/foodsoft-demo
+    - foodsoft_db: foodsoft-demo
+    - foodsoft_db_user: foodsoft-demo
+    - foodsoft_db_password: "{{ lookup('password', '/tmp/foodsoft_demo_database_pwd length=42 chars=ascii_letters,digits') }}"
+    - foodsoft_environment_file: /etc/foodsoft/foodsoft-demo.conf
+    - foodsoft_web_service: foodsoft-demo-web.service
+    - foodsoft_web_socket: foodsoft-demo-web.socket
+    - foodsoft_secret_key_base: "{{ lookup('password', '/tmp/foodsoft_demo_secret_key_base_pwd length=42 chars=ascii_letters,digits') }}"
+    - foodsoft_smtp_service: foodsoft-demo-smtp.service
+    - foodsoft_smtp_server_port: "2527"
+    - foodsoft_redis_url: redis://127.0.0.1:6379/2
+    - foodsoft_resque_service: foodsoft-demo-resque.service
+    - foodsoft_version: "v4.8.0"
+    - foodsoft_web_port: "3002"
+    - monit_foodsoft_config_file: foodsoft-demo
+    - foodsoft_config:
         multi_coop_install: false
         default_scope: '"demo"'
+  roles:
+    - role: galaxy/foodsoft
+    - role: configure-foodsoft
+  tasks:
+    - name: Install demo data
+      ansible.builtin.command:
+        cmd: "rbenv exec bundle exec rails db:purge db:schema:load db:seed:small.en"
+        chdir: "{{ foodsoft_home }}"
+      environment:
+        RAILS_ENV: production
+        SECRET_KEY_BASE: "{{ foodsoft_secret_key_base }}"
+        DISABLE_DATABASE_ENVIRONMENT_CHECK: 1
+        REDIS_URL: "{{ foodsoft_redis_url }}"
+      become: true
+      become_user: "{{ foodsoft_user }}"
+      tags: demo_data
