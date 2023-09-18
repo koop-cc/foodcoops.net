@@ -1,3 +1,0 @@
-{% for contact in item.contacts %}
-{ "email": "{{ contact.mail }}", "name": "{{ contact.name }}", "status": "enabled", "lists": [{{ listmonk_list_id }}], "preconfirm_subscriptions": true }
-{% endfor %}
