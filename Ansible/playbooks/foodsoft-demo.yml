@@ -24,6 +24,7 @@
     - foodsoft_config:
         multi_coop_install: false
         default_scope: '"demo"'
+        logout_redirect_url: "https://foodcoops.net/demo"
   roles:
     - role: galaxy/foodsoft
     - role: configure-foodsoft
