@@ -3,4 +3,4 @@
   hosts:
     - focone
   roles:
-    - role: galaxy/senselab.postfix
+    - role: senselab.postfix

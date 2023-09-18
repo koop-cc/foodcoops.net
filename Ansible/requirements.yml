@@ -1,33 +1,33 @@
 roles:
-  - name: galaxy/foodsoft
+  - name: foodcoops.foodsoft
     src: https://github.com/foodcoops/ansible-role-foodsoft.git
     scm: git
 
-  - name: galaxy/senselab.borgbackup
+  - name: senselab.borgbackup
     src: https://git.systemausfall.org/senselab/ansible-role-borgbackup.git
     scm: git
 
-  - name: galaxy/senselab.configure-firewall
+  - name: senselab.configure-firewall
     src: https://git.systemausfall.org/senselab/ansible-role-configure-firewall.git
     scm: git
 
-  - name: galaxy/senselab.dehydrated
+  - name: senselab.dehydrated
     src: https://git.systemausfall.org/senselab/ansible-role-dehydrated.git
     scm: git
 
-  - name: galaxy/senselab.mariadb
+  - name: senselab.mariadb
     src: https://git.systemausfall.org/senselab/ansible-role-mariadb.git
     scm: git
 
-  - name: galaxy/senselab.nginx
+  - name: senselab.nginx
     src: https://git.systemausfall.org/senselab/ansible-role-nginx.git
     scm: git
 
-  - name: galaxy/senselab.postfix
+  - name: senselab.postfix
     src: https://git.systemausfall.org/senselab/ansible-role-postfix.git
     scm: git
 
-  - name: galaxy/sharedlists
+  - name: foodcoops.sharedlists
     src: https://github.com/foodcoops/ansible-role-sharedlists.git
     scm: git
 

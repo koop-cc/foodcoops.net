@@ -3,7 +3,7 @@
   hosts:
     - focone
   roles:
-    - role: galaxy/sharedlists
+    - role: foodcoops.sharedlists
       sharedlists_db_password: "{{ vault_sharedlists_db_password }}"
       sharedlists_secret_key_base: "{{ vault_sharedlists_secret_key_base }}"
     - role: configure-sharedlists

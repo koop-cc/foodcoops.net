@@ -29,7 +29,7 @@
     - sharedlists:
         enabled: false
   roles:
-    - role: galaxy/foodsoft
+    - role: foodcoops.foodsoft
     - role: configure-foodsoft
   tasks:
     - name: Install demo data

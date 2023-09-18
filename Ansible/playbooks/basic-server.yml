@@ -3,4 +3,4 @@
     - focone
   roles:
     - role: basic-server
-    - role: galaxy/senselab.configure-firewall
+    - role: senselab.configure-firewall

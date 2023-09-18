@@ -2,4 +2,4 @@
 - hosts:
     - focone
   roles:
-    - role: galaxy/senselab.dehydrated
+    - role: senselab.dehydrated

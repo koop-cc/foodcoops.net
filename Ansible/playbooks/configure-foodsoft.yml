@@ -2,9 +2,9 @@
 - name: Playbook to configure a Foodsoft installation
   hosts:
     - focone
-  vars_files: ../roles/galaxy/foodsoft/defaults/main.yml
+  vars_files: "{{ roles_path }}/foodcoops.foodsoft/defaults/main.yml"
   handlers:
     - name: Import handlers
-      ansible.builtin.import_tasks: ../roles/galaxy/foodsoft/handlers/main.yml
+      ansible.builtin.import_tasks: "{{ roles_path  }}/foodcoops.foodsoft/handlers/main.yml"
   roles:
     - role: configure-foodsoft
