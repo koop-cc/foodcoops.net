@@ -23,3 +23,11 @@
   tags: never
   loop: "{{ vault_foodcoops }}"
   when: item.deleted is defined and item.deleted
+
+- name: Mailinglist
+  ansible.builtin.include_tasks: list.yml
+  loop: "{{ vault_foodcoops }}"
+  tags: always
+  args:
+    apply:
+      tags: list

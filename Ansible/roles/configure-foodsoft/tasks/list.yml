@@ -1,0 +1,23 @@
+---
+- name: List | Add contacts as subscribes to info list
+  ansible.builtin.uri:
+    url: "{{ listmonk_url }}"
+    url_username: "{{ listmonk_username }}"
+    url_password: "{{ listmonk_password }}"
+    method: POST
+    body_format: json
+    body: |-
+      {
+         "email": "{{ contact.mail }}",
+         "name": "{{ contact.name }}",
+         "status": "enabled",
+         "lists": [{{ listmonk_list_id }}],
+         "preconfirm_subscriptions": true
+      }
+    status_code:
+      - "200"
+      # Error 409 if subscribtion already exists
+      - "409"
+  loop: "{{ item.contacts }}"
+  loop_control:
+    loop_var: contact
