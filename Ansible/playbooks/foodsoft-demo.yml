@@ -21,6 +21,7 @@
     - foodsoft_version: "v4.8.0"
     - foodsoft_web_port: "3002"
     - monit_foodsoft_config_file: foodsoft-demo
+    - foodsoft_config_webstats_tracking_code: []
     - foodsoft_config:
         multi_coop_install: false
         default_scope: '"demo"'
