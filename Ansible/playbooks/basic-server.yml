@@ -3,4 +3,6 @@
     - focone
   roles:
     - role: basic-server
+      tags: basic-server
     - role: senselab.configure-firewall
+      tags: firewall

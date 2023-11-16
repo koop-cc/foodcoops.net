@@ -1,4 +1,7 @@
 ---
+ansible_hostname: 46.38.240.91
+ansible_port: 2243
+
 changetrack:
   sender: "{{ ansible_hostname }}+changetrack@{{ mail_fqdn }}"
   recipient: "changetrack@app.foodcoops.net"
@@ -7,7 +10,6 @@ phpmyadmin_domain: dbadmin.foodcoops.net
 phpmyadmin_password: "{{ vault_phpmyadmin_password }}"
 sharedlists_domain: sharedlists.foodcoops.net
 gateway_host: focone
-ssh_port: "2243"
 
 mail_fqdn: app.foodcoops.net
 mail_myorigin: mx.app.foodcoops.net

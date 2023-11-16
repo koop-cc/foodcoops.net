@@ -4,8 +4,8 @@ firewall_rules:
   - "allow in to any port 443"
   - "allow in to any port 80"
   # monitoring
-  - "allow in proto tcp from {{ munin_server_ip }} to any port 4949"
+  - "allow in proto tcp from {{ prometheus_host }} to any port 9100"
   # smtp
   - "allow in to any port 25"
   # ssh
-  - "allow in proto tcp to any port {{ ssh_port }}"
+  - "allow in proto tcp to any port {{ ansible_port }}"
