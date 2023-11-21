@@ -5,6 +5,7 @@ firewall_rules:
   - "allow in to any port 80"
   # monitoring
   - "allow in proto tcp from {{ prometheus_host }} to any port 9100"
+  - "allow in proto tcp from {{ prometheus_host }} to any port 9104"
   # smtp
   - "allow in to any port 25"
   # ssh
