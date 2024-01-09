@@ -35,21 +35,22 @@ On first time run, you'll need to setup the database. Start and connect to it as
 
 ```shell
 docker-compose up -d mariadb redis
-docker exec -it foodcoopsnet_mariadb_1 mysql -u root -p
+# password is in MYSQL_ROOT_PASSWORD
+docker exec -it docker-mariadb-1 mysql -u root -p
 ```
 
 Then run the following SQL commands:
 
 ```sql
 CREATE DATABASE foodsoft_demo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci;
-GRANT ALL ON foodsoft.* TO foodsoft@'%' IDENTIFIED BY 'secret_fs';
+GRANT ALL ON foodsoft_demo.* TO foodsoft@'%' IDENTIFIED BY 'secret_fs';
 
 CREATE DATABASE foodsoft_latest CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci;
 GRANT ALL ON foodsoft_latest.* TO foodsoft_latest@'%' IDENTIFIED BY 'secret_fsl';
 
 -- setup sharedlists database
 CREATE DATABASE sharedlists CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_520_ci;
-GRANT ALL ON sharedlists.* TO sharedlists@'%' IDENTIFIED BY 'secret_sl';
+GRANT ALL ON sharedlists.* TO sharedlists@'%' IDENTIFIED BY 'sharedlists';
 ```
 
 Subsequently you need to populate the databases:
@@ -74,11 +75,13 @@ need to do this differently right now.
 
 ```shell
 docker-compose run --rm \
-  -e 'DATABASE_URL=mysql2://foodsoft:${FOODSOFT_DB_PASSWORD}@mariadb/foodsoft_demo?encoding=utf8mb4' \
+  -e 'DATABASE_URL=mysql2://foodsoft:secret_fs@mariadb/foodsoft_demo?encoding=utf8mb4' \
+  -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 \
   foodsoft bundle exec rake db:schema:load db:seed:small.en
 
 docker-compose run --rm --entrypoint=/bin/bash \
-  -e 'DATABASE_URL=mysql2://foodsoft_latest:${FOODSOFT_LATEST_DB_PASSWORD}@mariadb/foodsoft_latest?encoding=utf8mb4' \
+  -e 'DATABASE_URL=mysql2://foodsoft_latest:secret_fsl@mariadb/foodsoft_latest?encoding=utf8mb4' \
+  -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 \
   foodsoft_latest bundle exec rake db:drop db:create db:schema:load db:seed:small.en
 ```
 
